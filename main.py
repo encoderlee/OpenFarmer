@@ -31,10 +31,10 @@ def main():
         user_yml = "user.yml"
         if len(sys.argv) == 2:
             user_yml = sys.argv[1]
-        return run(user_yml)
+        run(user_yml)
     except Exception:
         log.exception("start error")
-        return 2
+    input()
 
 
 if __name__ == '__main__':
