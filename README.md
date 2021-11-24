@@ -46,10 +46,7 @@
    https://www.python.org/downloads/
    
    【注意】安装时请记得勾选【Add Python 3.10 to PATH】
-3. 打开CMD命令行，定位到源代码目录，执行命令安装依赖包
-   >pip install -r requirements.txt -i https://pypi.douban.com/simple/
-   
-   当然也可以直接双击运行 【install_depends.py】 来安装依赖，其实也是执行上面的命令
+3. 双击运行 【install_depends.py】 来安装依赖包，一台电脑只需要安装一次即可
 4. 安装Chrome浏览器，并升级到最新版
 5. 下载ChromeDriver，版本确保和Chrome版本一致
 https://chromedriver.chromium.org/downloads
@@ -61,7 +58,7 @@ https://chromedriver.chromium.org/downloads
     其实小版本不一致也没关系，大版本号96一致就行
 
 6. 将下载的 ChromeDriver 压缩包中的 chromedriver.exe 文件，解压到本项目的源码目录中（和 main.py 在一个目录中）
-7. 修改配置文件user.yaml
+7. 修改配置文件【user.yaml】
    
    wax_account: (wax账号，也就是wax钱包地址,以.wam结尾)
    
@@ -72,8 +69,8 @@ https://chromedriver.chromium.org/downloads
    recover_energy: 500 (能量不够时恢复到多少能量，默认500，请准备足够的肉，程序不会自动去买肉)
 8. 修改完配置文件后，双击 【main.py】 运行脚本，程序如果异常退出，可以到 logs 文件夹下查看日志
 9. 脚本启动后，会弹出一个Chrome窗口并自动打开 FarmersWorld 官网，第一次启动请手工登录游戏，登录成功后，脚本会开始自动化操作
-10. 如果需要手工操作，请勿在脚本打开的Chrome窗口中操作，脚本打开的Chrome窗口，最小化即可，需要手工操作的时候，请另开Chrome浏览器登录游戏，该游戏可同时在多个浏览器中登录，不会把脚本Chrome中的游戏T下线
-11. 脚本多开，请把整个源码目录复制一份，再另一个目录中修改配置文件user.yaml为另一个账号，双击运行 【main.py】 启动第二个脚本，以此类推，多开互不干扰
+10. 如果需要手工操作，请勿在脚本打开的Chrome窗口中操作，脚本打开的Chrome窗口，最小化即可，尽量不要动它，需要手工操作的时候，请另开Chrome浏览器登录游戏，该游戏本身就可同时在多个浏览器中登录，不会把脚本Chrome中的游戏T下线
+11. 脚本多开，请把整个源码目录复制一份，在另一个目录中修改配置文件【user.yaml】为另一个账号，双击运行 【main.py】 启动第二个脚本，以此类推，多开互不干扰
 
 ### 打赏
 欢迎打赏，支持我继续不断完善这个项目
