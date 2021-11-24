@@ -21,6 +21,8 @@
 
 也欢迎关注我的CSDN博客
 
+欢迎加入 Telegram 群组：https://t.me/OpenFarmer
+
 ### 功能
 由于此项目本来是个人自用的，而我自己只种种田，所以并没有完成所有的功能，目前仅支持一下操作，但后面会不断的完善
 
@@ -38,11 +40,16 @@
 
 ### 用法
 1. git clone 源码到本地，或 Download ZIP 下载源码到本地
-2. 下载安装python3 (版本大于等于python3.7)请到python官网下载最新版本：
-   https://www.python.org/downloads/
-3. 打开CMD命令行，定位到源代码目录，执行命令安装依赖包
-   >pip install -r requirements.txt
+2. 下载安装python3 (版本须大于等于python3.7)
    
+   请到python官网下载最新版本：
+   https://www.python.org/downloads/
+   
+   【注意】安装时请记得勾选【Add Python 3.10 to PATH】
+3. 打开CMD命令行，定位到源代码目录，执行命令安装依赖包
+   >pip install -r requirements.txt -i https://pypi.douban.com/simple/
+   
+   当然也可以直接双击运行 【install_depends.py】 来安装依赖，其实也是执行上面的命令
 4. 安装Chrome浏览器，并升级到最新版
 5. 下载ChromeDriver，版本确保和Chrome版本一致
 https://chromedriver.chromium.org/downloads
@@ -63,8 +70,8 @@ https://chromedriver.chromium.org/downloads
    下面的（build、mining、chicken、plant、cow、mbs)分别对应建造、采集资源、养鸡、种地、养牛、会员点击，需要程序自动化的操作，设置为true，不需要程序自动化的操作，设置为false，比如你只种地的话，plant: true 即可，其它全部为false，这样减少不必要的网络操作，提高运行效率
 
    recover_energy: 500 (能量不够时恢复到多少能量，默认500，请准备足够的肉，程序不会自动去买肉)
-8. 修改完配置文件后，双击 main.py 运行脚本，程序如果异常退出，可以到logs文件夹下查看日志
-9. 脚本多开，请把整个源码目录复制一份，再另一个目录中修改配置文件user.yaml为另一个账号，双击运行 main.py 启动第二个脚本，以此类推，多开互不干扰
+8. 修改完配置文件后，双击 【main.py】 运行脚本，程序如果异常退出，可以到logs文件夹下查看日志
+9. 脚本多开，请把整个源码目录复制一份，再另一个目录中修改配置文件user.yaml为另一个账号，双击运行 【main.py】 启动第二个脚本，以此类推，多开互不干扰
 
 ### 打赏
 欢迎打赏，支持我继续不断完善这个项目
