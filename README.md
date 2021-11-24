@@ -56,7 +56,8 @@ https://chromedriver.chromium.org/downloads
     那么我就下载 ChromeDriver 96.0.4664.45
 
     其实小版本不一致也没关系，大版本号96一致就行
-
+   
+   windows系统的话下载【chromedriver_win32.zip】
 6. 将下载的 ChromeDriver 压缩包中的 chromedriver.exe 文件，解压到本项目的源码目录中（和 main.py 在一个目录中）
 7. 修改配置文件【user.yaml】
    

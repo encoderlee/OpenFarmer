@@ -1,0 +1,12 @@
+wax_account: uszym.wam
+# only http proxy like 127.0.0.1:10809
+proxy: null
+
+build: true
+mining: true
+chicken: true
+plant: true
+cow: true
+mbs: true
+
+recover_energy: 500
