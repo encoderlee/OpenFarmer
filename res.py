@@ -215,7 +215,7 @@ class MiningExcavator(Tool):
     name: str = "Mining Excavator"
     template_id: int = 203891
 
- 
+
 supported_tools = [Axe, StoneAxe, Saw, Chainsaw, FishingRod, FishingNet, FishingBoat, MiningExcavator]
 
 farming_table.update({cls.template_id: cls for cls in supported_tools})
@@ -249,7 +249,7 @@ def create_tool(item: dict) -> Tool:
 
 # 会员卡
 @dataclass(init=False)
-class MBS(Farming):    
+class MBS(Farming):
     def __init__(self, template_id, name, type):
         self.name = name
         self.template_id = template_id
@@ -285,6 +285,8 @@ def create_mbs(item: dict) -> MBS:
 # 建筑物
 @dataclass(init=False)
 class Building(Farming):
+    # 能量消耗
+    energy_consumed: int = 200
     times_claimed: int = None
     last_claimed: datetime = None
     is_ready: int = None

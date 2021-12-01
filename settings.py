@@ -14,7 +14,6 @@ class Settings:
     min_scan_interval = timedelta(seconds = 10)
 
 
-
 # 用户配置参数
 class user_param:
     wax_account: str = None
