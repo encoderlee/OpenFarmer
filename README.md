@@ -47,6 +47,7 @@
    
    【注意】安装时请记得勾选【Add Python 3.10 to PATH】
 3. 双击运行 【install_depends.py】 来安装依赖包，一台电脑只需要安装一次即可
+   【注意】安装依赖包前请关闭翻墙代理，关闭科学上网，不然无法从豆瓣pypi镜像站下载依赖包
 4. 安装Chrome浏览器，并升级到最新版
 5. 下载ChromeDriver，版本确保和Chrome版本一致
 https://chromedriver.chromium.org/downloads
