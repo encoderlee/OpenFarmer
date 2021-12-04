@@ -12,6 +12,13 @@ class Settings:
     max_scan_interval = timedelta(minutes=15)
     # 每次扫描至少间隔10秒，哪怕是出错重扫
     min_scan_interval = timedelta(seconds = 10)
+    #账号中剩余多少材料不提现
+    need_fww = 0
+    need_fwf = 200
+    need_fwg = 200
+    #最少提现数量，3种材料总和
+    withdraw_min = 200
+
 
 
 # 用户配置参数
@@ -25,6 +32,7 @@ class user_param:
     plant: bool = True
     cow: bool = True
     mbs: bool = True
+    withdraw: bool = True
     # 能量不够的时候，就去恢复那么多能量,但不超过最大能量
     recover_energy: int = 500
 
@@ -41,6 +49,7 @@ def load_user_param(user: dict):
     user_param.cow = user.get("cow", True)
     user_param.mbs = user.get("mbs", True)
     user_param.recover_energy = user.get("recover_energy", 500)
+    user_param.withdraw = user.get("withdraw", True)
 
 
 cfg = Settings(

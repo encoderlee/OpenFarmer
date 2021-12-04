@@ -1,12 +1,14 @@
-wax_account: uszym.wam
+wax_account: .4viq.wam
 # only http proxy like 127.0.0.1:10809
 proxy: null
-
+#建造、采集资源、养鸡、种地、养牛、会员点击，需要程序自动化的操作，设置为true
 build: true
 mining: true
 chicken: true
 plant: true
 cow: true
 mbs: true
+#自动提现
+withdraw: true
 
 recover_energy: 500
