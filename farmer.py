@@ -37,10 +37,11 @@ class CookieExpireException(FarmerException):
 
 # 调用智能合约出错，此时应停止并检查日志，不宜反复重试
 class TransactException(FarmerException):
-    # 有的智能合约错误可以重试,-1为无限重试
-    def __init__(self, msg, retry=True, max_retry_times: int = -1):
+    # 有的智能合约错误可以重试
+    def __init__(self, msg, retry=False, max_retry_times: int = 5):
         super().__init__(msg)
         self.retry = retry
+        # 常规错误最多允许5次，CPU资源不如允许20次
         self.max_retry_times = max_retry_times
 
 
@@ -261,6 +262,27 @@ class Farmer:
         resp = resp.json()
         res.init_mbs_config(resp["rows"])
 
+    # 从服务器获取配置
+    def get_farming_config(self):
+        post_data = {
+            "json": True,
+            "code": "farmersworld",
+            "scope": "farmersworld",
+            "table": "config",
+            "lower_bound": "",
+            "upper_bound": "",
+            "index_position": 1,
+            "key_type": "",
+            "limit": 1,
+            "reverse": False,
+            "show_payer": False
+        }
+        resp = self.http.post(self.url_table_row, json=post_data)
+        self.log.debug("get farming config:{0}".format(resp.text))
+        resp = resp.json()
+
+        return resp["rows"][0]
+
     # 获取游戏中的三种资源数量和能量值
     def get_resource(self) -> Resoure:
         post_data = self.table_row_template()
@@ -327,8 +349,8 @@ class Farmer:
         return crops
 
     # claim 建筑
-    def claim_building(self, item: Building):
-        self.consume_energy(Decimal(item.energy_consumed))
+    def claim_building(self, asset_id: str):
+        self.consume_energy(Decimal(farm_param.build.energy))
         transaction = {
             "actions": [{
                 "account": "farmersworld",
@@ -338,12 +360,13 @@ class Farmer:
                     "permission": "active",
                 }],
                 "data": {
-                    "asset_id": item.asset_id,
+                    "asset_id": asset_id,
                     "owner": self.wax_account,
                 },
             }],
         }
         return self.wax_transact(transaction)
+
 
     # 耕种农作物
     def claim_crop(self, crop: Crop):
@@ -372,7 +395,7 @@ class Farmer:
     def claim_buildings(self, blds: List[Building]):
         for item in blds:
             self.log.info("正在建造: {0}".format(item.show()))
-            if self.claim_building(item):
+            if self.claim_building(item.asset_id):
                 self.log.info("建造成功: {0}".format(item.show(more=False)))
             else:
                 self.log.info("建造失败: {0}".format(item.show(more=False)))
@@ -554,13 +577,13 @@ class Farmer:
             else:
                 self.log.error("transact error: {0}".format(result))
                 if "is greater than the maximum billable" in result:
-                    self.log.error("EOS CPU资源不足，可能需要质押更多WAX，一般为误报，稍后重试")
-                    raise TransactException(result)
-                raise TransactException(result)
+                    self.log.error("EOS CPU资源不足，可能需要质押更多WAX，稍后重试")
+                    raise TransactException(result, retry=True, max_retry_times=20)
+                raise TransactException(result, retry=True)
         except WebDriverException as e:
             self.log.error("transact error: {0}".format(e))
             self.log.exception(str(e))
-            raise TransactException(result)
+            raise TransactException(result, retry=True, max_retry_times=20)
 
     # 过滤可操作的作物
     def filter_operable(self, items: List[Farming]) -> Farming:
@@ -692,12 +715,49 @@ class Farmer:
         self.claim_mining(tools)
         return True
 
+
+
+    # 提现
+    def do_withdraw(self, food, gold ,wood ,fee ):
+        self.log.info("正在提现")
+        #format(1.23456, '.4f')
+        quantities = []
+        if food > 0 :
+            food = format(food, '.4f')
+            quantities.append(food + " FOOD")
+        if gold > 0 :
+            gold = format(gold, '.4f')
+            quantities.append(gold + " GOLD")
+        if wood > 0 :
+            wood = format(wood, '.4f')
+            quantities.append(wood + " WOOD")
+        
+        #格式：1.0000 WOOD
+        transaction = {
+            "actions": [{
+                "account": "farmersworld",
+                "name": "withdraw",
+                "authorization": [{
+                    "actor": self.wax_account,
+                    "permission": "active",
+                }],
+                "data": {
+                    "owner": self.wax_account,
+                    "quantities": quantities,
+                    "fee": fee,
+                },
+            }],
+        }
+        self.wax_transact(transaction)
+        self.log.info("提现完成")
+
+
     # 修理工具
     def repair_tool(self, tool: Tool):
         self.log.info(f"正在修理工具: {tool.show()}")
         consume_gold = (tool.durability - tool.current_durability) // 5
         if Decimal(consume_gold) > self.resoure.gold:
-            raise FarmerException("没有足够的金币修理工具，请补充金币，稍后程序自动重试")
+            raise StopException("没有足够的金币修理工具")
         transaction = {
             "actions": [{
                 "account": "farmersworld",
@@ -721,7 +781,7 @@ class Farmer:
         need_food = count // Decimal(5)
         if need_food > self.resoure.food:
             self.log.error(f"食物不足，仅剩【{self.resoure.food}】，兑换能量【{count}】点需要【{need_food}】个食物，请手工处理")
-            raise FarmerException("没有足够的食物，请补充食物，稍后程序自动重试")
+            raise StopException("food not enough")
 
         transaction = {
             "actions": [{
@@ -818,6 +878,34 @@ class Farmer:
             self.log.info("点击会员卡成功: {0}".format(item.show(more=False)))
             time.sleep(cfg.req_interval)
 
+    def scan_withdraw(self):
+        self.log.info("检查是否可以提现")
+        r = self.get_resource()
+        #获取提现费率
+        withdraw_wood = 0 
+        withdraw_food = 0 
+        withdraw_gold = 0 
+        config = self.get_farming_config()
+        withdraw_fee = config["fee"];
+        self.log.info(f"提现费率：{withdraw_fee}% ")
+
+        if withdraw_fee == 5 :
+            if r.wood > cfg.need_fww :
+                withdraw_wood = r.wood - cfg.need_fww
+            if r.gold > cfg.need_fwg :
+                withdraw_gold = r.gold - cfg.need_fwg
+            if r.food > cfg.need_fwf :
+                withdraw_food = r.food - cfg.need_fwf
+            if withdraw_food + withdraw_gold + withdraw_wood < cfg.withdraw_min :
+                self.log.info("提现数量太少了，下次再提")
+                return True
+            self.do_withdraw( withdraw_food, withdraw_gold , withdraw_wood , withdraw_fee)
+            self.log.info(f"提现：金币【{withdraw_gold}】 木头【{withdraw_wood}】 食物【{withdraw_food}】 费率【{withdraw_fee}】")
+        else:
+            self.log.info("不满足提现条件")
+
+        return True
+
     def scan_resource(self):
         r = self.get_resource()
         self.log.info(f"金币【{r.gold}】 木头【{r.wood}】 食物【{r.food}】 能量【{r.energy}/{r.max_energy}】")
@@ -855,6 +943,9 @@ class Farmer:
             if user_param.mining:
                 self.scan_mining()
                 time.sleep(cfg.req_interval)
+            if user_param.withdraw:
+                self.scan_withdraw()
+                time.sleep(cfg.req_interval)
             self.log.info("结束一轮扫描")
             if self.not_operational:
                 self.next_operate_time = min([item.next_availability for item in self.not_operational])
@@ -883,7 +974,7 @@ class Farmer:
                 return Status.Stop
             self.count_error_transact += 1
             self.log.error("合约调用异常【{0}】次".format(self.count_error_transact))
-            if self.count_error_transact >= e.max_retry_times and e.max_retry_times != -1:
+            if self.count_error_transact >= e.max_retry_times:
                 self.log.error("合约连续调用异常")
                 return Status.Stop
             self.next_scan_time = datetime.now() + cfg.min_scan_interval
@@ -895,10 +986,6 @@ class Farmer:
             self.log.exception(str(e))
             self.log.error("不可恢复错误，请手动处理，然后重启程序并重新登录")
             return Status.Stop
-        except FarmerException as e:
-            self.log.exception(str(e))
-            self.log.error("常规错误，稍后重试")
-            self.next_scan_time = datetime.now() + cfg.min_scan_interval
         except Exception as e:
             self.log.exception(str(e))
             self.log.error("常规错误，稍后重试")
