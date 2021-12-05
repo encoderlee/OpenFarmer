@@ -37,11 +37,10 @@ class CookieExpireException(FarmerException):
 
 # 调用智能合约出错，此时应停止并检查日志，不宜反复重试
 class TransactException(FarmerException):
-    # 有的智能合约错误可以重试
-    def __init__(self, msg, retry=False, max_retry_times: int = 5):
+    # 有的智能合约错误可以重试,-1为无限重试
+    def __init__(self, msg, retry=True, max_retry_times: int = -1):
         super().__init__(msg)
         self.retry = retry
-        # 常规错误最多允许5次，CPU资源不如允许20次
         self.max_retry_times = max_retry_times
 
 
@@ -349,8 +348,9 @@ class Farmer:
         return crops
 
     # claim 建筑
-    def claim_building(self, asset_id: str):
-        self.consume_energy(Decimal(farm_param.build.energy))
+    def claim_building(self, item: Building):
+        self.consume_energy(Decimal(item.energy_consumed))
+
         transaction = {
             "actions": [{
                 "account": "farmersworld",
@@ -360,7 +360,7 @@ class Farmer:
                     "permission": "active",
                 }],
                 "data": {
-                    "asset_id": asset_id,
+                    "asset_id": item.asset_id,
                     "owner": self.wax_account,
                 },
             }],
@@ -576,14 +576,15 @@ class Farmer:
                 return True
             else:
                 self.log.error("transact error: {0}".format(result))
-                if "is greater than the maximum billable" in result:
-                    self.log.error("EOS CPU资源不足，可能需要质押更多WAX，稍后重试")
-                    raise TransactException(result, retry=True, max_retry_times=20)
-                raise TransactException(result, retry=True)
+                if "is greater than the maximum billable" in result:               
+                    self.log.error("EOS CPU资源不足，可能需要质押更多WAX，一般为误报，稍后重试")
+                    raise TransactException(result)
+                raise TransactException(result)
+
         except WebDriverException as e:
             self.log.error("transact error: {0}".format(e))
             self.log.exception(str(e))
-            raise TransactException(result, retry=True, max_retry_times=20)
+            raise TransactException(result)
 
     # 过滤可操作的作物
     def filter_operable(self, items: List[Farming]) -> Farming:
@@ -781,7 +782,7 @@ class Farmer:
         need_food = count // Decimal(5)
         if need_food > self.resoure.food:
             self.log.error(f"食物不足，仅剩【{self.resoure.food}】，兑换能量【{count}】点需要【{need_food}】个食物，请手工处理")
-            raise StopException("food not enough")
+            raise FarmerException("没有足够的食物，请补充食物，稍后程序自动重试")
 
         transaction = {
             "actions": [{
@@ -974,7 +975,7 @@ class Farmer:
                 return Status.Stop
             self.count_error_transact += 1
             self.log.error("合约调用异常【{0}】次".format(self.count_error_transact))
-            if self.count_error_transact >= e.max_retry_times:
+            if self.count_error_transact >= e.max_retry_times and e.max_retry_times != -1:
                 self.log.error("合约连续调用异常")
                 return Status.Stop
             self.next_scan_time = datetime.now() + cfg.min_scan_interval
@@ -986,6 +987,10 @@ class Farmer:
             self.log.exception(str(e))
             self.log.error("不可恢复错误，请手动处理，然后重启程序并重新登录")
             return Status.Stop
+        except FarmerException as e:
+            self.log.exception(str(e))
+            self.log.error("常规错误，稍后重试")
+            self.next_scan_time = datetime.now() + cfg.min_scan_interval            
         except Exception as e:
             self.log.exception(str(e))
             self.log.error("常规错误，稍后重试")
