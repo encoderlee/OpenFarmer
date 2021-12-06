@@ -14,8 +14,8 @@ class Settings:
     min_scan_interval = timedelta(seconds = 10)
     #账号中剩余多少材料不提现
     need_fww = 0
-    need_fwf = 200
-    need_fwg = 200
+    need_fwf = 400
+    need_fwg = 350
     #最少提现数量，3种材料总和
     withdraw_min = 200
 
