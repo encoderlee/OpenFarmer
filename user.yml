@@ -1,4 +1,4 @@
-wax_account: .4viq.wam
+wax_account: abcde.wam
 # only http proxy like 127.0.0.1:10809
 proxy: null
 #建造、采集资源、养鸡、种地、养牛、会员点击，需要程序自动化的操作，设置为true
@@ -10,5 +10,14 @@ cow: true
 mbs: true
 #自动提现
 withdraw: true
+#账号中剩余多少材料不提现
+need_fww: 0
+need_fwf: 400
+need_fwg: 350
+#最少提现数量，3种材料总和
+withdraw_min: 10
+
 
 recover_energy: 500
+
+

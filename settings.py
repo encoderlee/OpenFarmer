@@ -38,6 +38,13 @@ class user_param:
 
     on_server: bool = False
 
+    #账号中剩余多少材料不提现
+    need_fww: int = 200
+    need_fwf: int = 200
+    need_fwg: int = 200
+    #最少提现数量，3种材料总和
+    withdraw_min: int = 200
+
 
 def load_user_param(user: dict):
     user_param.wax_account = user["wax_account"]
@@ -50,6 +57,10 @@ def load_user_param(user: dict):
     user_param.mbs = user.get("mbs", True)
     user_param.recover_energy = user.get("recover_energy", 500)
     user_param.withdraw = user.get("withdraw", True)
+    user_param.need_fww = user.get("withdraw", 200)
+    user_param.need_fwf = user.get("withdraw", 200)
+    user_param.need_fwg = user.get("withdraw", 200)
+    user_param.withdraw_min = user.get("withdraw", 200)
 
 
 cfg = Settings(

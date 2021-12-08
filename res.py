@@ -223,7 +223,7 @@ class MiningExcavator(Tool):
     template_id: int = 203891
 
 
-supported_tools = [Axe, StoneAxe, AncientStoneAxe, Saw, Chainsaw, FishingRod, FishingNet, FishingBoat, MiningExcavator]
+supported_tools = [Axe, StoneAxe, AncientStoneAxe , Saw, Chainsaw, FishingRod, FishingNet, FishingBoat, MiningExcavator]
 
 farming_table.update({cls.template_id: cls for cls in supported_tools})
 

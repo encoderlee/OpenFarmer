@@ -891,13 +891,13 @@ class Farmer:
         self.log.info(f"提现费率：{withdraw_fee}% ")
 
         if withdraw_fee == 5 :
-            if r.wood > cfg.need_fww :
-                withdraw_wood = r.wood - cfg.need_fww
-            if r.gold > cfg.need_fwg :
-                withdraw_gold = r.gold - cfg.need_fwg
-            if r.food > cfg.need_fwf :
-                withdraw_food = r.food - cfg.need_fwf
-            if withdraw_food + withdraw_gold + withdraw_wood < cfg.withdraw_min :
+            if r.wood > user_param.need_fww :
+                withdraw_wood = r.wood - user_param.need_fww
+            if r.gold > user_param.need_fwg :
+                withdraw_gold = r.gold - user_param.need_fwg
+            if r.food > user_param.need_fwf :
+                withdraw_food = r.food - user_param.need_fwf
+            if withdraw_food + withdraw_gold + withdraw_wood < user_param.withdraw_min :
                 self.log.info("提现数量太少了，下次再提")
                 return True
             self.do_withdraw( withdraw_food, withdraw_gold , withdraw_wood , withdraw_fee)
