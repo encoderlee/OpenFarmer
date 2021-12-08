@@ -70,7 +70,7 @@ https://chromedriver.chromium.org/downloads
 
    recover_energy: 500 (能量不够时恢复到多少能量，默认500，请准备足够的肉，程序不会自动去买肉)
   
-    settings.py中设置
+    
     账号中剩余多少材料不提现
     need_fww = 0
     need_fwf = 200
