@@ -15,7 +15,7 @@ need_fww: 0
 need_fwf: 400
 need_fwg: 350
 #最少提现数量，3种材料总和
-withdraw_min: 10
+withdraw_min: 200
 
 
 recover_energy: 500

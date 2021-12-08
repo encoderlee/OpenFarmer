@@ -57,10 +57,10 @@ def load_user_param(user: dict):
     user_param.mbs = user.get("mbs", True)
     user_param.recover_energy = user.get("recover_energy", 500)
     user_param.withdraw = user.get("withdraw", True)
-    user_param.need_fww = user.get("withdraw", 200)
-    user_param.need_fwf = user.get("withdraw", 200)
-    user_param.need_fwg = user.get("withdraw", 200)
-    user_param.withdraw_min = user.get("withdraw", 200)
+    user_param.need_fww = user.get("need_fww", 200)
+    user_param.need_fwf = user.get("need_fwf", 200)
+    user_param.need_fwg = user.get("need_fwg", 200)
+    user_param.withdraw_min = user.get("withdraw_min", 200)
 
 
 cfg = Settings(
