@@ -12,7 +12,7 @@ log = logging.LoggerAdapter(_log, {"tag": "global"})
 def init_loger(loger_name: str):
     handler = logging.StreamHandler(sys.stdout)
     #logging_format = logging.Formatter("[%(asctime)s][%(levelname)s][%(process)d][%(tag)s]: %(message)s")
-    logging_format = logging.Formatter("[%(asctime)s][%(tag)s]: %(message)s","%Y%m%d-%H:%M:%S")
+    logging_format = logging.Formatter("[%(asctime)s][%(tag)s]: %(message)s","%Y-%m-%d %H:%M:%S")
     handler.setFormatter(logging_format)
     logging.getLogger().addHandler(handler)
     if not os.path.exists(cfg.path_logs):
