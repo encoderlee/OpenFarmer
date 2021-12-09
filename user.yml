@@ -8,8 +8,12 @@ chicken: true
 plant: true
 cow: true
 mbs: true
+#自动卖玉米
+sell_corn: false
+#自动卖大麦
+sell_barley: false
 #自动提现
-withdraw: true
+withdraw: false
 #账号中剩余多少材料不提现
 need_fww: 0
 need_fwf: 400

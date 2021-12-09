@@ -33,6 +33,8 @@ class user_param:
     cow: bool = True
     mbs: bool = True
     withdraw: bool = True
+    sell_corn: bool = True
+    sell_barley: bool = True
     # 能量不够的时候，就去恢复那么多能量,但不超过最大能量
     recover_energy: int = 500
 
@@ -55,6 +57,8 @@ def load_user_param(user: dict):
     user_param.plant = user.get("plant", True)
     user_param.cow = user.get("cow", True)
     user_param.mbs = user.get("mbs", True)
+    user_param.sell_corn = user.get("sell_corn", True)
+    user_param.sell_barley = user.get("sell_barley", True)
     user_param.recover_energy = user.get("recover_energy", 500)
     user_param.withdraw = user.get("withdraw", True)
     user_param.need_fww = user.get("need_fww", 200)
