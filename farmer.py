@@ -597,8 +597,9 @@ class Farmer:
             else:
                 self.log.error("transact error: {0}".format(result))
                 if "is greater than the maximum billable" in result:               
-                    self.log.error("EOS CPU资源不足，可能需要质押更多WAX，一般为误报，稍后重试")
-                    raise TransactException(result)
+                    self.log.error("CPU资源不足，可能需要质押更多WAX，一般为误报，稍后重试")
+                if "estimated CPU time (0 us) is not less than the maximum billable CPU time for the transaction (0 us)" in result:               
+                    self.log.error("CPU资源不足，可能需要质押更多WAX，一般为误报，稍后重试")    
                 raise TransactException(result)
 
         except WebDriverException as e:
@@ -677,7 +678,7 @@ class Farmer:
                     if len(list_corn) - sell_corn_num <=  user_param.remaining_corn_num:
                         break;
                     asset_ids.append(item.asset_id)
-                    sell_corn_num++
+                    sell_corn_num = sell_corn_num + 1
 
         if user_param.sell_barley:
             self.log.info("检查大麦")
@@ -689,7 +690,7 @@ class Farmer:
                     if len(list_barley) - sell_barley_num <= user_param.remaining_barley_num:
                         break;
                     asset_ids.append(item.asset_id)
-                    sell_barley_num++
+                    sell_barley_num = sell_barley_num + 1
 
         if len(asset_ids) <= 0:
             self.log.warning("没有可售卖的玉米和大麦")
