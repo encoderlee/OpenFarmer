@@ -12,12 +12,7 @@ class Settings:
     max_scan_interval = timedelta(minutes=15)
     # 每次扫描至少间隔10秒，哪怕是出错重扫
     min_scan_interval = timedelta(seconds = 10)
-    #账号中剩余多少材料不提现
-    need_fww = 0
-    need_fwf = 400
-    need_fwg = 350
-    #最少提现数量，3种材料总和
-    withdraw_min = 200
+
 
 
 
@@ -47,6 +42,9 @@ class user_param:
     #最少提现数量，3种材料总和
     withdraw_min: int = 200
 
+    remaining_corn_num: int = 0
+    remaining_barley_num: int = 0
+
 
 def load_user_param(user: dict):
     user_param.wax_account = user["wax_account"]
@@ -65,6 +63,8 @@ def load_user_param(user: dict):
     user_param.need_fwf = user.get("need_fwf", 200)
     user_param.need_fwg = user.get("need_fwg", 200)
     user_param.withdraw_min = user.get("withdraw_min", 200)
+    user_param.remaining_corn_num = user.get("remaining_corn_num", 0)
+    user_param.remaining_barley_num = user.get("remaining_barley_num", 0)
 
 
 cfg = Settings(

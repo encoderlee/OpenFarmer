@@ -672,16 +672,24 @@ class Farmer:
             self.log.info("剩余玉米数量: {0}".format(len(list_corn)))
 
             if len(list_corn) > 0:
+                sell_corn_num = 0 
                 for item in list_corn:
+                    if len(list_corn) - sell_corn_num <=  user_param.remaining_corn_num:
+                        break;
                     asset_ids.append(item.asset_id)
+                    sell_corn_num++
 
         if user_param.sell_barley:
             self.log.info("检查大麦")
             list_barley = self.get_barley()
             self.log.info("剩余大麦数量: {0}".format(len(list_barley)))
             if len(list_barley) > 0:
+                sell_barley_num = 0 
                 for item in list_barley:
+                    if len(list_barley) - sell_barley_num <= user_param.remaining_barley_num:
+                        break;
                     asset_ids.append(item.asset_id)
+                    sell_barley_num++
 
         if len(asset_ids) <= 0:
             self.log.warning("没有可售卖的玉米和大麦")

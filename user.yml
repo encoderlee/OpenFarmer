@@ -8,16 +8,22 @@ chicken: true
 plant: true
 cow: true
 mbs: true
+
 #自动卖玉米
 sell_corn: false
+#留下玉米数量
+remaining_corn_num: 0
 #自动卖大麦
 sell_barley: false
+#留下大麦数量
+remaining_barley_num: 0
+
 #自动提现
 withdraw: false
 #账号中剩余多少材料不提现
-need_fww: 0
-need_fwf: 400
-need_fwg: 350
+need_fww: 200
+need_fwf: 200
+need_fwg: 200
 #最少提现数量，3种材料总和
 withdraw_min: 200
 
