@@ -69,7 +69,7 @@ https://chromedriver.chromium.org/downloads
 13. 正确关闭程序，请点击程序窗口右上角的X，稍等几秒钟便会关闭
 ### 命令行版本
 ![image](https://raw.githubusercontent.com/encoderlee/OpenFarmer/main/doc/demo1.png)
-如果不喜欢GUI或有特殊需求的同学，可以运行【cmd.py】，在控制台中运行程序，这种方式启动的话，需要先手工修改【user.yml】中的配置参数
+如果不喜欢GUI或有特殊需求的同学，可以运行【main.py】，在控制台中运行程序，这种方式启动的话，需要先手工修改【user.yml】中的配置参数
 
 wax_account: (wax账号，也就是wax钱包地址,以.wam结尾)
 
