@@ -17,7 +17,7 @@ def run(config_file: str):
     utils.clear_orphan_webdriver()
     farmer = Farmer()
     farmer.wax_account = user_param.wax_account
-    if user_param.proxy:
+    if user_param.use_proxy:
         farmer.proxy = user_param.proxy
         log.info("use proxy: {0}".format(user_param.proxy))
     farmer.init()

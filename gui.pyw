@@ -36,7 +36,7 @@ class Worker(QThread):
         log.info("wax_account; {0}".format(user_param.wax_account))
         utils.clear_orphan_webdriver()
         self.farmer.wax_account = user_param.wax_account
-        if user_param.proxy:
+        if user_param.use_proxy:
             self.farmer.proxy = user_param.proxy
             log.info("use proxy: {0}".format(user_param.proxy))
         self.farmer.init()
