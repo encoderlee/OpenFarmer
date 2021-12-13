@@ -292,8 +292,8 @@ def create_mbs(item: dict) -> MBS:
 # 建筑物
 @dataclass(init=False)
 class Building(Farming):
-    # 能量消耗
-    energy_consumed: int = 200
+    # 能量消耗 牛棚300，鸡舍250，田200
+    energy_consumed: int = 300
     times_claimed: int = None
     last_claimed: datetime = None
     is_ready: int = None
