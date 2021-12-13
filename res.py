@@ -257,6 +257,8 @@ def create_tool(item: dict) -> Tool:
 # 会员卡
 @dataclass(init=False)
 class MBS(Farming):
+    energy_consumed: int = 100
+
     def __init__(self, template_id, name, type):
         self.name = name
         self.template_id = template_id

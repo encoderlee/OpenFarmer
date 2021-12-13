@@ -10,6 +10,13 @@ import yaml
 import sys
 import utils
 from settings import load_user_param, user_param
+import os
+
+version = "1.0"
+
+def resource_path(relative_path):
+    base_path = getattr(sys, '_MEIPASS', os.path.dirname(os.path.abspath(__file__)))
+    return os.path.join(base_path, relative_path)
 
 class QTextEditLogHandler(QObject, logging.Handler):
     signal_log = pyqtSignal(str)
@@ -44,6 +51,8 @@ class MyDialog(QDialog, Ui_Dialog):
         self.user_yml = "user.yml"
         self.farmer = Farmer()
         self.setupUi(self)
+        self.setWindowTitle("农民世界助手{0}".format(version))
+        self.setWindowIcon(QtGui.QIcon(resource_path("favicon.ico")))
         self.setWindowFlags(Qt.WindowType.WindowMinimizeButtonHint | Qt.WindowType.WindowCloseButtonHint)
         self.setFixedSize(self.size())
         self.button_start.clicked.connect(self.start)
@@ -102,7 +111,7 @@ class MyDialog(QDialog, Ui_Dialog):
         self.edit_account.setEnabled(False)
         self.spinbox_energy.setEnabled(False)
         self.button_start.setEnabled(False)
-        self.setWindowTitle("农民世界助手【{0}】".format(self.edit_account.text()))
+        self.setWindowTitle("农民世界助手{0}【{1}】".format(version, self.edit_account.text()))
         self.update_ui(True)
         self.worker.start()
 
