@@ -941,6 +941,7 @@ class Farmer:
     def claim_mbs(self, tools: List[MBS]):
         for item in tools:
             self.log.info("正在点击会员卡: {0}".format(item.show(True)))
+            self.consume_energy(Decimal(item.energy_consumed))
             transaction = {
                 "actions": [{
                     "account": "farmersworld",
