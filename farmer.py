@@ -396,7 +396,7 @@ class Farmer:
     def claim_buildings(self, blds: List[Building]):
         for item in blds:
             self.log.info("正在建造: {0}".format(item.show()))
-            if self.claim_building(item.asset_id):
+            if self.claim_building(item):
                 self.log.info("建造成功: {0}".format(item.show(more=False)))
             else:
                 self.log.info("建造失败: {0}".format(item.show(more=False)))
@@ -1054,7 +1054,7 @@ class Farmer:
             self.count_error_transact = 0
 
         except TransactException as e:
-            self.log.exception("智能合约调用出错")
+            #self.log.exception("智能合约调用出错")
             if not e.retry:
                 return Status.Stop
             self.count_error_transact += 1
