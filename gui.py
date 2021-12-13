@@ -20,36 +20,40 @@ class QTextEditLogHandler(QObject, logging.Handler):
 
 
 class Worker(QThread):
+    def __init__(self, farmer: Farmer):
+        super().__init__()
+        self.farmer = farmer
+
     def run(self):
         logger.init_loger(user_param.wax_account)
         log.info("wax_account; {0}".format(user_param.wax_account))
         utils.clear_orphan_webdriver()
-        farmer = Farmer()
-        farmer.wax_account = user_param.wax_account
+        self.farmer.wax_account = user_param.wax_account
         if user_param.proxy:
-            farmer.proxy = user_param.proxy
+            self.farmer.proxy = user_param.proxy
             log.info("use proxy: {0}".format(user_param.proxy))
-        farmer.init()
-        farmer.start()
+        self.farmer.init()
+        self.farmer.start()
         log.info("开始自动化，请勿刷新浏览器，如需手工操作建议新开一个浏览器操作")
-        return farmer.run_forever()
+        return self.farmer.run_forever()
 
 
 class MyDialog(QDialog, Ui_Dialog):
     def __init__(self, parent=None):
         super().__init__(parent)
         self.user_yml = "user.yml"
+        self.farmer = Farmer()
         self.setupUi(self)
         self.setWindowFlags(Qt.WindowType.WindowMinimizeButtonHint | Qt.WindowType.WindowCloseButtonHint)
         self.setFixedSize(self.size())
         self.button_start.clicked.connect(self.start)
         handler = QTextEditLogHandler()
         handler.signal_log.connect(self.show_log)
-        logging_format = logging.Formatter("[%(asctime)s][%(levelname)s][%(process)d][%(tag)s]: %(message)s")
+        logging_format = logging.Formatter("[%(asctime)s][%(levelname)s][%(process)d]: %(message)s")
         handler.setFormatter(logging_format)
         logging.getLogger().addHandler(handler)
         self.load_yaml()
-        self.worker = Worker()
+        self.worker = Worker(self.farmer)
 
 
     def load_yaml(self):
@@ -109,7 +113,11 @@ class MyDialog(QDialog, Ui_Dialog):
         self.update_ui(True)
         with open(self.user_yml, "w") as file:
             yaml.dump(user_param.to_dict(), file, default_flow_style=False, sort_keys = False)
+        self.plain_text_edit.appendPlainText("稍等，程序正在退出...")
+        self.repaint()
+        self.farmer.close()
         event.accept()
+
 
 
 def main():

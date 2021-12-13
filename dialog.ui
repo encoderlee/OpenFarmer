@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>701</width>
-    <height>412</height>
+    <width>755</width>
+    <height>446</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -20,7 +20,7 @@
   <widget class="QLabel" name="label">
    <property name="geometry">
     <rect>
-     <x>15</x>
+     <x>35</x>
      <y>25</y>
      <width>41</width>
      <height>16</height>
@@ -33,7 +33,7 @@
   <widget class="QLineEdit" name="edit_account">
    <property name="geometry">
     <rect>
-     <x>60</x>
+     <x>80</x>
      <y>25</y>
      <width>116</width>
      <height>20</height>
@@ -46,7 +46,7 @@
   <widget class="QLabel" name="label_2">
    <property name="geometry">
     <rect>
-     <x>190</x>
+     <x>210</x>
      <y>30</y>
      <width>56</width>
      <height>16</height>
@@ -59,7 +59,7 @@
   <widget class="QSpinBox" name="spinbox_energy">
    <property name="geometry">
     <rect>
-     <x>250</x>
+     <x>270</x>
      <y>25</y>
      <width>57</width>
      <height>21</height>
@@ -77,8 +77,8 @@
     <rect>
      <x>0</x>
      <y>101</y>
-     <width>701</width>
-     <height>311</height>
+     <width>756</width>
+     <height>346</height>
     </rect>
    </property>
    <property name="readOnly">
@@ -91,7 +91,7 @@
   <widget class="QPushButton" name="button_start">
    <property name="geometry">
     <rect>
-     <x>555</x>
+     <x>590</x>
      <y>20</y>
      <width>131</width>
      <height>61</height>
@@ -104,7 +104,7 @@
   <widget class="QLineEdit" name="edit_proxy">
    <property name="geometry">
     <rect>
-     <x>410</x>
+     <x>430</x>
      <y>25</y>
      <width>126</width>
      <height>20</height>
@@ -117,7 +117,7 @@
   <widget class="QCheckBox" name="checkbox_proxy">
    <property name="geometry">
     <rect>
-     <x>330</x>
+     <x>350</x>
      <y>25</y>
      <width>71</width>
      <height>20</height>
@@ -133,7 +133,7 @@
   <widget class="QSplitter" name="splitter">
    <property name="geometry">
     <rect>
-     <x>35</x>
+     <x>55</x>
      <y>65</y>
      <width>501</width>
      <height>20</height>
