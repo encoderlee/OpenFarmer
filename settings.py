@@ -17,6 +17,7 @@ class Settings:
 # 用户配置参数
 class user_param:
     wax_account: str = None
+    use_proxy: bool = False
     proxy: str = None
 
     build: bool = True
@@ -30,9 +31,25 @@ class user_param:
 
     on_server: bool = False
 
+    @staticmethod
+    def to_dict():
+        return {
+            "wax_account": user_param.wax_account,
+            "use_proxy": user_param.use_proxy,
+            "proxy": user_param.proxy,
+            "build": user_param.build,
+            "mining": user_param.mining,
+            "chicken": user_param.chicken,
+            "plant": user_param.plant,
+            "cow": user_param.cow,
+            "mbs": user_param.mbs,
+            "recover_energy": user_param.recover_energy,
+        }
+
 
 def load_user_param(user: dict):
     user_param.wax_account = user["wax_account"]
+    user_param.use_proxy = user.get("use_proxy", False)
     user_param.proxy = user.get("proxy", None)
     user_param.build = user.get("build", True)
     user_param.mining = user.get("mining", True)
