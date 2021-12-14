@@ -538,7 +538,7 @@ class Farmer:
     def get_animal_food(self, template_id):
         feed_barley_list = [NFT.Chicken, NFT.Chick, NFT.Calf, NFT.FeMaleCalf, NFT.MaleCalf, NFT.DairyCow]
         feed_milk_list = [NFT.ChickenEgg]
-        asset = []
+        asset = None
         if template_id in feed_barley_list:
             list_barley = self.get_barley()
             self.log.info("剩余大麦数量: {0}".format(len(list_barley)))
@@ -555,8 +555,8 @@ class Farmer:
                 return False
             asset = list_milk.pop()
 
-        if len(asset) <= 0:
-            return ''
+        if asset is None:
+            return False
 
         feed_asset_id = asset.asset_id
 
