@@ -66,17 +66,10 @@ https://chromedriver.chromium.org/downloads
    
    proxy: (可设置http代理，格式为127.0.0.1:10809，不需要代理的话设置为null)
 
-   下面的（build、mining、chicken、plant、cow、mbs)分别对应建造、采集资源、养鸡、种地、养牛、会员点击，需要程序自动化的操作，设置为true，不需要程序自动化的操作，设置为false，比如你只种地的话，plant: true 即可，其它全部为false，这样减少不必要的网络操作，提高运行效率
+   下面的（build、mining、animal、plant、mbs)分别对应建造、采集资源、养鸡、种地、养牛、会员点击，需要程序自动化的操作，设置为true，不需要程序自动化的操作，设置为false，比如你只种地的话，plant: true 即可，其它全部为false，这样减少不必要的网络操作，提高运行效率
 
    recover_energy: 500 (能量不够时恢复到多少能量，默认500，请准备足够的肉，程序不会自动去买肉)
-  
-    
-    账号中剩余多少材料不提现
-    need_fww = 0
-    need_fwf = 200
-    need_fwg = 200
-    最少提现数量，3种材料总和
-    withdraw_min = 200
+
 
 8. 修改完配置文件后，双击 【main.py】 运行脚本，程序如果异常退出，可以到 logs 文件夹下查看日志
 9. 脚本启动后，会弹出一个Chrome窗口并自动打开 FarmersWorld 官网，第一次启动请手工登录游戏，登录成功后，脚本会开始自动化操作
@@ -87,6 +80,6 @@ https://chromedriver.chromium.org/downloads
 ### 打赏
 欢迎打赏，支持我继续不断完善这个项目
 
-0xeaC7d998684F50b7A492EA68F27633a117Be201d
+TXmvTZ3ndHpvJU7SYmuLdLBufWdxA34Qix
 
-支持USDT、ETH、BUSD、BNB等，以及 Ethereum、BSC等网络上的任何ERC20代币，感谢
+支持TRC20代币，感谢

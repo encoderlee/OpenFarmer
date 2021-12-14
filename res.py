@@ -63,9 +63,24 @@ class Farming:
 # 动物
 @dataclass(init=False)
 class Animal(Farming):
+    # 能量消耗
+    energy_consumed: int = None
+    # 当前喂养次数
     times_claimed: int = None
+    # 最大喂养次数
+    required_claims: int = None
+    # 最后喂养时间
     last_claimed: datetime = None
+    # 喂养时间列表
     day_claims_at: List[datetime] = None
+    # 间隔
+    charge_time: timedelta = None
+
+    def show(self, more=True) -> str:
+        if more:
+            return f"[{self.name}] [{self.asset_id}][喂养次数{self.times_claimed}/{self.required_claims}] [可操作时间:{utils.show_time(self.next_availability)}]"
+        else:
+            return f"[{self.name}] [{self.asset_id}]"
 
 
 # 大鸡
@@ -131,6 +146,21 @@ class DairyCow(Animal):
     template_id: int = 298607
 
 
+supported_animals = [Chicken, Chick, ChickenEgg, BabyCalf, Calf, FeMaleCalf, MaleCalf, Bull, DairyCow]
+
+farming_table.update({cls.template_id: cls for cls in supported_animals})
+
+
+def init_animal_config(rows: List[dict]):
+    for item in rows:
+        animal_class: Animal = farming_table.get(item["template_id"], None)
+        if animal_class:
+            animal_class.name = item["name"]
+            animal_class.energy_consumed = item["energy_consumed"]
+            animal_class.charge_time = timedelta(seconds=item["charge_time"])
+            animal_class.required_claims = item["required_claims"]
+
+
 # 动物-从http返回的json数据构造对象
 def create_animal(item: dict) -> Animal:
     template_id = item["template_id"]
@@ -142,8 +172,6 @@ def create_animal(item: dict) -> Animal:
         fm = FeMaleCalf()
     elif template_id == NFT.MaleCalf:
         fm = MaleCalf()
-    elif template_id == NFT.Bull:
-        fm = Bull()
     elif template_id == NFT.DairyCow:
         fm = DairyCow()
     elif template_id == NFT.Chicken:
@@ -159,6 +187,7 @@ def create_animal(item: dict) -> Animal:
     fm.last_claimed = datetime.fromtimestamp(item["last_claimed"])
     fm.next_availability = datetime.fromtimestamp(item["next_availability"])
     return fm
+
 
 ####################################################### Animal #######################################################
 
@@ -407,6 +436,3 @@ class Asset:
     is_burnable: bool
     schema_name: str
     template_id: str
-
-
-

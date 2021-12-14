@@ -22,7 +22,7 @@ from settings import user_param
 import res
 from res import Building, Resoure, Animal, Asset, Farming, Crop, NFT, Axe, Tool, Token, Chicken, FishingRod, MBS
 from res import BabyCalf, Calf, FeMaleCalf, MaleCalf, Bull, DairyCow
-# , BabyCalf, Calf,FeMaleCalf,MaleCalf,Bull,DairyCow
+
 from datetime import datetime, timedelta
 from settings import cfg
 import os
@@ -255,6 +255,12 @@ class Farmer:
         self.log.debug("get crop config:{0}".format(resp.text))
         resp = resp.json()
         res.init_crop_config(resp["rows"])
+        # 动物
+        post_data["table"] = "anmconf"
+        resp = self.http.post(self.url_table_row, json=post_data)
+        self.log.debug("get animal conf:{0}".format(resp.text))
+        resp = resp.json()
+        res.init_animal_config(resp["rows"])
 
         # 会员卡
         post_data["table"] = "mbsconf"
@@ -509,7 +515,7 @@ class Farmer:
     # 喂动物
     def feed_animal(self, asset_id_food: str, animal: Animal) -> bool:
         self.log.info("feed [{0}] to [{1}]".format(asset_id_food, animal.asset_id))
-        # self.consume_energy(Decimal(animal.energy_consumed))
+        self.consume_energy(Decimal(animal.energy_consumed))
         transaction = {
             "actions": [{
                 "account": "atomicassets",
@@ -694,6 +700,7 @@ class Farmer:
                 self.not_operational.append(item)
                 continue
             op.append(item)
+
         return op
 
     def scan_buildings(self):
