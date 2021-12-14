@@ -5,8 +5,8 @@ from datetime import datetime, timedelta
 from typing import List, ClassVar, Dict
 import utils
 
-
 farming_table = {}
+
 
 # nft template_id
 class NFT:
@@ -15,12 +15,16 @@ class NFT:
     Chicken: int = 298614
     Chick: int = 298613
     ChickenEgg: int = 298612
-    Bull: int = 298611
-    DairyCow: int = 298607
+    BabyCalf: int = 298597  # 小牛犊
+    Calf: int = 298598  # 小牛
+    FeMaleCalf: int = 298599  # 母小牛
+    MaleCalf: int = 298600  # 公小牛
+    Bull: int = 298611  # 公牛
+    DairyCow: int = 298607  # 奶牛
     Cow: int = 298603
-    Calf: int = 298600
     CornSeed: int = 298596
     BarleySeed: int = 298595
+    Milk: int = 298593  # 牛奶
 
 
 # 金、木、食物、能量
@@ -69,6 +73,42 @@ class Chicken(Animal):
     energy_consumed: int = 0
 
 
+# 小牛犊
+@dataclass(init=False)
+class BabyCalf(Animal):
+    energy_consumed: int = 0
+
+
+# 小牛
+@dataclass(init=False)
+class Calf(Animal):
+    energy_consumed: int = 0
+
+
+# 母小牛
+@dataclass(init=False)
+class FeMaleCalf(Animal):
+    energy_consumed: int = 0
+
+
+# 公小牛
+@dataclass(init=False)
+class MaleCalf(Animal):
+    energy_consumed: int = 0
+
+
+# 公牛
+@dataclass(init=False)
+class Bull(Animal):
+    energy_consumed: int = 0
+
+
+# 奶牛
+@dataclass(init=False)
+class DairyCow(Animal):
+    energy_consumed: int = 0
+
+
 ####################################################### Crop #######################################################
 
 # 农作物，大麦，玉米
@@ -112,7 +152,7 @@ farming_table.update({cls.template_id: cls for cls in supported_crops})
 
 def init_crop_config(rows: List[dict]):
     for item in rows:
-        crop_class : Crop = farming_table.get(item["template_id"], None)
+        crop_class: Crop = farming_table.get(item["template_id"], None)
         if crop_class:
             crop_class.name = item["name"]
             crop_class.charge_time = timedelta(seconds=item["charge_time"])
@@ -223,7 +263,7 @@ class MiningExcavator(Tool):
     template_id: int = 203891
 
 
-supported_tools = [Axe, StoneAxe, AncientStoneAxe , Saw, Chainsaw, FishingRod, FishingNet, FishingBoat, MiningExcavator]
+supported_tools = [Axe, StoneAxe, AncientStoneAxe, Saw, Chainsaw, FishingRod, FishingNet, FishingBoat, MiningExcavator]
 
 farming_table.update({cls.template_id: cls for cls in supported_tools})
 
@@ -236,6 +276,7 @@ def init_tool_config(rows: List[dict]):
             tool_class.charge_time = timedelta(seconds=item["charged_time"])
             tool_class.energy_consumed = item["energy_consumed"]
             tool_class.durability_consumed = item["durability_consumed"]
+
 
 # 从json构造工具对象
 def create_tool(item: dict) -> Tool:
@@ -258,6 +299,7 @@ def create_tool(item: dict) -> Tool:
 @dataclass(init=False)
 class MBS(Farming):
     energy_consumed: int = 100
+
     def __init__(self, template_id, name, type):
         self.name = name
         self.template_id = template_id
@@ -269,13 +311,15 @@ class MBS(Farming):
         else:
             return f"[{self.name}] [类型:{self.type}]"
 
-mbs_table : Dict[int, MBS]= {}
+
+mbs_table: Dict[int, MBS] = {}
 
 
 def init_mbs_config(rows: List[dict]):
     for item in rows:
         mbs = MBS(item["template_id"], item["name"], item["type"])
         mbs_table[item["template_id"]] = mbs
+
 
 # 从json构造mbs对象
 def create_mbs(item: dict) -> MBS:
@@ -286,6 +330,7 @@ def create_mbs(item: dict) -> MBS:
     mbs.asset_id = item["asset_id"]
     mbs.next_availability = datetime.fromtimestamp(item["next_availability"])
     return mbs
+
 
 ####################################################### MBS #######################################################
 
@@ -309,6 +354,36 @@ class Asset:
     is_burnable: bool
     schema_name: str
     template_id: str
+
+
+# 动物-从http返回的json数据构造对象
+def create_animal(item: dict) -> Animal:
+    template_id = item["template_id"]
+    if template_id == NFT.BabyCalf:
+        fm = BabyCalf()
+    elif template_id == NFT.Calf:
+        fm = Calf()
+    elif template_id == NFT.FeMaleCalf:
+        fm = FeMaleCalf()
+    elif template_id == NFT.MaleCalf:
+        fm = MaleCalf()
+    elif template_id == NFT.Bull:
+        fm = Bull()
+    elif template_id == NFT.DairyCow:
+        fm = DairyCow()
+    elif template_id == NFT.Chicken:
+        fm = Chicken()
+    else:
+        raise Exception("尚未支持的动物:{0}".format(item))
+
+    fm.day_claims_at = [datetime.fromtimestamp(item) for item in item["day_claims_at"]]
+    fm.asset_id = item["asset_id"]
+    fm.name = item["name"]
+    fm.template_id = template_id
+    fm.times_claimed = item.get("times_claimed", None)
+    fm.last_claimed = datetime.fromtimestamp(item["last_claimed"])
+    fm.next_availability = datetime.fromtimestamp(item["next_availability"])
+    return fm
 
 
 # 从http返回的json数据构造对象

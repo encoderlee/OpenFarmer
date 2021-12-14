@@ -2,32 +2,36 @@ wax_account: abcde.wam
 # only http proxy like 127.0.0.1:10809
 proxy: null
 #建造、采集资源、养鸡、种地、养牛、会员点击，需要程序自动化的操作，设置为true
-build: true
-mining: true
-chicken: true
-plant: true
-cow: true
-mbs: true
+build: false
+mining: false
+animal: false
+plant: false
+cow: false
+mbs: false
 
 #自动卖玉米
 sell_corn: false
-#留下玉米数量
+#保留玉米数量
 remaining_corn_num: 0
 #自动卖大麦
 sell_barley: false
-#留下大麦数量
+#保留大麦数量
 remaining_barley_num: 0
+#自动卖牛奶
+sell_milk: false
+#保留牛奶数量
+remaining_milk_num: 0
 
 #自动提现
 withdraw: false
 #账号中剩余多少材料不提现
-need_fww: 200
-need_fwf: 200
-need_fwg: 200
+need_fww: 0
+need_fwf: 400
+need_fwg: 1400
 #最少提现数量，3种材料总和
 withdraw_min: 200
 
-
+#每次补充多少能量
 recover_energy: 500
 
 
