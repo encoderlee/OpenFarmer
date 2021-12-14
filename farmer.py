@@ -780,7 +780,7 @@ class Farmer:
                     sell_milk_num = sell_milk_num + 1
 
         if len(asset_ids) <= 0:
-            self.log.warning("没有可售卖的玉米和大麦")
+            self.log.warning("没有可售卖的NFT资产【玉米｜小麦｜牛奶】")
             return True
 
         self.burn_assets(asset_ids)
@@ -790,7 +790,7 @@ class Farmer:
 
     # 卖资产-玉米、小麦和牛奶
     def burn_assets(self, asset_ids):
-        self.log.info("正在卖资产(玉米、小麦和牛奶")
+        self.log.info("正在卖资产【玉米｜小麦｜牛奶】")
         transaction = {
             "actions": [{
                 "account": "atomicassets",
