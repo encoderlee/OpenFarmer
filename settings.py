@@ -18,6 +18,7 @@ class Settings:
 # 用户配置参数
 class user_param:
     wax_account: str = None
+    use_proxy: str = True
     proxy: str = None
 
     build: bool = True
@@ -49,6 +50,7 @@ class user_param:
 
 def load_user_param(user: dict):
     user_param.wax_account = user["wax_account"]
+    user_param.use_proxy = user.get("proxy", True)
     user_param.proxy = user.get("proxy", None)
     user_param.build = user.get("build", True)
     user_param.mining = user.get("mining", True)

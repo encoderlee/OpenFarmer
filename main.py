@@ -19,7 +19,7 @@ def run(config_file: str):
     farmer.wax_account = user_param.wax_account
     if user_param.use_proxy:
         farmer.proxy = user_param.proxy
-        log.info("use proxy: {0}".format(user_param.use_proxy))
+        log.info("use proxy: {0}".format(user_param.proxy))
     farmer.init()
     farmer.start()
     log.info("开始自动化，请勿刷新浏览器，如需手工操作建议新开一个浏览器操作")
