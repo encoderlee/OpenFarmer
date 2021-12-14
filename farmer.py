@@ -537,7 +537,7 @@ class Farmer:
     #  获取动物需要的食物
     def get_animal_food(self, template_id):
         feed_barley_list = [NFT.Chicken, NFT.Chick, NFT.Calf, NFT.FeMaleCalf, NFT.MaleCalf, NFT.DairyCow]
-        feed_milk_list = [NFT.ChickenEgg]
+        feed_milk_list = [NFT.BabyCalf]
         asset = None
         if template_id in feed_barley_list:
             list_barley = self.get_barley()
