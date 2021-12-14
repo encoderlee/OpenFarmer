@@ -10,20 +10,19 @@ farming_table = {}
 
 # nft template_id
 class NFT:
-    Barley: int = 318606
-    Corn: int = 318607
-    Chicken: int = 298614
-    Chick: int = 298613
-    ChickenEgg: int = 298612
+    Barley: int = 318606  # 大麦
+    Corn: int = 318607  # 玉米
+    Chicken: int = 298614  # 大鸡
+    Chick: int = 298613  # 小鸡
+    ChickenEgg: int = 298612  # 鸡蛋
     BabyCalf: int = 298597  # 小牛犊
     Calf: int = 298598  # 小牛
     FeMaleCalf: int = 298599  # 母小牛
     MaleCalf: int = 298600  # 公小牛
     Bull: int = 298611  # 公牛
     DairyCow: int = 298607  # 奶牛
-    Cow: int = 298603
-    CornSeed: int = 298596
-    BarleySeed: int = 298595
+    CornSeed: int = 298596  # 玉米种子
+    BarleySeed: int = 298595  # 大麦种子
     Milk: int = 298593  # 牛奶
 
 
@@ -59,6 +58,8 @@ class Farming:
             return f"[{self.name}] [{self.asset_id}]"
 
 
+####################################################### Animal #######################################################
+
 # 动物
 @dataclass(init=False)
 class Animal(Farming):
@@ -70,44 +71,96 @@ class Animal(Farming):
 # 大鸡
 @dataclass(init=False)
 class Chicken(Animal):
-    energy_consumed: int = 0
+    name: str = "Chicken"
+    template_id: int = 298614
+
+
+# 小鸡
+@dataclass(init=False)
+class Chick(Animal):
+    name: str = "Chick"
+    template_id: int = 298613
+
+
+# 小鸡
+@dataclass(init=False)
+class ChickenEgg(Animal):
+    name: str = "ChickenEgg"
+    template_id: int = 298612
 
 
 # 小牛犊
 @dataclass(init=False)
 class BabyCalf(Animal):
-    energy_consumed: int = 0
+    name: str = "BabyCalf"
+    template_id: int = 298597
 
 
 # 小牛
 @dataclass(init=False)
 class Calf(Animal):
-    energy_consumed: int = 0
+    name: str = "Calf"
+    template_id: int = 298598
 
 
 # 母小牛
 @dataclass(init=False)
 class FeMaleCalf(Animal):
-    energy_consumed: int = 0
+    name: str = "FeMaleCalf"
+    template_id: int = 298599
 
 
 # 公小牛
 @dataclass(init=False)
 class MaleCalf(Animal):
-    energy_consumed: int = 0
+    name: str = "MaleCalf"
+    template_id: int = 298600
 
 
 # 公牛
 @dataclass(init=False)
 class Bull(Animal):
-    energy_consumed: int = 0
+    name: str = "Bull"
+    template_id: int = 298611
 
 
 # 奶牛
 @dataclass(init=False)
 class DairyCow(Animal):
-    energy_consumed: int = 0
+    name: str = "Dairy Cow"
+    template_id: int = 298607
 
+
+# 动物-从http返回的json数据构造对象
+def create_animal(item: dict) -> Animal:
+    template_id = item["template_id"]
+    if template_id == NFT.BabyCalf:
+        fm = BabyCalf()
+    elif template_id == NFT.Calf:
+        fm = Calf()
+    elif template_id == NFT.FeMaleCalf:
+        fm = FeMaleCalf()
+    elif template_id == NFT.MaleCalf:
+        fm = MaleCalf()
+    elif template_id == NFT.Bull:
+        fm = Bull()
+    elif template_id == NFT.DairyCow:
+        fm = DairyCow()
+    elif template_id == NFT.Chicken:
+        fm = Chicken()
+    else:
+        raise Exception("尚未支持的动物:{0}".format(item))
+
+    fm.day_claims_at = [datetime.fromtimestamp(item) for item in item["day_claims_at"]]
+    fm.asset_id = item["asset_id"]
+    fm.name = item["name"]
+    fm.template_id = template_id
+    fm.times_claimed = item.get("times_claimed", None)
+    fm.last_claimed = datetime.fromtimestamp(item["last_claimed"])
+    fm.next_availability = datetime.fromtimestamp(item["next_availability"])
+    return fm
+
+####################################################### Animal #######################################################
 
 ####################################################### Crop #######################################################
 
@@ -356,52 +409,4 @@ class Asset:
     template_id: str
 
 
-# 动物-从http返回的json数据构造对象
-def create_animal(item: dict) -> Animal:
-    template_id = item["template_id"]
-    if template_id == NFT.BabyCalf:
-        fm = BabyCalf()
-    elif template_id == NFT.Calf:
-        fm = Calf()
-    elif template_id == NFT.FeMaleCalf:
-        fm = FeMaleCalf()
-    elif template_id == NFT.MaleCalf:
-        fm = MaleCalf()
-    elif template_id == NFT.Bull:
-        fm = Bull()
-    elif template_id == NFT.DairyCow:
-        fm = DairyCow()
-    elif template_id == NFT.Chicken:
-        fm = Chicken()
-    else:
-        raise Exception("尚未支持的动物:{0}".format(item))
 
-    fm.day_claims_at = [datetime.fromtimestamp(item) for item in item["day_claims_at"]]
-    fm.asset_id = item["asset_id"]
-    fm.name = item["name"]
-    fm.template_id = template_id
-    fm.times_claimed = item.get("times_claimed", None)
-    fm.last_claimed = datetime.fromtimestamp(item["last_claimed"])
-    fm.next_availability = datetime.fromtimestamp(item["next_availability"])
-    return fm
-
-
-# 从http返回的json数据构造对象
-def create_farming(item: dict) -> Farming:
-    template_id = item["template_id"]
-    if template_id == NFT.CornSeed:
-        fm = CornSeed()
-    elif template_id == NFT.BarleySeed:
-        fm = BarleySeed()
-    elif template_id == NFT.Chicken:
-        fm = Chicken()
-        fm.day_claims_at = [datetime.fromtimestamp(item) for item in item["day_claims_at"]]
-    else:
-        raise Exception("尚未支持的作物类型:{0}".format(item))
-    fm.asset_id = item["asset_id"]
-    fm.name = item["name"]
-    fm.template_id = template_id
-    fm.times_claimed = item.get("times_claimed", None)
-    fm.last_claimed = datetime.fromtimestamp(item["last_claimed"])
-    fm.next_availability = datetime.fromtimestamp(item["next_availability"])
-    return fm
