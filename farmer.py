@@ -1112,8 +1112,8 @@ class Farmer:
             if user_param.withdraw:
                 self.scan_withdraw()
                 time.sleep(cfg.req_interval)
-            if user_param.sell_corn or user_param.sell_barley:
-                # 卖玉米和大麦
+            if user_param.sell_corn or user_param.sell_barley or user_param.sell_milk:
+                # 卖玉米和大麦和牛奶
                 self.scan_crop_assets()
                 time.sleep(cfg.req_interval)
             self.log.info("结束一轮扫描")
