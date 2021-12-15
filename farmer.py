@@ -471,6 +471,11 @@ class Farmer:
         milk_list = self.get_asset(NFT.Milk, 'Milk')
         return milk_list
 
+    # 获取鸡蛋
+    def get_egg(self) -> List[Asset]:
+        egg_list = self.get_asset(NFT.ChickenEgg, 'ChickenEgg')
+        return egg_list
+
     # 获取玉米
     def get_corn(self) -> List[Asset]:
         corn_list = self.get_asset(NFT.Corn, 'Corn')
@@ -680,11 +685,12 @@ class Farmer:
         return True
 
     # 售卖玉米和大麦
-    def scan_crop_assets(self):
+    def scan_nft_assets(self):
         asset_ids = []
         sell_barley_num = 0
         sell_corn_num = 0
         sell_milk_num = 0
+        sell_egg_num = 0
         if user_param.sell_corn:
             self.log.info("检查玉米NFT")
             list_corn = self.get_corn()
@@ -717,18 +723,29 @@ class Farmer:
                     asset_ids.append(item.asset_id)
                     sell_milk_num = sell_milk_num + 1
 
+        if user_param.sell_egg:
+            self.log.info("检查鸡蛋")
+            list_egg = self.get_egg()
+            self.log.info("剩余鸡蛋数量: {0}".format(len(list_egg)))
+            if len(list_egg) > 0:
+                for item in list_egg:
+                    if len(list_egg) - sell_egg_num <= user_param.remaining_egg_num:
+                        break
+                    asset_ids.append(item.asset_id)
+                    sell_egg_num = sell_egg_num + 1
+
         if len(asset_ids) <= 0:
-            self.log.warning("没有可售卖的NFT资产【玉米|小麦|牛奶】")
+            self.log.warning("没有可售卖的NFT资产【玉米|小麦|牛奶|鸡蛋】")
             return True
 
         self.burn_assets(asset_ids)
         self.log.warning(
-            "共卖出数量：[{0}]，玉米[{1}]，大麦[{2}],牛奶[{3}]".format(len(asset_ids), sell_barley_num, sell_corn_num, sell_milk_num))
+            "共卖出数量：[{0}]，玉米[{1}]，大麦[{2}],牛奶[{3},鸡蛋[{4}]".format(len(asset_ids), sell_barley_num, sell_corn_num, sell_milk_num, sell_egg_num))
         return True
 
     # 卖资产-玉米、小麦和牛奶
     def burn_assets(self, asset_ids):
-        self.log.info("正在卖资产【玉米|小麦|牛奶】")
+        self.log.info("正在卖资产【玉米|小麦|牛奶|鸡蛋】")
         transaction = {
             "actions": [{
                 "account": "atomicassets",
@@ -1050,9 +1067,9 @@ class Farmer:
             if user_param.withdraw:
                 self.scan_withdraw()
                 time.sleep(cfg.req_interval)
-            if user_param.sell_corn or user_param.sell_barley or user_param.sell_milk:
+            if user_param.sell_corn or user_param.sell_barley or user_param.sell_milk or user_param.sell_egg:
                 # 卖玉米和大麦和牛奶
-                self.scan_crop_assets()
+                self.scan_nft_assets()
                 time.sleep(cfg.req_interval)
             self.log.info("结束一轮扫描")
             if self.not_operational:

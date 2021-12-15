@@ -5,7 +5,7 @@ proxy: null
 #建造、采集资源、养动物、种地、会员点击，需要程序自动化的操作，设置为true
 build: false
 mining: false
-animal: true
+animal: false
 plant: false
 mbs: false
 
@@ -21,6 +21,10 @@ remaining_barley_num: 0
 sell_milk: false
 #保留牛奶数量
 remaining_milk_num: 0
+#自动卖鸡蛋
+sell_egg: false
+#保留鸡蛋数量
+remaining_egg_num: 0
 
 #自动提现
 withdraw: false
