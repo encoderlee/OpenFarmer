@@ -153,7 +153,7 @@ class DairyCow(Animal):
     template_id: int = 298607
 
 
-supported_animals = [Chicken, Chick, ChickenEgg, BabyCalf, Calf, FeMaleCalf, MaleCalf, Bull, DairyCow]
+supported_animals = [Chicken, Chick, ChickenEgg, BabyCalf, Calf, FeMaleCalf, MaleCalf,  DairyCow]
 
 farming_table.update({cls.template_id: cls for cls in supported_animals})
 
