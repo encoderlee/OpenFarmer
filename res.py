@@ -75,10 +75,17 @@ class Animal(Farming):
     day_claims_at: List[datetime] = None
     # 间隔
     charge_time: timedelta = None
+    # 24小时喂养次数
+    daily_claim_limit: int = None
+    # 消耗的nft
+    consumed_card: int = None
 
     def show(self, more=True) -> str:
         if more:
-            return f"[{self.name}] [{self.asset_id}][喂养次数{self.times_claimed}/{self.required_claims}] [可操作时间:{utils.show_time(self.next_availability)}]"
+            if len(self.day_claims_at) >= self.daily_claim_limit:
+                next_op_time = self.day_claims_at[0] + timedelta(hours=24)
+                self.next_availability = max(self.next_availability, next_op_time)
+            return f"[{self.name}] [{self.asset_id}][24小时喂养次数{len(self.day_claims_at)}/{self.daily_claim_limit}] [喂养次数{self.times_claimed}/{self.required_claims}] [可操作时间:{utils.show_time(self.next_availability)}] "
         else:
             return f"[{self.name}] [{self.asset_id}]"
 
@@ -159,34 +166,24 @@ def init_animal_config(rows: List[dict]):
             animal_class.energy_consumed = item["energy_consumed"]
             animal_class.charge_time = timedelta(seconds=item["charge_time"])
             animal_class.required_claims = item["required_claims"]
+            animal_class.daily_claim_limit = item["daily_claim_limit"]
+            animal_class.consumed_card = item["consumed_card"]
 
 
 # 动物-从http返回的json数据构造对象
 def create_animal(item: dict) -> Animal:
-    template_id = item["template_id"]
-    if template_id == NFT.BabyCalf:
-        fm = BabyCalf()
-    elif template_id == NFT.Calf:
-        fm = Calf()
-    elif template_id == NFT.FeMaleCalf:
-        fm = FeMaleCalf()
-    elif template_id == NFT.MaleCalf:
-        fm = MaleCalf()
-    elif template_id == NFT.DairyCow:
-        fm = DairyCow()
-    elif template_id == NFT.Chicken:
-        fm = Chicken()
-    else:
-        raise Exception("尚未支持的动物:{0}".format(item))
-
-    fm.day_claims_at = [datetime.fromtimestamp(item) for item in item["day_claims_at"]]
-    fm.asset_id = item["asset_id"]
-    fm.name = item["name"]
-    fm.template_id = template_id
-    fm.times_claimed = item.get("times_claimed", None)
-    fm.last_claimed = datetime.fromtimestamp(item["last_claimed"])
-    fm.next_availability = datetime.fromtimestamp(item["next_availability"])
-    return fm
+    animal_class = farming_table.get(item["template_id"], None)
+    if not animal_class:
+        return None
+    animal = animal_class()
+    animal.day_claims_at = [datetime.fromtimestamp(item) for item in item["day_claims_at"]]
+    animal.asset_id = item["asset_id"]
+    animal.name = item["name"]
+    animal.template_id = item["template_id"]
+    animal.times_claimed = item.get("times_claimed", None)
+    animal.last_claimed = datetime.fromtimestamp(item["last_claimed"])
+    animal.next_availability = datetime.fromtimestamp(item["next_availability"])
+    return animal
 
 
 ####################################################### Animal #######################################################

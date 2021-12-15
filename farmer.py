@@ -535,78 +535,24 @@ class Farmer:
         return self.wax_transact(transaction)
 
     #  获取动物需要的食物
-    def get_animal_food(self, template_id):
-        feed_barley_list = [NFT.Chicken, NFT.Chick, NFT.Calf, NFT.FeMaleCalf, NFT.MaleCalf, NFT.DairyCow]
-        feed_milk_list = [NFT.BabyCalf]
-        asset = None
-        if template_id in feed_barley_list:
-            list_barley = self.get_barley()
-            self.log.info("剩余大麦数量: {0}".format(len(list_barley)))
-            if len(list_barley) <= 0:
-                self.log.warning("大麦数量不足,请及时补充")
-                return False
-            asset = list_barley.pop()
-
-        if template_id in feed_milk_list:
-            list_milk = self.get_milk()
-            self.log.info("剩余牛奶数量: {0}".format(len(list_milk)))
-            if len(list_milk) <= 0:
-                self.log.warning("大麦数量不足,请及时补充")
-                return False
-            asset = list_milk.pop()
-
-        if asset is None:
+    def get_animal_food(self, animal: Animal):
+        crop_class: Crop = res.farming_table.get(animal.consumed_card)
+        list_food = self.get_asset(animal.consumed_card, crop_class.name)
+        self.log.info("剩余[{0}]数量: [{1}]".format(crop_class.name, len(list_food)))
+        if len(list_food) <= 0:
+            self.log.warning("{0}数量不足,请及时补充".format(crop_class.name))
             return False
+        asset = list_food.pop()
 
-        feed_asset_id = asset.asset_id
-
-        return feed_asset_id
+        return asset.asset_id
 
     # 饲养动物
     def claim_animal(self, animals: List[Animal]):
-
         for item in animals:
-            feed_asset_id = ''
-            if item.template_id == NFT.BabyCalf:
-                feed_asset_id = self.get_animal_food(NFT.BabyCalf)
-                if not feed_asset_id:
-                    return False
-                self.log.info("正在喂小牛犊: {0}".format(item.show()))
-            elif item.template_id == NFT.DairyCow:
-                feed_asset_id = self.get_animal_food(NFT.DairyCow)
-                if not feed_asset_id:
-                    return False
-                self.log.info("正在喂奶牛: {0}".format(item.show()))
-            elif item.template_id == NFT.Calf:
-                feed_asset_id = self.get_animal_food(NFT.Calf)
-                if not feed_asset_id:
-                    return False
-                self.log.info("正在喂小牛: {0}".format(item.show()))
-            elif item.template_id == NFT.FeMaleCalf:
-                feed_asset_id = self.get_animal_food(NFT.FeMaleCalf)
-                if not feed_asset_id:
-                    return False
-                self.log.info("正在喂母小牛: {0}".format(item.show()))
-            elif item.template_id == NFT.MaleCalf:
-                feed_asset_id = self.get_animal_food(NFT.MaleCalf)
-                if not feed_asset_id:
-                    return False
-                self.log.info("正在喂公小牛: {0}".format(item.show()))
-            elif item.template_id == NFT.Chicken:
-                feed_asset_id = self.get_animal_food(NFT.Chicken)
-                if not feed_asset_id:
-                    return False
-                self.log.info("正在喂鸡: {0}".format(item.show()))
-            elif item.template_id == NFT.Chick:
-                feed_asset_id = self.get_animal_food(NFT.Chick)
-                if not feed_asset_id:
-                    return False
-                self.log.info("正在喂小鸡: {0}".format(item.show()))
-            elif item.template_id == NFT.ChickenEgg:
-                feed_asset_id = self.get_animal_food(NFT.ChickenEgg)
-                if not feed_asset_id:
-                    return False
-                self.log.info("正在喂鸡蛋: {0}".format(item.show()))
+            feed_asset_id = self.get_animal_food(item)
+            if not feed_asset_id:
+                return False
+            self.log.info("正在喂[{0}]: [{1}]".format(item.name, item.show()))
 
             success = self.feed_animal(feed_asset_id, item)
             if success:
@@ -681,21 +627,12 @@ class Farmer:
             if isinstance(item, Building):
                 if item.is_ready == 1:
                     continue
-            # 鸡24小时内最多喂4次 or 小牛24小时内最多喂4次
-            if isinstance(item, Chicken) or isinstance(item, Calf):
-                if len(item.day_claims_at) >= 4:
+            # daily_claim_limit 鸡24小时内最多喂4次 ,奶牛24小时内最多喂6次，小牛犊24小时内最多喂2次
+            if isinstance(item, Animal):
+                if len(item.day_claims_at) >= item.daily_claim_limit:
                     next_op_time = item.day_claims_at[0] + timedelta(hours=24)
                     item.next_availability = max(item.next_availability, next_op_time)
-            # 奶牛24小时内最多喂6次
-            if isinstance(item, DairyCow):
-                if len(item.day_claims_at) >= 6:
-                    next_op_time = item.day_claims_at[0] + timedelta(hours=24)
-                    item.next_availability = max(item.next_availability, next_op_time)
-            # 小牛犊24小时内最多喂2次
-            if isinstance(item, BabyCalf):
-                if len(item.day_claims_at) >= 2:
-                    next_op_time = item.day_claims_at[0] + timedelta(hours=24)
-                    item.next_availability = max(item.next_availability, next_op_time)
+                    self.log.info("[{0}]24小时内最多喂[{1}]次 ".format(item.name, item.daily_claim_limit))
             if now < item.next_availability:
                 self.not_operational.append(item)
                 continue
