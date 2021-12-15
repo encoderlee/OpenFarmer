@@ -542,11 +542,11 @@ class Farmer:
 
     #  获取动物需要的食物
     def get_animal_food(self, animal: Animal):
-        crop_class: Crop = res.farming_table.get(animal.consumed_card)
-        list_food = self.get_asset(animal.consumed_card, crop_class.name)
-        self.log.info("剩余[{0}]数量: [{1}]".format(crop_class.name, len(list_food)))
+        food_class = res.farming_table.get(animal.consumed_card)
+        list_food = self.get_asset(animal.consumed_card, food_class.name)
+        self.log.info("剩余[{0}]数量: [{1}]".format(food_class.name, len(list_food)))
         if len(list_food) <= 0:
-            self.log.warning("{0}数量不足,请及时补充".format(crop_class.name))
+            self.log.warning("{0}数量不足,请及时补充".format(food_class.name))
             return False
         asset = list_food.pop()
 

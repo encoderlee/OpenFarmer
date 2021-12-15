@@ -58,6 +58,16 @@ class Farming:
             return f"[{self.name}] [{self.asset_id}]"
 
 
+
+# 牛奶
+@dataclass(init=False)
+class Milk(Farming):
+    name: str = "Milk"
+    template_id: int = 298593
+
+
+farming_table.update({cls.template_id: cls for cls in [Milk]})
+
 ####################################################### Animal #######################################################
 
 # 动物
@@ -222,6 +232,7 @@ class BarleySeed(Crop):
 class CornSeed(Crop):
     name: str = "Corn Seed"
     template_id: int = 298596
+
 
 
 supported_crops = [BarleySeed, CornSeed]
