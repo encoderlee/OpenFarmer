@@ -506,10 +506,11 @@ class Farmer:
         resp = resp.json()
         animals = []
         for item in resp["rows"]:
-            # if item["name"] != "Chicken":
-            #   continue
-            anim: Animal = res.create_animal(item)
-            animals.append(anim)
+            anim = res.create_animal(item)
+            if anim:
+                animals.append(anim)
+            else:
+                self.log.warning("尚未支持的动物:{0}".format(item))
         return animals
 
     # 喂动物
