@@ -58,7 +58,7 @@ class Farming:
             return f"[{self.name}] [{self.asset_id}]"
 
 
-
+# ==== Food =====
 # 牛奶
 @dataclass(init=False)
 class Milk(Farming):
@@ -66,9 +66,26 @@ class Milk(Farming):
     template_id: int = 298593
 
 
-farming_table.update({cls.template_id: cls for cls in [Milk]})
+# 玉米
+@dataclass(init=False)
+class Corn(Farming):
+    name: str = "Corn"
+    template_id: int = 318607
 
-####################################################### Animal #######################################################
+
+# 大麦
+@dataclass(init=False)
+class Barley(Farming):
+    name: str = "Barley"
+    template_id: int = 318606
+
+
+supported_foods = [Milk, Corn, Barley]
+farming_table.update({cls.template_id: cls for cls in supported_foods})
+
+# ==== Food =====
+
+# ################### Animal ######################
 
 # 动物
 @dataclass(init=False)
@@ -163,7 +180,7 @@ class DairyCow(Animal):
     template_id: int = 298607
 
 
-supported_animals = [Chicken, Chick, ChickenEgg, BabyCalf, Calf, FeMaleCalf, MaleCalf,  DairyCow]
+supported_animals = [Chicken, Chick, ChickenEgg, BabyCalf, Calf, FeMaleCalf, MaleCalf, DairyCow]
 
 farming_table.update({cls.template_id: cls for cls in supported_animals})
 
@@ -232,7 +249,6 @@ class BarleySeed(Crop):
 class CornSeed(Crop):
     name: str = "Corn Seed"
     template_id: int = 298596
-
 
 
 supported_crops = [BarleySeed, CornSeed]

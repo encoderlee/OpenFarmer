@@ -767,7 +767,7 @@ class Farmer:
         time.sleep(cfg.req_interval)
 
     def scan_animals(self):
-        self.log.info("检查农场")
+        self.log.info("检查动物")
         animals = self.get_animals()
         self.log.info("饲养的动物:")
         for item in animals:
@@ -1049,20 +1049,20 @@ class Farmer:
             self.scan_resource()
             time.sleep(cfg.req_interval)
 
+            if user_param.mining:
+                self.scan_mining()
+                time.sleep(cfg.req_interval)
             if user_param.mbs:
                 self.scan_mbs()
                 time.sleep(cfg.req_interval)
             if user_param.build:
                 self.scan_buildings()
                 time.sleep(cfg.req_interval)
-            if user_param.plant:
-                self.scan_crops()
-                time.sleep(cfg.req_interval)
             if user_param.animal:
                 self.scan_animals()
                 time.sleep(cfg.req_interval)
-            if user_param.mining:
-                self.scan_mining()
+            if user_param.plant:
+                self.scan_crops()
                 time.sleep(cfg.req_interval)
             if user_param.withdraw:
                 self.scan_withdraw()

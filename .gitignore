@@ -2,3 +2,4 @@ __pycache__
 /.idea
 /logs
 /data_dir
+user.yml

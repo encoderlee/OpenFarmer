@@ -30,12 +30,12 @@ remaining_egg_num: 0
 withdraw: false
 #账号中剩余多少材料不提现
 need_fww: 0
-need_fwf: 400
-need_fwg: 1400
+need_fwf: 500
+need_fwg: 500
 #最少提现数量，3种材料总和
-withdraw_min: 200
+withdraw_min: 500
 
-#每次补充多少能量
+#每次补充满多少能量
 recover_energy: 500
 
 
