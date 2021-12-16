@@ -521,7 +521,12 @@ class Farmer:
     # 喂动物
     def feed_animal(self, asset_id_food: str, animal: Animal) -> bool:
         self.log.info("feed [{0}] to [{1}]".format(asset_id_food, animal.asset_id))
-        self.consume_energy(Decimal(animal.energy_consumed))
+        fake_consumed = Decimal(0)
+        if animal.times_claimed == animal.required_claims - 1:
+            # 收获前的最后一次喂养，多需要200点能量，游戏合约BUG
+            fake_consumed = Decimal(200)
+        self.consume_energy(Decimal(animal.energy_consumed), fake_consumed)
+
         transaction = {
             "actions": [{
                 "account": "atomicassets",
