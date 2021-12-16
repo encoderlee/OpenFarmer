@@ -747,7 +747,7 @@ class Farmer:
 
         self.burn_assets(asset_ids)
         self.log.warning(
-            "共卖出数量：[{0}]，玉米[{1}]，大麦[{2}],牛奶[{3},鸡蛋[{4}]".format(len(asset_ids), sell_barley_num, sell_corn_num, sell_milk_num, sell_egg_num))
+            "共卖出数量：[{0}]，玉米[{1}]，大麦[{2}],牛奶[{3}],鸡蛋[{4}]".format(len(asset_ids), sell_barley_num, sell_corn_num, sell_milk_num, sell_egg_num))
         return True
 
     # 卖资产-玉米、小麦和牛奶
@@ -1062,14 +1062,11 @@ class Farmer:
             if user_param.mbs:
                 self.scan_mbs()
                 time.sleep(cfg.req_interval)
-            if user_param.build:
-                self.scan_buildings()
+            if user_param.plant:
+                self.scan_crops()
                 time.sleep(cfg.req_interval)
             if user_param.animal:
                 self.scan_animals()
-                time.sleep(cfg.req_interval)
-            if user_param.plant:
-                self.scan_crops()
                 time.sleep(cfg.req_interval)
             if user_param.withdraw:
                 self.scan_withdraw()
@@ -1077,6 +1074,9 @@ class Farmer:
             if user_param.sell_corn or user_param.sell_barley or user_param.sell_milk or user_param.sell_egg:
                 # 卖玉米和大麦和牛奶
                 self.scan_nft_assets()
+                time.sleep(cfg.req_interval)
+            if user_param.build:
+                self.scan_buildings()
                 time.sleep(cfg.req_interval)
             self.log.info("结束一轮扫描")
             if self.not_operational:
