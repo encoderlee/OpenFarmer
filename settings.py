@@ -8,7 +8,7 @@ class Settings:
     chrome_data_dir: str
     url_db: str = None
     # 发送http请求的间隔
-    req_interval = 3
+    req_interval = 30
     # 每小时至少扫描一次，即使没有可用的作物，这样可以处理上次扫码后新种的作物
     max_scan_interval = timedelta(minutes=15)
     # 每次扫描至少间隔10秒，哪怕是出错重扫

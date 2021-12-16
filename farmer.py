@@ -613,11 +613,12 @@ class Farmer:
                 self.log.debug("transact result: {0}".format(result))
                 return True
             else:
-                self.log.error("transact error: {0}".format(result))
                 if "is greater than the maximum billable" in result:
-                    self.log.error("CPU资源不足，可能需要质押更多WAX，一般为误报，稍后重试")
-                if "estimated CPU time (0 us) is not less than the maximum billable CPU time for the transaction (0 us)" in result:
-                    self.log.error("CPU资源不足，可能需要质押更多WAX，一般为误报，稍后重试")
+                    self.log.error("CPU资源不足，可能需要质押更多WAX，一般为误报，稍后重试 maximum")
+                elif "estimated CPU time (0 us) is not less than the maximum billable CPU time for the transaction (0 us)" in result:
+                    self.log.error("CPU资源不足，可能需要质押更多WAX，一般为误报，稍后重试 estimated")
+                else:
+                    self.log.error("transact error: {0}".format(result))
                 raise TransactException(result)
 
         except WebDriverException as e:
