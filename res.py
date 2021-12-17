@@ -206,6 +206,7 @@ def create_animal(item: dict) -> Animal:
     animal.day_claims_at = [datetime.fromtimestamp(item) for item in item["day_claims_at"]]
     animal.asset_id = item["asset_id"]
     animal.name = item["name"]
+    animal.times_claimed = item["times_claimed"]
     animal.template_id = item["template_id"]
     animal.times_claimed = item.get("times_claimed", None)
     animal.last_claimed = datetime.fromtimestamp(item["last_claimed"])
