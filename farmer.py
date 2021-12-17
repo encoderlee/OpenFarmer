@@ -747,7 +747,7 @@ class Farmer:
 
         self.burn_assets(asset_ids)
         self.log.warning(
-            "共卖出数量：[{0}]，玉米[{1}]，大麦[{2}],牛奶[{3}],鸡蛋[{4}]".format(len(asset_ids), sell_barley_num, sell_corn_num, sell_milk_num, sell_egg_num))
+            "共卖出数量：[{0}]，玉米[{1}]，大麦[{2}],牛奶[{3}],鸡蛋[{4}]".format(len(asset_ids), sell_corn_num, sell_barley_num,  sell_milk_num, sell_egg_num))
         return True
 
     # 卖资产-玉米、小麦和牛奶
