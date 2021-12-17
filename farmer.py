@@ -55,8 +55,7 @@ class Status:
 
 class Farmer:
     # wax rpc
-    # url_rpc = "https://api.wax.alohaeos.com/v1/chain/"
-    url_rpc = "https://wax.pink.gg/v1/chain/"
+    url_rpc = "https://api.wax.alohaeos.com/v1/chain/"
     url_table_row = url_rpc + "get_table_rows"
     # 资产API
     url_assets = "https://wax.api.atomicassets.io/atomicassets/v1/assets"
