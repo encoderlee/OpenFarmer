@@ -560,12 +560,15 @@ class Farmer:
     # 饲养动物
     def claim_animal(self, animals: List[Animal]):
         for item in animals:
-            feed_asset_id = self.get_animal_food(item)
-            if not feed_asset_id:
-                return False
             self.log.info("正在喂[{0}]: [{1}]".format(item.name, item.show()))
+            if 'Egg' in item.name:
+                success = self.care_animal(item)
+            else:
+                feed_asset_id = self.get_animal_food(item)
+                if not feed_asset_id:
+                    return False
+                success = self.feed_animal(feed_asset_id, item)
 
-            success = self.feed_animal(feed_asset_id, item)
             if success:
                 self.log.info("喂养成功: {0}".format(item.show(more=False)))
             else:
@@ -573,6 +576,30 @@ class Farmer:
                 self.count_error_claim += 1
             time.sleep(cfg.req_interval)
         return True
+
+    def care_animal(self, animal: Animal):
+        self.log.info("care_animal {0}".format(animal.asset_id))
+        fake_consumed = Decimal(0)
+        if animal.times_claimed == animal.required_claims - 1:
+            # 收获前的最后一次喂养，多需要200点能量，游戏合约BUG
+            fake_consumed = Decimal(200)
+        self.consume_energy(Decimal(animal.energy_consumed), fake_consumed)
+
+        transaction = {
+            "actions": [{
+                "account": "farmersworld",
+                "name": "anmclaim",
+                "authorization": [{
+                    "actor": self.wax_account,
+                    "permission": "active",
+                }],
+                "data": {
+                    "animal_id": animal.asset_id,
+                    "owner": self.wax_account,
+                },
+            }],
+        }
+        return self.wax_transact(transaction)
 
     # 获取wax账户信息
     def wax_get_account(self):
@@ -747,7 +774,8 @@ class Farmer:
 
         self.burn_assets(asset_ids)
         self.log.warning(
-            "共卖出数量：[{0}]，玉米[{1}]，大麦[{2}],牛奶[{3}],鸡蛋[{4}]".format(len(asset_ids), sell_corn_num, sell_barley_num,  sell_milk_num, sell_egg_num))
+            "共卖出数量：[{0}]，玉米[{1}]，大麦[{2}],牛奶[{3}],鸡蛋[{4}]".format(len(asset_ids), sell_corn_num, sell_barley_num,
+                                                                 sell_milk_num, sell_egg_num))
         return True
 
     # 卖资产-玉米、小麦和牛奶
