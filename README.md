@@ -97,6 +97,12 @@ recover_energy: 500 (能量不够时恢复到多少能量，默认500，请准�
 ### 打赏
 欢迎打赏，支持我继续不断完善这个项目
 
+eth、bsc钱包地址：
+
 0xeaC7d998684F50b7A492EA68F27633a117Be201d
 
-支持USDT、ETH、BUSD、BNB等，以及 Ethereum、BSC等网络上的任何ERC20代币，感谢
+支持USDT、ETH、BUSD、BNB等，以及 Ethereum、BSC、xDAI等eth兼容网络上的任何ERC20代币
+
+wax网络钱包地址：
+
+m45yy.wam
