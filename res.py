@@ -106,6 +106,8 @@ class Animal(Farming):
     daily_claim_limit: int = None
     # 消耗的nft
     consumed_card: int = None
+    # 所属建筑
+    required_building: int = None
 
     def show(self, more=True) -> str:
         if more:
@@ -195,6 +197,7 @@ def init_animal_config(rows: List[dict]):
             animal_class.required_claims = item["required_claims"]
             animal_class.daily_claim_limit = item["daily_claim_limit"]
             animal_class.consumed_card = item["consumed_card"]
+            animal_class.required_building = item["required_building"]
 
 
 # 动物-从http返回的json数据构造对象

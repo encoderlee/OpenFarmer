@@ -59,10 +59,11 @@ class Status:
 class Farmer:
     # wax rpc
     # url_rpc = "https://api.wax.alohaeos.com/v1/chain/"
-    url_rpc = "https://api.wax.alohaeos.com/v1/chain/"
+    url_rpc = "https://wax.dapplica.io/v1/chain/"
     url_table_row = url_rpc + "get_table_rows"
     # 资产API
-    url_assets = "https://wax.api.atomicassets.io/atomicassets/v1/assets"
+    #url_assets = "https://wax.api.atomicassets.io/atomicassets/v1/assets"
+    url_assets = "https://atomic.wax.eosrio.io/atomicassets/v1/assets"
     waxjs: str = None
     myjs: str = None
     chrome_data_dir = os.path.abspath(cfg.chrome_data_dir)
@@ -513,7 +514,14 @@ class Farmer:
         for item in resp["rows"]:
             anim = res.create_animal(item)
             if anim:
-                animals.append(anim)
+                if anim.required_building == 298590 and user_param.cow:
+                    # 牛棚
+                    animals.append(anim)
+                elif anim.required_building == 298591 and user_param.chicken:
+                    # 鸡舍
+                    animals.append(anim)
+                else:
+                    self.log.warning("自动喂养未开启:{0}".format(item))
             else:
                 self.log.warning("尚未支持的动物:{0}".format(item))
         return animals
@@ -1093,7 +1101,7 @@ class Farmer:
             if user_param.plant:
                 self.scan_crops()
                 time.sleep(cfg.req_interval)
-            if user_param.animal:
+            if user_param.chicken or user_param.cow:
                 self.scan_animals()
                 time.sleep(cfg.req_interval)
             if user_param.withdraw:

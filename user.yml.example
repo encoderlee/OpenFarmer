@@ -2,10 +2,11 @@ wax_account: abcde.wam
 # only http proxy like 127.0.0.1:10809
 use_proxy: false
 proxy: null
-#建造、采集资源、养动物、种地、会员点击，需要程序自动化的操作，设置为true
+#建造、采集资源、养鸡、养牛、种地、会员点击，需要程序自动化的操作，设置为true
 build: false
 mining: false
-animal: false
+chicken: false
+cow: false
 plant: false
 mbs: false
 

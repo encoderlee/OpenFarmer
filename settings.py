@@ -25,7 +25,7 @@ class user_param:
 
     build: bool = True
     mining: bool = True
-    animal: bool = True
+    chicken: bool = True
     plant: bool = True
     cow: bool = True
     mbs: bool = True
@@ -58,7 +58,8 @@ def load_user_param(user: dict):
     user_param.proxy = user.get("proxy", None)
     user_param.build = user.get("build", True)
     user_param.mining = user.get("mining", True)
-    user_param.animal = user.get("animal", True)
+    user_param.chicken = user.get("chicken", True)
+    user_param.cow = user.get("cow", True)
     user_param.plant = user.get("plant", True)
     user_param.mbs = user.get("mbs", True)
     user_param.sell_corn = user.get("sell_corn", True)
