@@ -520,8 +520,8 @@ class Farmer:
                 elif anim.required_building == 298591 and user_param.chicken:
                     # 鸡舍
                     animals.append(anim)
-                else:
-                    self.log.warning("自动喂养未开启:{0}".format(item))
+                # else:
+                    # self.log.warning("自动喂养未开启:{0}".format(item))
             else:
                 self.log.warning("尚未支持的动物:{0}".format(item))
         return animals
