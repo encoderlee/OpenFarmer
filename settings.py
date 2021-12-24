@@ -64,6 +64,8 @@ class user_param:
     fwg_min: int = 0
     deposit_fwg: int = 0
 
+    min_durability: int = 0
+
 
 def load_user_param(user: dict):
     user_param.wax_account = user["wax_account"]
@@ -82,6 +84,7 @@ def load_user_param(user: dict):
     user_param.auto_plant = user.get("auto_plant", True)
     user_param.recover_energy = user.get("recover_energy", 500)
     user_param.min_energy = user.get("min_energy", 50)
+    user_param.min_durability = user.get("min_durability", 0)
     user_param.withdraw = user.get("withdraw", True)
     user_param.auto_deposit = user.get("auto_deposit", True)
     user_param.need_fww = user.get("need_fww", 200)

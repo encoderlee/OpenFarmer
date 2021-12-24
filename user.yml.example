@@ -63,3 +63,5 @@ recover_energy: 500
 #低于多少能量开启补充
 min_energy: 50
 
+#低于多少耐久度开启维修
+min_durability: 10
