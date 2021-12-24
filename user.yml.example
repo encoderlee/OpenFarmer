@@ -49,9 +49,9 @@ auto_deposit: false
 fww_min: 0
 #每次充值木头数量
 deposit_fww: 0
-#少于多少实物充值
+#少于多少食物充值
 fwf_min: 0
-#每次充值实物数量
+#每次充值食物数量
 deposit_fwf: 10
 #少于多少金充值
 fwg_min: 0
