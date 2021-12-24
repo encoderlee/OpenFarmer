@@ -499,7 +499,7 @@ class Farmer:
             asset.schema_name = item["schema"]["schema_name"]
             asset.template_id = item["template"]["template_id"]
             asset_list.append(asset)
-        self.log.info("[{0}]_get_asset_list: [{1}]".format(name, format(asset_list)))
+        self.log.debug("[{0}]_get_asset_list: [{1}]".format(name, format(asset_list)))
         return asset_list
 
     # 获取动物的信息
