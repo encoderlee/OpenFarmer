@@ -452,6 +452,8 @@ class Building(Farming):
     times_claimed: int = None
     last_claimed: datetime = None
     is_ready: int = None
+    slots_used: int = None
+    num_slots: int = None
 
 
 # NFT资产，可以是小麦，小麦种子，牛奶等

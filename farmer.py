@@ -62,7 +62,7 @@ class Farmer:
     url_rpc = "https://wax.dapplica.io/v1/chain/"
     url_table_row = url_rpc + "get_table_rows"
     # 资产API
-    #url_assets = "https://wax.api.atomicassets.io/atomicassets/v1/assets"
+    # url_assets = "https://wax.api.atomicassets.io/atomicassets/v1/assets"
     url_assets = "https://atomic.wax.eosrio.io/atomicassets/v1/assets"
     waxjs: str = None
     myjs: str = None
@@ -333,6 +333,7 @@ class Farmer:
             build.next_availability = datetime.fromtimestamp(item["next_availability"])
             build.template_id = item["template_id"]
             build.times_claimed = item.get("times_claimed", None)
+            build.slots_used = item.get("slots_used", None)
             if build.is_ready == 1:
                 continue
             buildings.append(build)
@@ -521,7 +522,7 @@ class Farmer:
                     # 鸡舍
                     animals.append(anim)
                 # else:
-                    # self.log.warning("自动喂养未开启:{0}".format(item))
+                # self.log.warning("自动喂养未开启:{0}".format(item))
             else:
                 self.log.warning("尚未支持的动物:{0}".format(item))
         return animals
@@ -706,6 +707,73 @@ class Farmer:
             self.log.info(item.show())
         self.claim_buildings(buildings)
         return True
+
+    def scan_plants(self):
+        self.log.info("自动种地")
+        post_data = self.table_row_template()
+        post_data["table"] = "buildings"
+        post_data["index_position"] = 2
+
+        resp = self.http.post(self.url_table_row, json=post_data)
+        self.log.debug("get_buildings_info:{0}".format(resp.text))
+        resp = resp.json()
+        for item in resp["rows"]:
+            if item["template_id"] == 298592:
+                slots_num = 8 - item["slots_used"]
+                if slots_num > 0:
+                    self.plant_corps(slots_num)
+
+        return True
+
+    # 种植
+    def plant_corps(self, slots_num):
+        self.log.info("获取大麦或玉米种子")
+        if user_param.barleyseed_num > 0:
+            barleyseed_list = self.get_asset(298595, 'Barley Seed')
+            if len(barleyseed_list) < user_param.barleyseed_num:
+                self.log.warning("大麦种子数量不足,请及时补充")
+                return False
+            for i in range(user_param.barleyseed_num):
+                asset = barleyseed_list.pop()
+                self.wear_assets([asset.asset_id])
+        else:
+            self.log.info("设置的大麦种子数量为0")
+
+        if user_param.cornseed_num > 0:
+            cornseed_list = self.get_asset(298596, 'Corn Seed')
+            if len(cornseed_list) < user_param.cornseed_num:
+                self.log.warning("玉米种子数量不足,请及时补充")
+                return False
+            for i in range(user_param.cornseed_num):
+                asset = cornseed_list.pop()
+                self.wear_assets([asset.asset_id])
+        else:
+            self.log.info("设置的玉米种子数量为0")
+
+        return True
+
+    # 穿戴工具，种地-（种地：玉米、小麦）
+    def wear_assets(self, asset_ids):
+        self.log.info("正在种地【玉米种子|小麦种子】")
+        transaction = {
+            "actions": [{
+                "account": "atomicassets",
+                "name": "transfer",
+                "authorization": [{
+                    "actor": self.wax_account,
+                    "permission": "active",
+                }],
+                "data": {
+                    "from": self.wax_account,
+                    "to": "farmersworld",
+                    "asset_ids": asset_ids,
+                    "memo": "stake",
+                },
+            }],
+        }
+        self.wax_transact(transaction)
+        self.log.info("种地完成")
+        time.sleep(cfg.req_interval)
 
     def scan_crops(self):
         self.log.info("检查农田")
@@ -1113,6 +1181,9 @@ class Farmer:
                 time.sleep(cfg.req_interval)
             if user_param.build:
                 self.scan_buildings()
+                time.sleep(cfg.req_interval)
+            if user_param.auto_plant:
+                self.scan_plants()
                 time.sleep(cfg.req_interval)
             self.log.info("结束一轮扫描")
             if self.not_operational:

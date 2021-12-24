@@ -34,6 +34,7 @@ class user_param:
     sell_barley: bool = True
     sell_milk: bool = True
     sell_egg: bool = True
+    auto_plant: bool = True
     # 能量不够的时候，就去恢复那么多能量,但不超过最大能量
     recover_energy: int = 500
 
@@ -50,6 +51,9 @@ class user_param:
     remaining_barley_num: int = 0
     remaining_milk_num: int = 0
     remaining_egg_num: int = 0
+
+    barleyseed_num: int = 0
+    cornseed_num: int = 0
 
 
 def load_user_param(user: dict):
@@ -76,6 +80,9 @@ def load_user_param(user: dict):
     user_param.remaining_barley_num = user.get("remaining_barley_num", 0)
     user_param.remaining_milk_num = user.get("remaining_milk_num", 0)
     user_param.remaining_egg_num = user.get("remaining_egg_num", 0)
+
+    user_param.barleyseed_num = user.get("barleyseed_num", 0)
+    user_param.cornseed_num = user.get("cornseed_num", 0)
 
 
 cfg = Settings(
