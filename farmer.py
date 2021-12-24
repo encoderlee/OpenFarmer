@@ -956,7 +956,7 @@ class Farmer:
     # 充值
     def scan_deposit(self):
         self.log.info("检查是否需要充值")
-        r = self.get_resource()
+        r = self.resoure
 
         deposit_wood = 0
         deposit_food = 0
@@ -1182,7 +1182,7 @@ class Farmer:
 
     def scan_withdraw(self):
         self.log.info("检查是否可以提现")
-        r = self.get_resource()
+        r = self.resoure
         # 获取提现费率
         withdraw_wood = 0
         withdraw_food = 0
