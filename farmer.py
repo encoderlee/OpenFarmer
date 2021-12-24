@@ -953,6 +953,73 @@ class Farmer:
         self.claim_mining(tools)
         return True
 
+    # 充值
+    def scan_deposit(self):
+        self.log.info("检查是否需要充值")
+        r = self.get_resource()
+
+        deposit_wood = 0
+        deposit_food = 0
+        deposit_gold = 0
+
+        if r.wood <= user_param.fww_min:
+            deposit_wood = user_param.deposit_fww
+            if self.token.fww < deposit_wood:
+                self.log.info(f"fww不足，请先购买{deposit_wood}个fww代币")
+                return False
+        if r.gold <= user_param.fwg_min:
+            deposit_gold = user_param.deposit_fwg
+            if self.token.fwg < deposit_gold:
+                self.log.info(f"fwg不足，请先购买{deposit_gold}个fwg代币")
+                return False
+        if r.food <= user_param.fwf_min:
+            deposit_food = user_param.deposit_fwf
+            if self.token.fwf < deposit_food:
+                self.log.info(f"fwf不足，请先购买{deposit_food}个fwf代币")
+                return False
+        if deposit_wood + deposit_food + deposit_gold == 0:
+            self.log.info("无需充值")
+        else:
+            self.do_deposit(deposit_food, deposit_gold, deposit_wood)
+            self.log.info(f"充值：金币【{deposit_gold}】 木头【{deposit_wood}】 食物【{deposit_food}】 ")
+
+        return True
+
+    # 充值
+    def do_deposit(self, food, gold, wood):
+        self.log.info("正在充值")
+        # format(1.23456, '.4f')
+        quantities = []
+        if food > 0:
+            food = format(food, '.4f')
+            quantities.append(food + " FWF")
+        if gold > 0:
+            gold = format(gold, '.4f')
+            quantities.append(gold + " FWG")
+        if wood > 0:
+            wood = format(wood, '.4f')
+            quantities.append(wood + " FWW")
+        # quantities格式：1.0000 FWW
+        transaction = {
+            "actions": [{
+                "account": "farmerstoken",
+                "name": "transfers",
+                "authorization": [{
+                    "actor": self.wax_account,
+                    "permission": "active",
+                }],
+                "data": {
+                    "from": self.wax_account,
+                    "to": "farmersworld",
+                    "quantities": quantities,
+                    "memo": "deposit",
+                },
+            }],
+        }
+        self.wax_transact(transaction)
+        self.log.info("充值完成")
+
+
     # 提现
     def do_withdraw(self, food, gold, wood, fee):
         self.log.info("正在提现")
@@ -1121,7 +1188,7 @@ class Farmer:
         withdraw_food = 0
         withdraw_gold = 0
         config = self.get_farming_config()
-        withdraw_fee = config["fee"];
+        withdraw_fee = config["fee"]
         self.log.info(f"提现费率：{withdraw_fee}% ")
 
         if withdraw_fee == 5:
@@ -1140,6 +1207,7 @@ class Farmer:
             self.log.info("不满足提现条件")
 
         return True
+
 
     def scan_resource(self):
         r = self.get_resource()
@@ -1177,6 +1245,9 @@ class Farmer:
                 time.sleep(cfg.req_interval)
             if user_param.withdraw:
                 self.scan_withdraw()
+                time.sleep(cfg.req_interval)
+            if user_param.auto_deposit:
+                self.scan_deposit()
                 time.sleep(cfg.req_interval)
             if user_param.sell_corn or user_param.sell_barley or user_param.sell_milk or user_param.sell_egg:
                 # 卖玉米和大麦和牛奶
