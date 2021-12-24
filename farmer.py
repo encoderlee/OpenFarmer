@@ -734,7 +734,8 @@ class Farmer:
             if len(barleyseed_list) < user_param.barleyseed_num:
                 self.log.warning("大麦种子数量不足,请及时补充")
                 return False
-            for i in range(user_param.barleyseed_num):
+            plant_times = min(slots_num,user_param.barleyseed_num)
+            for i in range(plant_times):
                 asset = barleyseed_list.pop()
                 self.wear_assets([asset.asset_id])
         else:
@@ -745,7 +746,8 @@ class Farmer:
             if len(cornseed_list) < user_param.cornseed_num:
                 self.log.warning("玉米种子数量不足,请及时补充")
                 return False
-            for i in range(user_param.cornseed_num):
+            plant_times2 = min(slots_num, user_param.cornseed_num)
+            for i in range(plant_times2):
                 asset = cornseed_list.pop()
                 self.wear_assets([asset.asset_id])
         else:
