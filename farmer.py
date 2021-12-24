@@ -1118,7 +1118,10 @@ class Farmer:
 
     # 消耗耐久度 （操作前模拟计算）
     def consume_durability(self, tool: Tool):
-        if tool.current_durability - user_param.min_durability >= tool.durability_consumed:
+        if tool.current_durability / tool.durability < (user_param.min_durability / 100):
+            self.log.info(f"工具耐久不足{user_param.min_durability}%")
+            self.repair_tool(tool)
+        elif tool.current_durability >= tool.durability_consumed:
             return True
         else:
             self.log.info("工具耐久不足")
