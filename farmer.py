@@ -722,7 +722,8 @@ class Farmer:
                 slots_num = 8 - item["slots_used"]
                 if slots_num > 0:
                     self.plant_corps(slots_num)
-
+                else:
+                    self.log.info("没有未使用的地块")
         return True
 
     # 种植
