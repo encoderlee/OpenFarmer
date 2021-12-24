@@ -37,6 +37,7 @@ class user_param:
     auto_plant: bool = True
     # 能量不够的时候，就去恢复那么多能量,但不超过最大能量
     recover_energy: int = 500
+    min_energy: int = 50
 
     on_server: bool = False
 
@@ -71,6 +72,7 @@ def load_user_param(user: dict):
     user_param.sell_milk = user.get("sell_milk", True)
     user_param.sell_egg = user.get("sell_egg", True)
     user_param.recover_energy = user.get("recover_energy", 500)
+    user_param.min_energy = user.get("min_energy", 50)
     user_param.withdraw = user.get("withdraw", True)
     user_param.need_fww = user.get("need_fww", 200)
     user_param.need_fwf = user.get("need_fwf", 200)

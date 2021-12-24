@@ -38,12 +38,13 @@ cornseed_num: 0
 withdraw: false
 #账号中剩余多少材料不提现
 need_fww: 0
-need_fwf: 500
-need_fwg: 500
+need_fwf: 1000
+need_fwg: 1000
 #最少提现数量，3种材料总和
 withdraw_min: 500
 
 #每次补充满多少能量
 recover_energy: 500
-
+#低于多少能量开启补充
+min_energy: 50
 

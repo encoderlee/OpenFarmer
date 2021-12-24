@@ -1035,7 +1035,7 @@ class Farmer:
     # 消耗能量 （操作前模拟计算）
     def consume_energy(self, real_consume: Decimal, fake_consume: Decimal = Decimal(0)):
         consume = real_consume + fake_consume
-        if self.resoure.energy - consume > 0:
+        if self.resoure.energy - consume > user_param.min_energy:
             self.resoure.energy -= real_consume
             return True
         else:
