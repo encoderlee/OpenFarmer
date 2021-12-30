@@ -20,7 +20,7 @@ class Settings:
 # 用户配置参数
 class user_param:
     wax_account: str = None
-    use_proxy: str = True
+    use_proxy: bool = True
     proxy: str = None
 
     build: bool = True
@@ -29,6 +29,9 @@ class user_param:
     plant: bool = True
     cow: bool = True
     mbs: bool = True
+    # 能量不够的时候，就去恢复那么多能量,但不超过最大能量
+    recover_energy: int = 500
+
     withdraw: bool = True
     auto_deposit: bool = True
     sell_corn: bool = True
@@ -36,8 +39,6 @@ class user_param:
     sell_milk: bool = True
     sell_egg: bool = True
     auto_plant: bool = True
-    # 能量不够的时候，就去恢复那么多能量,但不超过最大能量
-    recover_energy: int = 500
     min_energy: int = 50
 
     on_server: bool = False
@@ -66,10 +67,52 @@ class user_param:
 
     min_durability: int = 0
 
+    @staticmethod
+    def to_dict():
+        return {
+            "wax_account": user_param.wax_account,
+            "use_proxy": user_param.use_proxy,
+            "proxy": user_param.proxy,
+            "build": user_param.build,
+            "mining": user_param.mining,
+            "chicken": user_param.chicken,
+            "plant": user_param.plant,
+            "cow": user_param.cow,
+            "mbs": user_param.mbs,
+            "recover_energy": user_param.recover_energy,
+
+            "withdraw": user_param.withdraw,
+            "auto_deposit": user_param.auto_deposit,
+            "sell_corn": user_param.sell_corn,
+            "sell_barley": user_param.sell_barley,
+            "sell_milk": user_param.sell_milk,
+            "sell_egg": user_param.sell_egg,
+            "auto_plant": user_param.auto_plant,
+            "min_energy": user_param.min_energy,
+            "on_server": user_param.on_server,
+            "need_fww": user_param.need_fww,
+            "need_fwf": user_param.need_fwf,
+            "need_fwg": user_param.need_fwg,
+            "withdraw_min": user_param.withdraw_min,
+            "remaining_corn_num": user_param.remaining_corn_num,
+            "remaining_barley_num": user_param.remaining_barley_num,
+            "remaining_milk_num": user_param.remaining_milk_num,
+            "remaining_egg_num": user_param.remaining_egg_num,
+            "barleyseed_num": user_param.barleyseed_num,
+            "cornseed_num": user_param.cornseed_num,
+            "fww_min": user_param.fww_min,
+            "deposit_fww": user_param.deposit_fww,
+            "fwf_min": user_param.fwf_min,
+            "deposit_fwf": user_param.deposit_fwf,
+            "fwg_min": user_param.fwg_min,
+            "deposit_fwg": user_param.deposit_fwg,
+            "min_durability": user_param.min_durability,
+        }
+
 
 def load_user_param(user: dict):
     user_param.wax_account = user["wax_account"]
-    user_param.use_proxy = user.get("proxy", True)
+    user_param.use_proxy = user.get("use_proxy", True)
     user_param.proxy = user.get("proxy", None)
     user_param.build = user.get("build", True)
     user_param.mining = user.get("mining", True)

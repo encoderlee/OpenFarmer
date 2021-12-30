@@ -64,8 +64,8 @@ https://chromedriver.chromium.org/downloads
    
    windows系统的话下载【chromedriver_win32.zip】
 6. 将下载的 ChromeDriver 压缩包中的 chromedriver.exe 文件，解压到本项目的源码目录中（和 main.py 在一个目录中）
-7. 修改配置文件【user.yaml】 
-   1. 复制user.yaml.example 到 user.yaml
+7. 修改配置文件【user.yml】 
+   1. 复制user.yml.example 到 user.yml
    2. 按照你的实际情况设置各个参数
    3. wax_account: (wax账号，也就是wax钱包地址,以.wam结尾)
    4. proxy: (可设置http代理，格式为127.0.0.1:10809，不需要代理的话设置为null)

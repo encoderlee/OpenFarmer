@@ -303,6 +303,9 @@ class Farmer:
         resource = Resoure()
         resource.energy = Decimal(resp["rows"][0]["energy"])
         resource.max_energy = Decimal(resp["rows"][0]["max_energy"])
+        resource.gold = Decimal(0)
+        resource.wood = Decimal(0)
+        resource.food = Decimal(0)
         balances: List[str] = resp["rows"][0]["balances"]
         for item in balances:
             sp = item.split(" ")
