@@ -58,15 +58,14 @@ class MyDialog(QDialog, Ui_Dialog):
         self.setWindowFlags(Qt.WindowType.WindowMinimizeButtonHint | Qt.WindowType.WindowCloseButtonHint)
         self.setFixedSize(self.size())
         self.button_start.clicked.connect(self.start)
-        self.button_stop.clicked.connect(self.stop)
         handler = QTextEditLogHandler()
         handler.signal_log.connect(self.show_log)
-        logging_format = logging.Formatter("[%(asctime)s][%(levelname)s][%(process)d]: %(message)s")
+        #logging_format = logging.Formatter("[%(asctime)s][%(levelname)s][%(process)d]: %(message)s")
+        logging_format = logging.Formatter("[%(asctime)s][%(tag)s]: %(message)s", "%Y-%m-%d %H:%M:%S")
         handler.setFormatter(logging_format)
         logging.getLogger().addHandler(handler)
         self.load_yaml()
         self.worker = Worker(self.farmer)
-        self.WorkingStatus = True
 
     def load_yaml(self):
         if len(sys.argv) == 2:
@@ -215,7 +214,6 @@ class MyDialog(QDialog, Ui_Dialog):
             exec('self.label_{}.setEnabled(status)'.format(i))
 
     def start(self):
-        self.WorkingStatus = True
         self.setEnabled(False)
         self.setWindowTitle("农民世界助手{0}【{1}】".format(version, self.edit_account.text()))
         self.update_ui(True)
@@ -225,7 +223,6 @@ class MyDialog(QDialog, Ui_Dialog):
         self.plain_text_edit.appendPlainText(line)
 
     def stop(self):
-        self.WorkingStatus = False
         self.update_ui(True)
         self.setEnabled(True)
         with open(self.user_yml, "w") as file:
@@ -236,8 +233,7 @@ class MyDialog(QDialog, Ui_Dialog):
         self.plain_text_edit.appendPlainText("程序已退出")
 
     def closeEvent(self, event: QtGui.QCloseEvent):
-        if self.WorkingStatus:
-            self.stop()
+        self.stop()
         event.accept()
 
 
