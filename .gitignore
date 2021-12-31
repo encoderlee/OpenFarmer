@@ -3,3 +3,6 @@ __pycache__
 /logs
 /data_dir
 user.yml
+/dist
+/build
+chromedriver.exe
