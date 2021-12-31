@@ -3,7 +3,10 @@
 >该脚本基于https://github.com/encoderlee/OpenFarmer 开发，在他的功能基础上增加了一些功能，感谢这位大佬无私奉献。
 
 ### 一个免费、开源的农民世界 FarmersWorld 挂机脚本
-![image](https://raw.githubusercontent.com/encoderlee/OpenFarmer/main/doc/demo1.png)
+可视化界面图例：
+![image](https://static.umaske.com/20211231114315.png)
+命令行界面图例：
+![image](https://static.umaske.com/20211231114612.png)
 ### 初衷
 
 农民世界 https://farmersworld.io 的火热相信大家已经有目共睹
@@ -42,7 +45,11 @@
 12. 支持食物、金子不足自动充值
 13. 支持5%费率的时候自动提现
 
-### 用法
+### 用法一
+嫌麻烦的同学可以直接在github页面右侧的【Releases】处下载最新的打包版本，该版本只支持windows 64位系统，建议在win10系统上运行，把压缩包里的目录解压出来，双击运行【gui.exe】即可，命令行版本可运行【main.exe】，使用命令行版本前需手工修改配置文件【user.yml】
+
+对安全性有要求，喜欢捣鼓代码的，建议从源码运行，根据下面的步骤一步步来
+### 用法二
 1. git clone 源码到本地，或 Download ZIP 下载源码到本地
 2. 下载安装python3 (版本须大于等于python3.7)
    
@@ -102,3 +109,6 @@ TRC20地址: TXmvTZ3ndHpvJU7SYmuLdLBufWdxA34Qix
 WAX地址：4lrzu.wam（支持WAX、FWW、FWF、FWG）
 
 ### 感谢!
+
+
+> 农民世界中文教程：https://fww.umaske.com
