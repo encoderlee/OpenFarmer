@@ -721,7 +721,7 @@ class Farmer:
         self.log.debug("get_buildings_info:{0}".format(resp.text))
         resp = resp.json()
         for item in resp["rows"]:
-            if item["template_id"] == 298592:
+            if item["template_id"] == 298592 and item["is_ready"] == 1:
                 slots_num = 8 - item["slots_used"]
                 if slots_num > 0:
                     self.plant_corps(slots_num)
