@@ -2,12 +2,18 @@ wax_account: abcde.wam
 # only http proxy like 127.0.0.1:10809
 use_proxy: false
 proxy: null
-#建造、采集资源、养鸡、养牛、种地、会员点击，需要程序自动化的操作，设置为true
+# 建造、采集资源、养鸡、养牛、种地、会员点击，需要程序自动化的操作，设置为true
+# 建造
 build: false
+# 采集资源
 mining: false
+# 养鸡
 chicken: false
+# 养牛
 cow: false
+# 种地浇水
 plant: false
+# 会员点击
 mbs: false
 
 #自动卖资产对应游戏里的Exchange
@@ -28,42 +34,43 @@ sell_egg: false
 #保留鸡蛋数量
 remaining_egg_num: 0
 
-#自动种作物（大麦种子|玉米种子）
-#请先买好大麦种子或玉米种子
+# 自动种作物（大麦种子|玉米种子）
+# 请先买好大麦种子或玉米种子
 auto_plant: false
 #大麦种子数量
 barleyseed_num: 0
 #玉米种子数量
 cornseed_num: 0
 
-#自动提现
+# 自动提现
 withdraw: false
-#账号中剩余多少材料不提现
+# 账号中剩余多少材料不提现
 need_fww: 0
 need_fwf: 1000
 need_fwg: 1000
 #最少提现数量，3种材料总和
 withdraw_min: 500
 
-#自动充值
+# 自动充值
 auto_deposit: false
 #少于多少木头充值
 fww_min: 0
-#每次充值木头数量
+# 每次充值木头数量
 deposit_fww: 0
-#少于多少食物充值
+# 少于多少食物充值
 fwf_min: 0
-#每次充值食物数量
+# 每次充值食物数量
 deposit_fwf: 10
-#少于多少金充值
+# 少于多少金充值
 fwg_min: 0
-#每次充值金币数量
+# 每次充值金币数量
 deposit_fwg: 10
 
-#每次补充满多少能量
+# 每次补充满多少能量
 recover_energy: 500
-#低于多少能量开启补充（只有在操作的时候才会检测能量）
+# 低于多少能量开启补充（每次操作前才会检测能量够不够，如果不够开启补充）
 min_energy: 50
 
-#低于多少耐久度开启维修(单位%）（只有在操作的时候才会检测）
+#低于多少耐久度开启维修(单位%）（每次操作前才会检测能量够不够，如果不够开启维修）
 min_durability: 20
+
