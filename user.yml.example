@@ -39,9 +39,9 @@ remaining_egg_num: 0
 buy_food: false
 # 一次购买的数量
 buy_food_num: 0
-# 自动买大麦种子（种地种子不够时，触发购买）
+# 自动买大麦种子（种地种子不够时，触发购买，数量缺多少买多少）
 buy_barley_seed: false
-# 自动买玉米种子（种地种子不够时，触发购买）
+# 自动买玉米种子（种地种子不够时，触发购买，数量缺多少买多少）
 buy_corn_seed: false
 
 
