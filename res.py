@@ -71,6 +71,7 @@ class Milk(Farming):
 class Corn(Farming):
     name: str = "Corn"
     template_id: int = 318607
+    golds_cost: int = 82
 
 
 # 大麦
@@ -78,6 +79,7 @@ class Corn(Farming):
 class Barley(Farming):
     name: str = "Barley"
     template_id: int = 318606
+    golds_cost: int = 55
 
 
 supported_foods = [Milk, Corn, Barley]
@@ -240,18 +242,19 @@ class Crop(Farming):
             return f"[{self.name}] [{self.asset_id}]"
 
 
-# 大麦
+# 大麦种子
 @dataclass(init=False)
 class BarleySeed(Crop):
     name: str = "Barley Seed"
     template_id: int = 298595
+    golds_cost: int = 50
 
-
-# 玉米
+# 玉米种子
 @dataclass(init=False)
 class CornSeed(Crop):
     name: str = "Corn Seed"
     template_id: int = 298596
+    golds_cost: int = 75
 
 
 supported_crops = [BarleySeed, CornSeed]

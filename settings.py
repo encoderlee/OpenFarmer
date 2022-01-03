@@ -67,6 +67,14 @@ class user_param:
 
     min_durability: int = 0
 
+    # 自动买食物
+    buy_food: bool = False
+    buy_food_num: int = 0
+    # 自动买大麦种子
+    buy_barley_seed: bool = False
+    # 自动买玉米种子
+    buy_corn_seed: bool = False
+
     @staticmethod
     def to_dict():
         return {
@@ -107,6 +115,11 @@ class user_param:
             "fwg_min": user_param.fwg_min,
             "deposit_fwg": user_param.deposit_fwg,
             "min_durability": user_param.min_durability,
+
+            "buy_food": user_param.buy_food,
+            "buy_food_num": user_param.buy_food_num,
+            "buy_barley_seed": user_param.buy_barley_seed,
+            "buy_corn_seed": user_param.buy_corn_seed,
         }
 
 
@@ -120,16 +133,16 @@ def load_user_param(user: dict):
     user_param.cow = user.get("cow", True)
     user_param.plant = user.get("plant", True)
     user_param.mbs = user.get("mbs", True)
-    user_param.sell_corn = user.get("sell_corn", True)
-    user_param.sell_barley = user.get("sell_barley", True)
-    user_param.sell_milk = user.get("sell_milk", True)
-    user_param.sell_egg = user.get("sell_egg", True)
-    user_param.auto_plant = user.get("auto_plant", True)
+    user_param.sell_corn = user.get("sell_corn", False)
+    user_param.sell_barley = user.get("sell_barley", False)
+    user_param.sell_milk = user.get("sell_milk", False)
+    user_param.sell_egg = user.get("sell_egg", False)
+    user_param.auto_plant = user.get("auto_plant", False)
     user_param.recover_energy = user.get("recover_energy", 500)
     user_param.min_energy = user.get("min_energy", 50)
     user_param.min_durability = user.get("min_durability", 0)
-    user_param.withdraw = user.get("withdraw", True)
-    user_param.auto_deposit = user.get("auto_deposit", True)
+    user_param.withdraw = user.get("withdraw", False)
+    user_param.auto_deposit = user.get("auto_deposit", False)
     user_param.need_fww = user.get("need_fww", 200)
     user_param.need_fwf = user.get("need_fwf", 200)
     user_param.need_fwg = user.get("need_fwg", 200)
@@ -148,6 +161,11 @@ def load_user_param(user: dict):
     user_param.deposit_fwf = user.get("deposit_fwf", 0)
     user_param.fwg_min = user.get("fwg_min", 0)
     user_param.deposit_fwg = user.get("deposit_fwg", 0)
+
+    user_param.buy_food = user.get("buy_food", False)
+    user_param.buy_food_num = user.get("buy_food_num", 0)
+    user_param.buy_barley_seed = user.get("buy_barley_seed", False)
+    user_param.buy_corn_seed = user.get("buy_corn_seed", False)
 
 
 cfg = Settings(

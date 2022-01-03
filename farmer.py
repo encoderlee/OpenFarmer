@@ -563,8 +563,12 @@ class Farmer:
         list_food = self.get_asset(animal.consumed_card, food_class.name)
         self.log.info("剩余[{0}]数量: [{1}]".format(food_class.name, len(list_food)))
         if len(list_food) <= 0:
-            self.log.warning("{0}数量不足,请及时补充".format(food_class.name))
-            return False
+            rs = self.buy_corps(animal.consumed_card, user_param.buy_food_num)
+            if not rs:
+                self.log.warning("{0}数量不足,请及时补充".format(food_class.name))
+                return False
+            else:
+                list_food = self.get_asset(animal.consumed_card, food_class.name)
         asset = list_food.pop()
 
         return asset.asset_id
@@ -729,6 +733,57 @@ class Farmer:
                     self.log.info("没有未使用的地块")
         return True
 
+    # 购买作物
+    def buy_corps(self, template_id: int, buy_num: int):
+        if buy_num <= 0:
+            self.log.info("购买数量为0")
+            return False
+        item_class = res.farming_table.get(template_id)
+        total_golds = item_class.golds_cost * buy_num
+        if total_golds > self.resoure.gold:
+            self.log.info("金币不足，还差{0}个，开始充值".format((total_golds - self.resoure.gold)))
+            self.do_deposit(0, (total_golds - self.resoure.gold), 0)
+
+        if user_param.buy_barley_seed and template_id == 298595:
+            self.log.info("开始购买大麦种子,数量：{0}".format(buy_num))
+            self.market_buy(template_id, buy_num)
+        elif user_param.buy_corn_seed and template_id == 298596:
+            self.log.info("开始购买玉米种子,数量：{0}".format(buy_num))
+            self.market_buy(template_id, buy_num)
+        elif user_param.buy_food and template_id == 318606:
+            self.log.info("开始购买大麦,数量：{0}".format(buy_num))
+            self.market_buy(template_id, buy_num)
+        elif user_param.buy_food and template_id == 318607:
+            self.log.info("开始购买玉米,数量：{0}".format(buy_num))
+            self.market_buy(template_id, buy_num)
+        else:
+            self.log.info("不支持购买，请检查配置")
+
+        return True
+
+    # 市场购买
+    def market_buy(self, template_id: int, buy_num: int):
+
+        transaction = {
+            "actions": [{
+                "account": "farmersworld",
+                "name": "mktbuy",
+                "authorization": [{
+                    "actor": self.wax_account,
+                    "permission": "active",
+                }],
+                "data": {
+                    "owner": self.wax_account,
+                    "quantity": buy_num,
+                    "template_id": template_id,
+                },
+            }],
+        }
+        self.wax_transact(transaction)
+        self.log.info("购买完成")
+
+        return True
+
     # 种植
     def plant_corps(self, slots_num):
         self.log.info("获取大麦或玉米种子")
@@ -736,8 +791,13 @@ class Farmer:
             barleyseed_list = self.get_asset(298595, 'Barley Seed')
             plant_times = min(slots_num, user_param.barleyseed_num)
             if len(barleyseed_list) < plant_times:
-                self.log.warning("大麦种子数量不足,请及时补充")
-                return False
+                self.log.warning("大麦种子数量不足,开始市场购买")
+                buy_barleyseed_num = plant_times - len(barleyseed_list)
+                rs = self.buy_corps(298595, buy_barleyseed_num)
+                if not rs:
+                    return False
+                else:
+                    barleyseed_list = self.get_asset(298595, 'Barley Seed')
             for i in range(plant_times):
                 asset = barleyseed_list.pop()
                 self.wear_assets([asset.asset_id])
@@ -749,7 +809,12 @@ class Farmer:
             plant_times2 = min(slots_num, user_param.cornseed_num)
             if len(cornseed_list) < plant_times2:
                 self.log.warning("玉米种子数量不足,请及时补充")
-                return False
+                buy_cornseed_num = plant_times2 - len(cornseed_list)
+                rs = self.buy_corps(298596, buy_cornseed_num)
+                if not rs:
+                    return False
+                else:
+                    cornseed_list = self.get_asset(298596, 'Corn Seed')
             for i in range(plant_times2):
                 asset = cornseed_list.pop()
                 self.wear_assets([asset.asset_id])
@@ -1062,7 +1127,8 @@ class Farmer:
         self.log.info(f"正在修理工具: {tool.show()}")
         consume_gold = (tool.durability - tool.current_durability) // 5
         if Decimal(consume_gold) > self.resoure.gold:
-            raise StopException("没有足够的金币修理工具")
+            raise FarmerException("没有足够的金币修理工具，请补充金币，稍后程序自动重试")
+
         transaction = {
             "actions": [{
                 "account": "farmersworld",
