@@ -741,8 +741,13 @@ class Farmer:
         item_class = res.farming_table.get(template_id)
         total_golds = item_class.golds_cost * buy_num
         if total_golds > self.resoure.gold:
-            self.log.info("金币不足，还差{0}个，开始充值".format((total_golds - self.resoure.gold)))
-            self.do_deposit(0, (total_golds - self.resoure.gold), 0)
+            new_buy_num = int(self.resoure.gold/item_class.golds_cost)
+            if new_buy_num <= 0:
+                self.log.info("金币不足，无法购买，请先补充金币")
+                return False
+            else:
+                self.log.info("金币不足，需要购买[{0}]个，实际购买[{1}]个".format(buy_num, new_buy_num))
+                buy_num = new_buy_num
 
         if user_param.buy_barley_seed and template_id == 298595:
             self.log.info("开始购买大麦种子,数量：{0}".format(buy_num))
