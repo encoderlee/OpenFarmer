@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>665</width>
+    <width>733</width>
     <height>470</height>
    </rect>
   </property>
@@ -48,7 +48,7 @@
     <rect>
      <x>20</x>
      <y>210</y>
-     <width>631</width>
+     <width>691</width>
      <height>231</height>
     </rect>
    </property>
@@ -62,7 +62,7 @@
   <widget class="QPushButton" name="button_start">
    <property name="geometry">
     <rect>
-     <x>540</x>
+     <x>607</x>
      <y>20</y>
      <width>101</width>
      <height>41</height>
@@ -167,7 +167,7 @@
     <rect>
      <x>18</x>
      <y>90</y>
-     <width>111</width>
+     <width>101</width>
      <height>111</height>
     </rect>
    </property>
@@ -253,9 +253,9 @@
   <widget class="QWidget" name="verticalLayoutWidget_2">
    <property name="geometry">
     <rect>
-     <x>148</x>
+     <x>142</x>
      <y>90</y>
-     <width>191</width>
+     <width>151</width>
      <height>111</height>
     </rect>
    </property>
@@ -272,6 +272,17 @@
     </item>
     <item>
      <widget class="QLabel" name="label_4">
+      <property name="font">
+       <font>
+        <pointsize>8</pointsize>
+       </font>
+      </property>
+      <property name="autoFillBackground">
+       <bool>false</bool>
+      </property>
+      <property name="styleSheet">
+       <string notr="true"/>
+      </property>
       <property name="text">
        <string>触发充值：</string>
       </property>
@@ -325,6 +336,11 @@
     </item>
     <item>
      <widget class="QLabel" name="label_5">
+      <property name="font">
+       <font>
+        <pointsize>8</pointsize>
+       </font>
+      </property>
       <property name="text">
        <string>充值数量：</string>
       </property>
@@ -394,9 +410,9 @@
   <widget class="QWidget" name="gridLayoutWidget">
    <property name="geometry">
     <rect>
-     <x>358</x>
+     <x>310</x>
      <y>90</y>
-     <width>171</width>
+     <width>161</width>
      <height>111</height>
     </rect>
    </property>
@@ -502,7 +518,7 @@
   <widget class="QWidget" name="gridLayoutWidget_2">
    <property name="geometry">
     <rect>
-     <x>380</x>
+     <x>410</x>
      <y>4</y>
      <width>131</width>
      <height>74</height>
@@ -583,10 +599,10 @@
   <widget class="QWidget" name="verticalLayoutWidget_3">
    <property name="geometry">
     <rect>
-     <x>548</x>
+     <x>491</x>
      <y>90</y>
-     <width>97</width>
-     <height>72</height>
+     <width>111</width>
+     <height>111</height>
     </rect>
    </property>
    <layout class="QVBoxLayout" name="verticalLayout_4">
@@ -609,13 +625,6 @@
         </property>
        </widget>
       </item>
-      <item row="0" column="1">
-       <widget class="QLineEdit" name="barleyseed_num">
-        <property name="text">
-         <string>8</string>
-        </property>
-       </widget>
-      </item>
       <item row="1" column="0">
        <widget class="QLabel" name="label_22">
         <property name="text">
@@ -630,14 +639,41 @@
         </property>
        </widget>
       </item>
+      <item row="0" column="1">
+       <widget class="QLineEdit" name="barleyseed_num">
+        <property name="text">
+         <string>8</string>
+        </property>
+       </widget>
+      </item>
      </layout>
+    </item>
+    <item>
+     <widget class="QCheckBox" name="checkbox_buy_barley_seed">
+      <property name="text">
+       <string>自动买大麦种子</string>
+      </property>
+      <property name="checked">
+       <bool>false</bool>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QCheckBox" name="checkbox_buy_corn_seed">
+      <property name="text">
+       <string>自动买玉米种子</string>
+      </property>
+      <property name="checked">
+       <bool>false</bool>
+      </property>
+     </widget>
     </item>
    </layout>
   </widget>
   <widget class="Line" name="line_3">
    <property name="geometry">
     <rect>
-     <x>130</x>
+     <x>123</x>
      <y>90</y>
      <width>16</width>
      <height>111</height>
@@ -650,7 +686,7 @@
   <widget class="Line" name="line_4">
    <property name="geometry">
     <rect>
-     <x>340</x>
+     <x>293</x>
      <y>90</y>
      <width>16</width>
      <height>111</height>
@@ -663,7 +699,7 @@
   <widget class="Line" name="line_5">
    <property name="geometry">
     <rect>
-     <x>530</x>
+     <x>473</x>
      <y>90</y>
      <width>16</width>
      <height>111</height>
@@ -691,12 +727,67 @@
     <rect>
      <x>0</x>
      <y>72</y>
-     <width>801</width>
+     <width>821</width>
      <height>16</height>
     </rect>
    </property>
    <property name="orientation">
     <enum>Qt::Horizontal</enum>
+   </property>
+  </widget>
+  <widget class="QWidget" name="verticalLayoutWidget_4">
+   <property name="geometry">
+    <rect>
+     <x>622</x>
+     <y>90</y>
+     <width>85</width>
+     <height>62</height>
+    </rect>
+   </property>
+   <layout class="QVBoxLayout" name="verticalLayout_2">
+    <item>
+     <widget class="QCheckBox" name="checkbox_buy_food">
+      <property name="toolTip">
+       <string>自动买食物[玉米或大麦]（喂动物食物不够时，触发购买）</string>
+      </property>
+      <property name="text">
+       <string>自动买食物</string>
+      </property>
+      <property name="checked">
+       <bool>false</bool>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QLabel" name="label_23">
+      <property name="toolTip">
+       <string>一次购买的数量</string>
+      </property>
+      <property name="text">
+       <string>购买数量：</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QLineEdit" name="buy_food_num">
+      <property name="text">
+       <string>0</string>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="Line" name="line_7">
+   <property name="geometry">
+    <rect>
+     <x>603</x>
+     <y>90</y>
+     <width>16</width>
+     <height>111</height>
+    </rect>
+   </property>
+   <property name="orientation">
+    <enum>Qt::Vertical</enum>
    </property>
   </widget>
  </widget>

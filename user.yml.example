@@ -46,7 +46,7 @@ buy_corn_seed: false
 
 
 # 自动种作物（大麦种子|玉米种子）
-# 请先买好大麦种子或玉米种子
+# 请先买好大麦种子、玉米种子或开启市场自动购买
 auto_plant: false
 #大麦种子数量
 barleyseed_num: 0
