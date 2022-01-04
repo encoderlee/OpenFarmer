@@ -493,7 +493,6 @@ class Farmer:
         if len(chest["data"]) <= 0:
             return asset_list
         for item in chest["data"]:
-            assert item["name"] == name
             asset = Asset()
             asset.asset_id = item["asset_id"]
             asset.name = item["name"]
