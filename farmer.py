@@ -551,16 +551,18 @@ class Farmer:
 
     # 喂动物
     def feed_animal(self, asset_id_food: str, animal: Animal, breeding=False) -> bool:
-        self.log.info("feed [{0}] to [{1}]".format(asset_id_food, animal.asset_id))
+
         fake_consumed = Decimal(0)
         if animal.times_claimed == animal.required_claims - 1:
             # 收获前的最后一次喂养，多需要200点能量，游戏合约BUG
             fake_consumed = Decimal(200)
         self.consume_energy(Decimal(animal.energy_consumed), fake_consumed)
         if not breeding:
-            memo = "breed_animal:[{0}],[{1}]".format(animal.bearer_id,animal.partner_id)
-        else:
+            self.log.info("feed [{0}] to [{1}]".format(asset_id_food, animal.asset_id))
             memo = "feed_animal:{0}".format(animal.asset_id)
+        else:
+            self.log.info("feed [{0}] to [{1}]".format(asset_id_food, animal.bearer_id))
+            memo = "breed_animal:{0},{1}".format(animal.bearer_id, animal.partner_id)
 
         transaction = {
             "actions": [{
@@ -618,17 +620,18 @@ class Farmer:
 
     # 饲养繁殖的动物
     def breeding_claim(self, animals: List[Animal]):
+
         for item in animals:
-            self.log.info("【繁殖】正在喂[{0}]: [{1}]".format(item.name, item.show()))
+            self.log.info("【繁殖】正在喂[{0}]: [{1}]".format(item.name, item.show(False,True)))
             feed_asset_id = self.get_animal_food(item)
             if not feed_asset_id:
                 return False
             success = self.feed_animal(feed_asset_id, item, True)
 
             if success:
-                self.log.info("【繁殖】喂养成功: {0}".format(item.show(more=False)))
+                self.log.info("【繁殖】喂养成功: {0}".format(item.show(more=False, breeding=True)))
             else:
-                self.log.info("【繁殖】喂养失败: {0}".format(item.show(more=False)))
+                self.log.info("【繁殖】喂养失败: {0}".format(item.show(more=False, breeding=True)))
                 self.count_error_claim += 1
             time.sleep(cfg.req_interval)
         return True
