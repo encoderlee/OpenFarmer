@@ -125,6 +125,8 @@ class MyDialog(QDialog, Ui_Dialog):
             user_param.buy_barley_seed = self.checkbox_buy_barley_seed.isChecked()
             user_param.buy_corn_seed = self.checkbox_buy_corn_seed.isChecked()
             user_param.buy_food_num = int(self.buy_food_num.text())
+            # 自动购买
+            user_param.breeding = self.checkbox_breeding.isChecked()
 
         else:
             self.edit_account.setText(user_param.wax_account)
@@ -174,6 +176,8 @@ class MyDialog(QDialog, Ui_Dialog):
             self.checkbox_buy_barley_seed.setChecked(user_param.buy_barley_seed)
             self.checkbox_buy_corn_seed.setChecked(user_param.buy_corn_seed)
             self.buy_food_num.setText(str(user_param.buy_food_num))
+            # 繁殖
+            self.checkbox_breeding.setChecked(user_param.breeding)
 
     def setEnabled(self, status: bool):
         self.checkbox_cow.setEnabled(status)
@@ -225,6 +229,8 @@ class MyDialog(QDialog, Ui_Dialog):
         self.checkbox_buy_barley_seed.setEnabled(status)
         self.checkbox_buy_corn_seed.setEnabled(status)
         self.buy_food_num.setEnabled(status)
+        # 繁殖
+        self.checkbox_breeding.setEnabled(status)
         for i in range(1, 24):
             exec('self.label_{}.setEnabled(status)'.format(i))
 

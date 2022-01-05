@@ -74,6 +74,7 @@ class user_param:
     buy_barley_seed: bool = False
     # 自动买玉米种子
     buy_corn_seed: bool = False
+    breeding: bool = False
 
     @staticmethod
     def to_dict():
@@ -120,6 +121,7 @@ class user_param:
             "buy_food_num": user_param.buy_food_num,
             "buy_barley_seed": user_param.buy_barley_seed,
             "buy_corn_seed": user_param.buy_corn_seed,
+            "breeding": user_param.breeding,
         }
 
 
@@ -166,6 +168,7 @@ def load_user_param(user: dict):
     user_param.buy_food_num = user.get("buy_food_num", 0)
     user_param.buy_barley_seed = user.get("buy_barley_seed", False)
     user_param.buy_corn_seed = user.get("buy_corn_seed", False)
+    user_param.breeding = user.get("breeding", False)
 
 
 cfg = Settings(

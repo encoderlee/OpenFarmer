@@ -505,6 +505,25 @@ class Farmer:
         return asset_list
 
     # 获取动物的信息
+    def get_breedings(self) -> List[Animal]:
+        post_data = self.table_row_template()
+        post_data["table"] = "breedings"
+        post_data["index_position"] = 2
+
+        resp = self.http.post(self.url_table_row, json=post_data)
+        self.log.debug("get_breedings:{0}".format(resp.text))
+        resp = resp.json()
+        if len(resp["rows"]) == 0:
+            self.log.warning("没有正在繁殖的动物，请先手动开启繁殖")
+        animals = []
+        for item in resp["rows"]:
+            anim = res.create_animal(item, True)
+            if anim:
+                animals.append(anim)
+            else:
+                self.log.info("尚未支持繁殖的动物")
+        return animals
+
     def get_animals(self) -> List[Animal]:
         post_data = self.table_row_template()
         post_data["table"] = "animals"
@@ -513,6 +532,8 @@ class Farmer:
         resp = self.http.post(self.url_table_row, json=post_data)
         self.log.debug("get_animal_info:{0}".format(resp.text))
         resp = resp.json()
+        if len(resp["rows"]) == 0:
+            self.log.warning("账户中没有动物")
         animals = []
         for item in resp["rows"]:
             anim = res.create_animal(item)
@@ -523,20 +544,23 @@ class Farmer:
                 elif anim.required_building == 298591 and user_param.chicken:
                     # 鸡舍
                     animals.append(anim)
-                # else:
-                # self.log.warning("自动喂养未开启:{0}".format(item))
             else:
-                self.log.warning("尚未支持的动物:{0}".format(item))
+                self.log.info("尚未支持的动物:{0}".format(item["name"]))
+
         return animals
 
     # 喂动物
-    def feed_animal(self, asset_id_food: str, animal: Animal) -> bool:
+    def feed_animal(self, asset_id_food: str, animal: Animal, breeding=False) -> bool:
         self.log.info("feed [{0}] to [{1}]".format(asset_id_food, animal.asset_id))
         fake_consumed = Decimal(0)
         if animal.times_claimed == animal.required_claims - 1:
             # 收获前的最后一次喂养，多需要200点能量，游戏合约BUG
             fake_consumed = Decimal(200)
         self.consume_energy(Decimal(animal.energy_consumed), fake_consumed)
+        if not breeding:
+            memo = "breed_animal:[{0}],[{1}]".format(animal.bearer_id,animal.partner_id)
+        else:
+            memo = "feed_animal:{0}".format(animal.asset_id)
 
         transaction = {
             "actions": [{
@@ -549,7 +573,7 @@ class Farmer:
                 "data": {
                     "asset_ids": [asset_id_food],
                     "from": self.wax_account,
-                    "memo": "feed_animal:{0}".format(animal.asset_id),
+                    "memo": memo,
                     "to": "farmersworld"
                 },
             }],
@@ -588,6 +612,23 @@ class Farmer:
                 self.log.info("喂养成功: {0}".format(item.show(more=False)))
             else:
                 self.log.info("喂养失败: {0}".format(item.show(more=False)))
+                self.count_error_claim += 1
+            time.sleep(cfg.req_interval)
+        return True
+
+    # 饲养繁殖的动物
+    def breeding_claim(self, animals: List[Animal]):
+        for item in animals:
+            self.log.info("【繁殖】正在喂[{0}]: [{1}]".format(item.name, item.show()))
+            feed_asset_id = self.get_animal_food(item)
+            if not feed_asset_id:
+                return False
+            success = self.feed_animal(feed_asset_id, item, True)
+
+            if success:
+                self.log.info("【繁殖】喂养成功: {0}".format(item.show(more=False)))
+            else:
+                self.log.info("【繁殖】喂养失败: {0}".format(item.show(more=False)))
                 self.count_error_claim += 1
             time.sleep(cfg.req_interval)
         return True
@@ -659,7 +700,7 @@ class Farmer:
                 self.log.info("transact ok, transaction_id: [{0}]".format(result["transaction_id"]))
                 self.log.debug("transact result: {0}".format(result))
                 time.sleep(cfg.transact_interval)
-                return True
+                return result
             else:
                 if "is greater than the maximum billable" in result:
                     self.log.error("CPU资源不足，可能需要质押更多WAX，一般为误报，稍后重试 maximum")
@@ -740,7 +781,7 @@ class Farmer:
         item_class = res.farming_table.get(template_id)
         total_golds = item_class.golds_cost * buy_num
         if total_golds > self.resoure.gold:
-            new_buy_num = int(self.resoure.gold/item_class.golds_cost)
+            new_buy_num = int(self.resoure.gold / item_class.golds_cost)
             if new_buy_num <= 0:
                 self.log.info("金币不足，无法购买，请先补充金币")
                 return False
@@ -952,6 +993,22 @@ class Farmer:
         self.log.info("售卖已完成")
         time.sleep(cfg.req_interval)
 
+    def scan_breedings(self):
+        self.log.info("检查繁殖的动物")
+        breedings = self.get_breedings()
+        self.log.info("饲养繁殖的动物:")
+        for item in breedings:
+            self.log.info(item.show())
+        breedings = self.filter_operable(breedings)
+        if not breedings:
+            self.log.info("没有可操作繁殖的动物")
+            return True
+        self.log.info("可操作繁殖的动物:")
+        for item in breedings:
+            self.log.info(item.show())
+        self.breeding_claim(breedings)
+        return True
+
     def scan_animals(self):
         self.log.info("检查动物")
         animals = self.get_animals()
@@ -1005,8 +1062,9 @@ class Farmer:
                     },
                 }],
             }
-            self.wax_transact(transaction)
-            self.log.info("采矿成功: {0}".format(item.show(more=False)))
+            result = self.wax_transact(transaction)
+            ming_resource = result["processed"]["action_traces"][0]["inline_traces"][1]["act"]["data"]["rewards"]
+            self.log.info("采矿成功: [{0}],[{1}]".format(item.show(more=False), ming_resource))
             time.sleep(cfg.req_interval)
 
     def scan_mining(self):
@@ -1090,7 +1148,6 @@ class Farmer:
         }
         self.wax_transact(transaction)
         self.log.info("充值完成")
-
 
     # 提现
     def do_withdraw(self, food, gold, wood, fee):
@@ -1284,7 +1341,6 @@ class Farmer:
 
         return True
 
-
     def scan_resource(self):
         r = self.get_resource()
         self.log.info(f"金币【{r.gold}】 木头【{r.wood}】 食物【{r.food}】 能量【{r.energy}/{r.max_energy}】")
@@ -1316,8 +1372,13 @@ class Farmer:
             if user_param.plant:
                 self.scan_crops()
                 time.sleep(cfg.req_interval)
+            # 养牛和养鸡
             if user_param.chicken or user_param.cow:
                 self.scan_animals()
+                time.sleep(cfg.req_interval)
+            # 繁殖喂养
+            if user_param.breeding:
+                self.scan_breedings()
                 time.sleep(cfg.req_interval)
             if user_param.withdraw:
                 self.scan_withdraw()

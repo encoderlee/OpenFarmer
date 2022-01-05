@@ -5,7 +5,7 @@ import os
 from settings import cfg
 
 _log = logging.getLogger(__name__)
-_log.setLevel(logging.INFO)
+_log.setLevel(logging.DEBUG)
 log = logging.LoggerAdapter(_log, {"tag": "global"})
 
 

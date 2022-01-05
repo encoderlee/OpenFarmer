@@ -110,13 +110,20 @@ class Animal(Farming):
     consumed_card: int = None
     # 所属建筑
     required_building: int = None
+    # 繁殖
+    bearer_id: int = None
+    partner_id: int = None
 
-    def show(self, more=True) -> str:
+    def show(self, more=True, breeding=False) -> str:
         if more:
             if len(self.day_claims_at) >= self.daily_claim_limit:
                 next_op_time = self.day_claims_at[0] + timedelta(hours=24)
                 self.next_availability = max(self.next_availability, next_op_time)
-            return f"[{self.name}] [{self.asset_id}][24小时喂养次数{len(self.day_claims_at)}/{self.daily_claim_limit}] [喂养次数{self.times_claimed}/{self.required_claims}] [可操作时间:{utils.show_time(self.next_availability)}] "
+            if not breeding:
+                text = f"[{self.name}] [{self.asset_id}][24小时喂养次数{len(self.day_claims_at)}/{self.daily_claim_limit}] [喂养次数{self.times_claimed}/{self.required_claims}] [可操作时间:{utils.show_time(self.next_availability)}] "
+            else:
+                text = f"[{self.name}繁殖] [{self.bearer_id}][24小时喂养次数{len(self.day_claims_at)}/{self.daily_claim_limit}] [喂养次数{self.times_claimed}/{self.required_claims}] [可操作时间:{utils.show_time(self.next_availability)}] "
+            return text
         else:
             return f"[{self.name}] [{self.asset_id}]"
 
@@ -203,7 +210,28 @@ def init_animal_config(rows: List[dict]):
 
 
 # 动物-从http返回的json数据构造对象
-def create_animal(item: dict) -> Animal:
+def create_animal(item: dict, breeding=False) -> Animal:
+    animal_class = farming_table.get(item["template_id"], None)
+    if not animal_class:
+        return None
+    animal = animal_class()
+    animal.day_claims_at = [datetime.fromtimestamp(item) for item in item["day_claims_at"]]
+    animal.name = item["name"]
+    animal.template_id = item["template_id"]
+    animal.times_claimed = item.get("times_claimed", None)
+    animal.last_claimed = datetime.fromtimestamp(item["last_claimed"])
+    animal.next_availability = datetime.fromtimestamp(item["next_availability"])
+    if not breeding:
+        animal.asset_id = item["asset_id"]
+    else:
+        animal.consumed_card = 318607  # 繁殖目前就只有奶牛，先写死
+        animal.bearer_id = item["bearer_id"]
+        animal.partner_id = item["partner_id"]
+
+    return animal
+
+# 动物-从http返回的json数据构造对象
+def create_breeding(item: dict) -> Animal:
     animal_class = farming_table.get(item["template_id"], None)
     if not animal_class:
         return None
@@ -216,7 +244,6 @@ def create_animal(item: dict) -> Animal:
     animal.last_claimed = datetime.fromtimestamp(item["last_claimed"])
     animal.next_availability = datetime.fromtimestamp(item["next_availability"])
     return animal
-
 
 ####################################################### Animal #######################################################
 

@@ -75,7 +75,7 @@
   <widget class="QLineEdit" name="edit_proxy">
    <property name="geometry">
     <rect>
-     <x>257</x>
+     <x>266</x>
      <y>15</y>
      <width>101</width>
      <height>20</height>
@@ -88,7 +88,7 @@
   <widget class="QCheckBox" name="checkbox_proxy">
    <property name="geometry">
     <rect>
-     <x>182</x>
+     <x>191</x>
      <y>15</y>
      <width>71</width>
      <height>20</height>
@@ -101,73 +101,12 @@
     <bool>false</bool>
    </property>
   </widget>
-  <widget class="QSplitter" name="splitter">
-   <property name="geometry">
-    <rect>
-     <x>20</x>
-     <y>50</y>
-     <width>341</width>
-     <height>20</height>
-    </rect>
-   </property>
-   <property name="orientation">
-    <enum>Qt::Horizontal</enum>
-   </property>
-   <widget class="QCheckBox" name="checkbox_build">
-    <property name="text">
-     <string>建造</string>
-    </property>
-    <property name="checked">
-     <bool>false</bool>
-    </property>
-   </widget>
-   <widget class="QCheckBox" name="checkbox_mining">
-    <property name="text">
-     <string>挖矿</string>
-    </property>
-    <property name="checked">
-     <bool>true</bool>
-    </property>
-   </widget>
-   <widget class="QCheckBox" name="checkbox_chicken">
-    <property name="text">
-     <string>养鸡</string>
-    </property>
-    <property name="checked">
-     <bool>false</bool>
-    </property>
-   </widget>
-   <widget class="QCheckBox" name="checkbox_plant">
-    <property name="text">
-     <string>作物浇水</string>
-    </property>
-    <property name="checked">
-     <bool>false</bool>
-    </property>
-   </widget>
-   <widget class="QCheckBox" name="checkbox_cow">
-    <property name="text">
-     <string>养牛</string>
-    </property>
-    <property name="checked">
-     <bool>false</bool>
-    </property>
-   </widget>
-   <widget class="QCheckBox" name="checkbox_mbs">
-    <property name="text">
-     <string>会员</string>
-    </property>
-    <property name="checked">
-     <bool>true</bool>
-    </property>
-   </widget>
-  </widget>
   <widget class="QWidget" name="verticalLayoutWidget">
    <property name="geometry">
     <rect>
      <x>18</x>
      <y>90</y>
-     <width>101</width>
+     <width>103</width>
      <height>111</height>
     </rect>
    </property>
@@ -789,6 +728,75 @@
    <property name="orientation">
     <enum>Qt::Vertical</enum>
    </property>
+  </widget>
+  <widget class="QSplitter" name="splitter">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>50</y>
+     <width>353</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="orientation">
+    <enum>Qt::Horizontal</enum>
+   </property>
+   <widget class="QCheckBox" name="checkbox_build">
+    <property name="text">
+     <string>建造</string>
+    </property>
+    <property name="checked">
+     <bool>false</bool>
+    </property>
+   </widget>
+   <widget class="QCheckBox" name="checkbox_mining">
+    <property name="text">
+     <string>挖矿</string>
+    </property>
+    <property name="checked">
+     <bool>false</bool>
+    </property>
+   </widget>
+   <widget class="QCheckBox" name="checkbox_chicken">
+    <property name="text">
+     <string>养鸡</string>
+    </property>
+    <property name="checked">
+     <bool>false</bool>
+    </property>
+   </widget>
+   <widget class="QCheckBox" name="checkbox_plant">
+    <property name="text">
+     <string>作物浇水</string>
+    </property>
+    <property name="checked">
+     <bool>false</bool>
+    </property>
+   </widget>
+   <widget class="QCheckBox" name="checkbox_cow">
+    <property name="text">
+     <string>养牛</string>
+    </property>
+    <property name="checked">
+     <bool>false</bool>
+    </property>
+   </widget>
+   <widget class="QCheckBox" name="checkbox_breeding">
+    <property name="text">
+     <string>繁殖</string>
+    </property>
+    <property name="checked">
+     <bool>false</bool>
+    </property>
+   </widget>
+   <widget class="QCheckBox" name="checkbox_mbs">
+    <property name="text">
+     <string>会员</string>
+    </property>
+    <property name="checked">
+     <bool>false</bool>
+    </property>
+   </widget>
   </widget>
  </widget>
  <resources/>
