@@ -1066,9 +1066,9 @@ class Farmer:
                 }],
             }
             result = self.wax_transact(transaction)
-            # ming_resource = result["processed"]["action_traces"][0]["inline_traces"][1]["act"]["data"]["rewards"]
-            # self.log.info("采矿成功: [{0}],[{1}]".format(item.show(more=False), ming_resource))
-            self.log.info("采矿成功: {0}".format(item.show(more=False)))
+            ming_resource = result["processed"]["action_traces"][0]["inline_traces"][1]["act"]["data"]["rewards"]
+            self.log.info("采矿成功: {0},{1}".format(item.show(more=False), ming_resource))
+            # self.log.info("采矿成功: {0}".format(item.show(more=False)))
             time.sleep(cfg.req_interval)
 
     def scan_mining(self):
