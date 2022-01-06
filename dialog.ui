@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>733</width>
+    <width>746</width>
     <height>470</height>
    </rect>
   </property>
@@ -48,7 +48,7 @@
     <rect>
      <x>20</x>
      <y>210</y>
-     <width>691</width>
+     <width>701</width>
      <height>231</height>
     </rect>
    </property>
@@ -62,7 +62,7 @@
   <widget class="QPushButton" name="button_start">
    <property name="geometry">
     <rect>
-     <x>607</x>
+     <x>620</x>
      <y>20</y>
      <width>101</width>
      <height>41</height>
@@ -75,7 +75,7 @@
   <widget class="QLineEdit" name="edit_proxy">
    <property name="geometry">
     <rect>
-     <x>266</x>
+     <x>295</x>
      <y>15</y>
      <width>101</width>
      <height>20</height>
@@ -88,7 +88,7 @@
   <widget class="QCheckBox" name="checkbox_proxy">
    <property name="geometry">
     <rect>
-     <x>191</x>
+     <x>220</x>
      <y>15</y>
      <width>71</width>
      <height>20</height>
@@ -194,7 +194,7 @@
     <rect>
      <x>142</x>
      <y>90</y>
-     <width>151</width>
+     <width>161</width>
      <height>111</height>
     </rect>
    </property>
@@ -349,9 +349,9 @@
   <widget class="QWidget" name="gridLayoutWidget">
    <property name="geometry">
     <rect>
-     <x>310</x>
+     <x>318</x>
      <y>90</y>
-     <width>161</width>
+     <width>171</width>
      <height>111</height>
     </rect>
    </property>
@@ -457,7 +457,7 @@
   <widget class="QWidget" name="gridLayoutWidget_2">
    <property name="geometry">
     <rect>
-     <x>410</x>
+     <x>440</x>
      <y>4</y>
      <width>131</width>
      <height>74</height>
@@ -538,7 +538,7 @@
   <widget class="QWidget" name="verticalLayoutWidget_3">
    <property name="geometry">
     <rect>
-     <x>491</x>
+     <x>508</x>
      <y>90</y>
      <width>111</width>
      <height>111</height>
@@ -625,7 +625,7 @@
   <widget class="Line" name="line_4">
    <property name="geometry">
     <rect>
-     <x>293</x>
+     <x>303</x>
      <y>90</y>
      <width>16</width>
      <height>111</height>
@@ -638,7 +638,7 @@
   <widget class="Line" name="line_5">
    <property name="geometry">
     <rect>
-     <x>473</x>
+     <x>490</x>
      <y>90</y>
      <width>16</width>
      <height>111</height>
@@ -677,7 +677,7 @@
   <widget class="QWidget" name="verticalLayoutWidget_4">
    <property name="geometry">
     <rect>
-     <x>622</x>
+     <x>639</x>
      <y>90</y>
      <width>85</width>
      <height>62</height>
@@ -719,7 +719,7 @@
   <widget class="Line" name="line_7">
    <property name="geometry">
     <rect>
-     <x>603</x>
+     <x>620</x>
      <y>90</y>
      <width>16</width>
      <height>111</height>
@@ -734,7 +734,7 @@
     <rect>
      <x>20</x>
      <y>50</y>
-     <width>353</width>
+     <width>381</width>
      <height>16</height>
     </rect>
    </property>
