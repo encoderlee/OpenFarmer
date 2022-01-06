@@ -224,6 +224,8 @@ def create_animal(item: dict, breeding=False) -> Animal:
     if not breeding:
         animal.asset_id = item["asset_id"]
     else:
+        animal.required_claims = 9  # 繁殖目前就只有奶牛，先写死
+        animal.daily_claim_limit = 3  # 繁殖目前就只有奶牛，先写死
         animal.consumed_card = 318607  # 繁殖目前就只有奶牛，先写死
         animal.bearer_id = item["bearer_id"]
         animal.partner_id = item["partner_id"]
