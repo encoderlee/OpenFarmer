@@ -682,6 +682,9 @@ class Farmer:
         self.log.debug("get_fw_balance:{0}".format(resp.text))
         resp = resp.json()
         balance = Token()
+        balance.fwf = 0
+        balance.fwg = 0
+        balance.fww = 0
         for item in resp:
             sp = item.split(" ")
             if sp[1].upper() == "FWF":
