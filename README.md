@@ -57,7 +57,7 @@
 
 ### 用法二
 
-1. git clone 源码到本地，或 Download ZIP 下载源码到本地
+1. 点击当前页面的【Code】=> git clone 源码到本地，或 Download ZIP 下载源码到本地
 2. 下载安装python3 (版本须大于等于python3.7)
    
    请到python官网下载最新版本：
@@ -66,7 +66,7 @@
    【注意】安装时请记得勾选【Add Python 3.10 to PATH】
 3. 双击运行 【install_depends.py】 来安装依赖包，一台电脑只需要安装一次即可
    【注意】安装依赖包前请关闭翻墙代理，关闭科学上网，不然无法从豆瓣pypi镜像站下载依赖包
-4. 安装Chrome浏览器，并升级到最新版
+4. 安装Chrome浏览器，并升级到最新版（用当前版本也行，确保和ChromeDriver版本一致）
 5. 下载ChromeDriver，版本确保和Chrome版本一致
 
 https://chromedriver.chromium.org/downloads
@@ -98,13 +98,17 @@ https://chromedriver.chromium.org/downloads
 
 ### 命令行运行脚本
 
-打开命令行工具（建议下载cmder命令行工具，下载链接：https://github.com/cmderdev/cmder/releases/download/v1.3.18/cmder_mini.zip）
+>前提是完成上面的步骤，安装好python环境，安装好依赖
+
+打开命令行工具（建议下载cmder命令行工具，下载链接：[https://github.com/cmderdev/cmder/releases/download/v1.3.18/cmder_mini.zip](https://github.com/cmderdev/cmder/releases/download/v1.3.18/cmder_mini.zip)）
 
 进入项目目录（假设项目放在D盘的OpenFarmer目录）
 
 1、在命令行工具输入  D: 【按回车】
 
 2、cd D:/OpenFarmer 【按回车】
+
+（如果未安装依赖，可以先执行 python install_depends.py ）
 
 3、python main.py 【按回车】（有些环境是py main.py）
 
@@ -132,4 +136,5 @@ WAX地址：4lrzu.wam（支持WAX、FWW、FWF、FWG）
 
 ### 教程
 
-> 农民世界中文教程：https://fww.umaske.com
+> 农民世界中文教程：[https://fww.umaske.com](https://fww.umaske.com)
+> 农民世界实时监控中文版：[https://fw.umaske.com](https://fw.umaske.com)
