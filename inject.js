@@ -1,4 +1,4 @@
-window.mywax = new waxjs.WaxJS({rpcEndpoint: 'https://api.wax.alohaeos.com'});
+window.mywax = new waxjs.WaxJS({rpcEndpoint: 'https://wax.dapplica.io'});
 
 window.sleep = function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));

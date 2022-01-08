@@ -1,6 +1,6 @@
 ## OpenFarmer
 ### 一个免费、开源的农民世界 FarmersWorld 挂机脚本
-![image](https://raw.githubusercontent.com/encoderlee/OpenFarmer/main/doc/demo2.png)
+![image](https://raw.githubusercontent.com/encoderlee/OpenFarmer/main/doc/demo3.png)
 ### 初衷
 
 农民世界 https://farmersworld.io 的火热相信大家已经有目共睹
@@ -28,10 +28,10 @@
 
 1. 支持一台电脑上多开
 2. 支持设置HTTP代理
-3. 支持Mining下的所有工具（斧头、石斧、锯子、钓鱼竿、渔网、渔船、挖掘机等）的自动采集
-4. 支持Plant下的所有农作物（大麦、玉米）的自动采集
-5. 支持Chicken下（鸡）的自动喂养，（鸡蛋和小鸡）暂不支持
-6. 养牛暂不支持
+3. 支持所有采集工具，支持养鸡、种地、养牛
+4. 支持5%自动提现
+5. 支持自动充值
+6. 支持自动卖产出的作物
 7. 支持会员卡的自动点击
 8. 工具耐久不足自动修理（请准备好足够修理的金币）
 9. 能量不足自动补充（请准备好足够的肉）
@@ -56,11 +56,11 @@
 5. 下载ChromeDriver，版本确保和Chrome版本一致
 https://chromedriver.chromium.org/downloads
 
-    比如我的Chrome版本是 96.0.4664.45
+    比如我的Chrome版本是 97.0.4692.71
 
-    那么我就下载 ChromeDriver 96.0.4664.45
+    那么我就下载 ChromeDriver 97.0.4692.71
 
-    其实小版本不一致也没关系，大版本号96一致就行
+    其实小版本不一致也没关系，大版本号97一致就行
    
    windows系统的话下载【chromedriver_win32.zip】
 6. 将下载的 ChromeDriver 压缩包中的 chromedriver.exe 文件，解压到本项目的源码目录中（和 main.py 在一个目录中）
@@ -73,7 +73,7 @@ https://chromedriver.chromium.org/downloads
 13. 正确关闭程序，请点击程序窗口右上角的X，稍等几秒钟便会关闭
 ### 命令行版本
 ![image](https://raw.githubusercontent.com/encoderlee/OpenFarmer/main/doc/demo1.png)
-如果不喜欢GUI或有特殊需求的同学，可以运行【main.py】，在控制台中运行程序，这种方式启动的话，需要先手工修改【user.yml】中的配置参数
+如果不喜欢GUI或有特殊需求的同学，可以运行【main.py】，在控制台中运行程序，这种方式启动的话，需要先手工修改【user.yml】中的配置参数，每个参数的含义参考【user.yml.example】
 
 wax_account: (wax账号，也就是wax钱包地址,以.wam结尾)
 

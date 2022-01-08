@@ -32,7 +32,6 @@ elif platform.system().lower() == "darwin":
     plat.name = "macos"
     plat.chromedriver = "chromedriver"
     plat.python = "python3"
-
 plat.python_path = shutil.which(plat.python)
 plat.driver_path = shutil.which(plat.chromedriver)
 if not plat.driver_path:

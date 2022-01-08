@@ -6,17 +6,17 @@ proxy: null
 # 建造
 build: false
 # 采集资源
-mining: true
+mining: false
 # 养鸡
-chicken: true
+chicken: false
 # 养牛
-cow: true
+cow: false
 # 种地浇水
-plant: true
+plant: false
 # 会员点击
-mbs: true
+mbs: false
 # 繁殖喂养
-breeding: true
+breeding: false
 
 #自动卖资产对应游戏里的Exchange
 #自动卖玉米
