@@ -74,6 +74,7 @@ https://chromedriver.chromium.org/downloads
 ### 命令行版本
 ![image](https://raw.githubusercontent.com/encoderlee/OpenFarmer/main/doc/demo1.png)
 如果不喜欢GUI或有特殊需求的同学，可以运行【main.py】，在控制台中运行程序，这种方式启动的话，需要先手工修改【user.yml】中的配置参数，每个参数的含义参考【user.yml.example】
+【user.yml】文件的修改，最好用【Notepad++】编辑器，windows的记事本打开的话，换行有问题
 
 wax_account: (wax账号，也就是wax钱包地址,以.wam结尾)
 
