@@ -134,7 +134,13 @@ WAX地址：4lrzu.wam（支持WAX、FWW、FWF、FWG）
 
 ### 感谢!
 
-### 教程
+
+### 我的其他作品
 
 > 农民世界中文教程：[https://fww.umaske.com](https://fww.umaske.com)
+>
 > 农民世界实时监控中文版：[https://fw.umaske.com](https://fw.umaske.com)
+>
+>【农民世界助手-Anchor钱包版】：[https://github.com/lintan/OpenFarmerOnAnchor](https://github.com/lintan/OpenFarmerOnAnchor)
+
+
