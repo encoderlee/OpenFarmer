@@ -81,7 +81,7 @@ https://chromedriver.chromium.org/downloads
 6. 将下载的 ChromeDriver 压缩包中的 chromedriver.exe 文件，解压到本项目的源码目录中（和 main.py 在一个目录中）
 7. 修改配置文件【user.yml】 
    1. 复制一份 user.yml.example 文件，改名为 user.yml
-   2. 按照你的实际情况设置各个参数
+   2. 按照你的实际情况设置各个参数（修改user.yml推荐使用nodepad++编辑器，下载链接：[点击下载nodepad++编辑器](https://github.com/notepad-plus-plus/notepad-plus-plus/releases/download/v8.2/npp.8.2.Installer.x64.exe)）
    3. wax_account: (wax账号，也就是wax钱包地址,以.wam结尾)
    4. proxy: (可设置http代理，格式为127.0.0.1:10809，不需要代理的话设置为null)
    5. 下面的（build、mining、chicken、cow、plant、mbs)分别对应建造、采集资源、养鸡、养牛、种地、会员点击，需要程序自动化的操作，设置为true，不需要程序自动化的操作，设置为false，比如你只种地的话，plant: true 即可，其它全部为false，这样减少不必要的网络操作，提高运行效率 
@@ -100,7 +100,7 @@ https://chromedriver.chromium.org/downloads
 
 >前提是完成上面的步骤，安装好python环境，安装好依赖
 
-打开命令行工具（建议下载cmder命令行工具，下载链接：[https://github.com/cmderdev/cmder/releases/download/v1.3.18/cmder_mini.zip](https://github.com/cmderdev/cmder/releases/download/v1.3.18/cmder_mini.zip)）
+打开命令行工具（建议下载cmder命令行工具，下载链接：[点击下载cmder命令行工具](https://github.com/cmderdev/cmder/releases/download/v1.3.18/cmder_mini.zip)）
 
 进入项目目录（假设项目放在D盘的OpenFarmer目录）
 
