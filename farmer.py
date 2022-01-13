@@ -819,7 +819,7 @@ class Farmer:
             self.log.info("开始购买玉米,数量：{0}".format(buy_num))
             self.market_buy(template_id, buy_num)
         else:
-            self.log.info("不支持购买，请检查配置")
+            self.log.info("配置不执行购买，请检查")
 
         return True
 
@@ -852,7 +852,7 @@ class Farmer:
         if user_param.barleyseed_num > 0:
             barleyseed_list = self.get_asset(298595, 'Barley Seed')
             plant_times = min(slots_num, user_param.barleyseed_num)
-            if len(barleyseed_list) < plant_times:
+            if len(barleyseed_list) < plant_times and user_param.buy_barley_seed:
                 self.log.warning("大麦种子数量不足,开始市场购买")
                 buy_barleyseed_num = plant_times - len(barleyseed_list)
                 rs = self.buy_corps(298595, buy_barleyseed_num)
@@ -860,26 +860,32 @@ class Farmer:
                     return False
                 else:
                     barleyseed_list = self.get_asset(298595, 'Barley Seed')
-            for i in range(plant_times):
-                asset = barleyseed_list.pop()
-                self.wear_assets([asset.asset_id])
+            if len(barleyseed_list) > 0:
+                for i in range(plant_times):
+                    asset = barleyseed_list.pop()
+                    self.wear_assets([asset.asset_id])
+            else:
+                self.log.info("大麦种子数量不足，请及时补充")
         else:
             self.log.info("设置的大麦种子数量为0")
 
         if user_param.cornseed_num > 0:
             cornseed_list = self.get_asset(298596, 'Corn Seed')
             plant_times2 = min(slots_num, user_param.cornseed_num)
-            if len(cornseed_list) < plant_times2:
-                self.log.warning("玉米种子数量不足,请及时补充")
+            if len(cornseed_list) < plant_times2 and user_param.buy_corn_seed:
+                self.log.warning("玉米种子数量不足,开始市场购买")
                 buy_cornseed_num = plant_times2 - len(cornseed_list)
                 rs = self.buy_corps(298596, buy_cornseed_num)
                 if not rs:
                     return False
                 else:
                     cornseed_list = self.get_asset(298596, 'Corn Seed')
-            for i in range(plant_times2):
-                asset = cornseed_list.pop()
-                self.wear_assets([asset.asset_id])
+            if len(cornseed_list) > 0:
+                for i in range(plant_times2):
+                    asset = cornseed_list.pop()
+                    self.wear_assets([asset.asset_id])
+            else:
+                self.log.info("玉米种子数量不足，请及时补充")
         else:
             self.log.info("设置的玉米种子数量为0")
 
@@ -1079,10 +1085,10 @@ class Farmer:
                     },
                 }],
             }
-            result = self.wax_transact(transaction)
-            ming_resource = result["processed"]["action_traces"][0]["inline_traces"][1]["act"]["data"]["rewards"]
-            self.log.info("采矿成功: {0},{1}".format(item.show(more=False), ming_resource))
-            # self.log.info("采矿成功: {0}".format(item.show(more=False)))
+            self.wax_transact(transaction)
+            # ming_resource = result["processed"]["action_traces"][0]["inline_traces"][1]["act"]["data"]["rewards"]
+            # self.log.info("采矿成功: {0},{1}".format(item.show(more=False), ming_resource))
+            self.log.info("采矿成功: {0}".format(item.show(more=False)))
             time.sleep(cfg.req_interval)
 
     def scan_mining(self):
