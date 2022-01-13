@@ -19,6 +19,11 @@ class Settings:
 
 # 用户配置参数
 class user_param:
+    rpc_domain_list: list = []
+    rpc_domain: str = None
+    assets_domain: str = None
+    assets_domain_list: list = []
+
     wax_account: str = None
     use_proxy: bool = True
     proxy: str = None
@@ -79,6 +84,10 @@ class user_param:
     @staticmethod
     def to_dict():
         return {
+            "rpc_domain_list": user_param.rpc_domain_list,
+            "rpc_domain": user_param.rpc_domain,
+            "assets_domain_list": user_param.assets_domain_list,
+            "assets_domain": user_param.assets_domain,
             "wax_account": user_param.wax_account,
             "use_proxy": user_param.use_proxy,
             "proxy": user_param.proxy,
@@ -89,7 +98,6 @@ class user_param:
             "cow": user_param.cow,
             "mbs": user_param.mbs,
             "recover_energy": user_param.recover_energy,
-
             "withdraw": user_param.withdraw,
             "auto_deposit": user_param.auto_deposit,
             "sell_corn": user_param.sell_corn,
@@ -126,6 +134,11 @@ class user_param:
 
 
 def load_user_param(user: dict):
+    user_param.rpc_domain_list = user.get("rpc_domain_list", ['https://api.wax.alohaeos.com'])
+    user_param.rpc_domain = user.get("rpc_domain", 'https://api.wax.alohaeos.com')
+    user_param.assets_domain_list = user.get("assets_domain_list", ['https://wax.api.atomicassets.io'])
+    user_param.assets_domain = user.get("assets_domain", 'https://api.wax.alohaeos.com')
+
     user_param.wax_account = user["wax_account"]
     user_param.use_proxy = user.get("use_proxy", True)
     user_param.proxy = user.get("proxy", None)

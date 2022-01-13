@@ -59,16 +59,20 @@ class Status:
 class Farmer:
     # wax rpc
     # url_rpc = "https://api.wax.alohaeos.com/v1/chain/"
-    url_rpc = "https://wax.dapplica.io/v1/chain/"
-    url_table_row = url_rpc + "get_table_rows"
+    # url_rpc = "https://wax.dapplica.io/v1/chain/"
+    # url_table_row = url_rpc + "get_table_rows"
     # 资产API
     # url_assets = "https://wax.api.atomicassets.io/atomicassets/v1/assets"
-    url_assets = "https://atomic.wax.eosrio.io/atomicassets/v1/assets"
+    # url_assets = "https://atomic.wax.eosrio.io/atomicassets/v1/assets"
     waxjs: str = None
     myjs: str = None
     chrome_data_dir = os.path.abspath(cfg.chrome_data_dir)
 
     def __init__(self):
+        self.url_rpc: str = None
+        self.url_table_row: str = None
+        self.url_assets: str = None
+
         self.wax_account: str = None
         self.login_name: str = None
         self.password: str = None
@@ -99,6 +103,10 @@ class Farmer:
             self.driver.quit()
 
     def init(self):
+        self.url_rpc = user_param.rpc_domain + '/v1/chain/'
+        self.url_table_row = user_param.rpc_domain + '/v1/chain/get_table_rows'
+        self.url_assets = user_param.assets_domain + '/atomicassets/v1/assets'
+
         self.log.extra["tag"] = self.wax_account
         options = webdriver.ChromeOptions()
         # options.add_argument("--headless")
@@ -139,7 +147,8 @@ class Farmer:
                 Farmer.waxjs = base64.b64encode(Farmer.waxjs.encode()).decode()
         if not Farmer.myjs:
             with open("inject.js", "r") as file:
-                Farmer.myjs = file.read()
+                inject_rpc = "window.mywax = new waxjs.WaxJS({rpcEndpoint: '"+user_param.rpc_domain+"'});"
+                Farmer.myjs = inject_rpc + file.read()
                 file.close()
 
         code = "var s = document.createElement('script');"
@@ -152,6 +161,8 @@ class Farmer:
 
     def start(self):
         self.log.info("启动浏览器")
+        self.log.info("wax节点:{0}".format(user_param.rpc_domain))
+        self.log.info("原子市场节点:{0}".format(user_param.assets_domain))
         if self.cookies:
             self.log.info("使用预设的cookie自动登录")
             cookies = self.cookies["cookies"]

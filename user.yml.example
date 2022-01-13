@@ -1,3 +1,25 @@
+# wax节点链接,默认使用第一个节点
+rpc_domain_list:
+ - https://api.wax.alohaeos.com
+ - https://wax.dapplica.io
+ - https://api.waxsweden.org
+ - https://wax.pink.gg
+ - https://wax.dapplica.io
+ - https://wax.eosphere.io
+ - https://api.wax.greeneosio.com
+ - https://wax.cryptolions.io
+
+# 原子市场节点链接,默认使用第一个节点
+assets_domain_list:
+  - https://wax.api.atomicassets.io
+  - https://atomic.wax.eosrio.io
+
+# 选中的WAX节点
+rpc_domain: https://api.wax.alohaeos.com
+# 选中的原子市场节点
+assets_domain: https://wax.api.atomicassets.io
+
+# wax账号
 wax_account: abcde.wam
 # only http proxy like 127.0.0.1:10809
 use_proxy: false
