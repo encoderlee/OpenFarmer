@@ -13,6 +13,7 @@ def run(config_file: str):
         file.close()
     load_user_param(user)
     logger.init_loger(user_param.wax_account)
+    log.info("项目开源地址：https://github.com/lintan/OpenFarmer")
     log.info("WAX账号: {0}".format(user_param.wax_account))
     utils.clear_orphan_webdriver()
     farmer = Farmer()

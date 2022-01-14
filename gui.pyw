@@ -35,7 +35,7 @@ class Worker(QThread):
 
     def run(self):
         logger.init_loger(user_param.wax_account)
-        log.info("项目开源地址：https://github.com/lintan/OpenFarmerOnAnchor")
+        log.info("项目开源地址：https://github.com/lintan/OpenFarmer")
         log.info("WAX账号： {0}".format(user_param.wax_account))
         utils.clear_orphan_webdriver()
         self.farmer.rpc_domain = user_param.rpc_domain
