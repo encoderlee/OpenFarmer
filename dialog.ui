@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>746</width>
-    <height>470</height>
+    <width>775</width>
+    <height>517</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -15,7 +15,7 @@
   </property>
   <property name="windowIcon">
    <iconset>
-    <normaloff>favicon.ico</normaloff>favicon.ico</iconset>
+    <normaloff>C:/Users/Administrator/.designer/backup/favicon.ico</normaloff>C:/Users/Administrator/.designer/backup/favicon.ico</iconset>
   </property>
   <widget class="QLabel" name="label_1">
    <property name="geometry">
@@ -47,9 +47,9 @@
    <property name="geometry">
     <rect>
      <x>20</x>
-     <y>210</y>
-     <width>701</width>
-     <height>231</height>
+     <y>240</y>
+     <width>741</width>
+     <height>241</height>
     </rect>
    </property>
    <property name="readOnly">
@@ -62,8 +62,8 @@
   <widget class="QPushButton" name="button_start">
    <property name="geometry">
     <rect>
-     <x>620</x>
-     <y>20</y>
+     <x>650</x>
+     <y>30</y>
      <width>101</width>
      <height>41</height>
     </rect>
@@ -75,20 +75,20 @@
   <widget class="QLineEdit" name="edit_proxy">
    <property name="geometry">
     <rect>
-     <x>295</x>
+     <x>265</x>
      <y>15</y>
      <width>101</width>
      <height>20</height>
     </rect>
    </property>
    <property name="text">
-    <string>127.0.0.1:10809</string>
+    <string>127.0.0.1:1080</string>
    </property>
   </widget>
   <widget class="QCheckBox" name="checkbox_proxy">
    <property name="geometry">
     <rect>
-     <x>220</x>
+     <x>190</x>
      <y>15</y>
      <width>71</width>
      <height>20</height>
@@ -105,7 +105,7 @@
    <property name="geometry">
     <rect>
      <x>18</x>
-     <y>90</y>
+     <y>110</y>
      <width>103</width>
      <height>111</height>
     </rect>
@@ -193,8 +193,8 @@
    <property name="geometry">
     <rect>
      <x>142</x>
-     <y>90</y>
-     <width>161</width>
+     <y>110</y>
+     <width>187</width>
      <height>111</height>
     </rect>
    </property>
@@ -202,7 +202,7 @@
     <item>
      <widget class="QCheckBox" name="checkbox_auto_deposit">
       <property name="text">
-       <string>自动充值</string>
+       <string>自动充值资源</string>
       </property>
       <property name="checked">
        <bool>false</bool>
@@ -349,8 +349,8 @@
   <widget class="QWidget" name="gridLayoutWidget">
    <property name="geometry">
     <rect>
-     <x>318</x>
-     <y>90</y>
+     <x>348</x>
+     <y>110</y>
      <width>171</width>
      <height>111</height>
     </rect>
@@ -457,8 +457,8 @@
   <widget class="QWidget" name="gridLayoutWidget_2">
    <property name="geometry">
     <rect>
-     <x>440</x>
-     <y>4</y>
+     <x>490</x>
+     <y>10</y>
      <width>131</width>
      <height>74</height>
     </rect>
@@ -538,8 +538,8 @@
   <widget class="QWidget" name="verticalLayoutWidget_3">
    <property name="geometry">
     <rect>
-     <x>508</x>
-     <y>90</y>
+     <x>538</x>
+     <y>110</y>
      <width>111</width>
      <height>111</height>
     </rect>
@@ -613,7 +613,7 @@
    <property name="geometry">
     <rect>
      <x>123</x>
-     <y>90</y>
+     <y>110</y>
      <width>16</width>
      <height>111</height>
     </rect>
@@ -625,8 +625,8 @@
   <widget class="Line" name="line_4">
    <property name="geometry">
     <rect>
-     <x>303</x>
-     <y>90</y>
+     <x>330</x>
+     <y>110</y>
      <width>16</width>
      <height>111</height>
     </rect>
@@ -638,8 +638,8 @@
   <widget class="Line" name="line_5">
    <property name="geometry">
     <rect>
-     <x>490</x>
-     <y>90</y>
+     <x>520</x>
+     <y>110</y>
      <width>16</width>
      <height>111</height>
     </rect>
@@ -648,24 +648,24 @@
     <enum>Qt::Vertical</enum>
    </property>
   </widget>
-  <widget class="QLabel" name="label">
+  <widget class="QLabel" name="label_24">
    <property name="geometry">
     <rect>
-     <x>60</x>
-     <y>447</y>
-     <width>551</width>
+     <x>20</x>
+     <y>490</y>
+     <width>561</width>
      <height>16</height>
     </rect>
    </property>
    <property name="text">
-    <string>如果程序对你有帮助，欢迎打赏，支持我继续不断完善这个项目。感谢！     WAX钱包地址：4lrzu.wam</string>
+    <string>如果程序对你有帮助，欢迎打赏，支持我继续不断完善这个项目。感谢！ WAX钱包地址：openfarmercn </string>
    </property>
   </widget>
   <widget class="Line" name="line_6">
    <property name="geometry">
     <rect>
      <x>0</x>
-     <y>72</y>
+     <y>92</y>
      <width>821</width>
      <height>16</height>
     </rect>
@@ -677,8 +677,8 @@
   <widget class="QWidget" name="verticalLayoutWidget_4">
    <property name="geometry">
     <rect>
-     <x>639</x>
-     <y>90</y>
+     <x>669</x>
+     <y>110</y>
      <width>85</width>
      <height>62</height>
     </rect>
@@ -719,8 +719,8 @@
   <widget class="Line" name="line_7">
    <property name="geometry">
     <rect>
-     <x>620</x>
-     <y>90</y>
+     <x>650</x>
+     <y>110</y>
      <width>16</width>
      <height>111</height>
     </rect>
@@ -733,7 +733,7 @@
    <property name="geometry">
     <rect>
      <x>20</x>
-     <y>50</y>
+     <y>73</y>
      <width>381</width>
      <height>16</height>
     </rect>
@@ -750,11 +750,14 @@
     </property>
    </widget>
    <widget class="QCheckBox" name="checkbox_mining">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
     <property name="text">
      <string>挖矿</string>
     </property>
     <property name="checked">
-     <bool>false</bool>
+     <bool>true</bool>
     </property>
    </widget>
    <widget class="QCheckBox" name="checkbox_chicken">
@@ -797,6 +800,102 @@
      <bool>false</bool>
     </property>
    </widget>
+  </widget>
+  <widget class="QLabel" name="label_25">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>42</y>
+     <width>41</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>节点</string>
+   </property>
+  </widget>
+  <widget class="QComboBox" name="comboBox_rpc_domain">
+   <property name="geometry">
+    <rect>
+     <x>50</x>
+     <y>40</y>
+     <width>201</width>
+     <height>22</height>
+    </rect>
+   </property>
+   <item>
+    <property name="text">
+     <string>https://api.wax.alohaeos.com</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>https://wax.dapplica.io</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>https://wax.pink.gg</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>https://api.waxsweden.org</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>https://wax.dapplica.io</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>https://wax.eosphere.io</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>https://api.wax.greeneosio.com</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>https://wax.cryptolions.io</string>
+    </property>
+   </item>
+  </widget>
+  <widget class="QLabel" name="label_26">
+   <property name="geometry">
+    <rect>
+     <x>260</x>
+     <y>42</y>
+     <width>51</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>原子节点</string>
+   </property>
+  </widget>
+  <widget class="QComboBox" name="comboBox_assets_domain">
+   <property name="geometry">
+    <rect>
+     <x>310</x>
+     <y>40</y>
+     <width>161</width>
+     <height>22</height>
+    </rect>
+   </property>
+   <item>
+    <property name="text">
+     <string>https://wax.api.atomicassets.io</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>https://atomic.wax.eosrio.io</string>
+    </property>
+   </item>
   </widget>
  </widget>
  <resources/>

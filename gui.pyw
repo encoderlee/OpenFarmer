@@ -35,8 +35,11 @@ class Worker(QThread):
 
     def run(self):
         logger.init_loger(user_param.wax_account)
-        log.info("wax_account; {0}".format(user_param.wax_account))
+        log.info("项目开源地址：https://github.com/lintan/OpenFarmerOnAnchor")
+        log.info("WAX账号： {0}".format(user_param.wax_account))
         utils.clear_orphan_webdriver()
+        self.farmer.rpc_domain = user_param.rpc_domain
+        self.farmer.assets_domain = user_param.assets_domain
         self.farmer.wax_account = user_param.wax_account
         if user_param.use_proxy:
             self.farmer.proxy = user_param.proxy
@@ -78,6 +81,11 @@ class MyDialog(QDialog, Ui_Dialog):
 
     def update_ui(self, ui_to_user_param: bool):
         if ui_to_user_param:
+            user_param.rpc_domain = self.comboBox_rpc_domain.currentText()
+            user_param.rpc_domain_list = user_param.rpc_domain_list
+            user_param.assets_domain_list = user_param.assets_domain_list
+            user_param.assets_domain = user_param.assets_domain
+
             user_param.wax_account = self.edit_account.text()
             user_param.use_proxy = self.checkbox_proxy.isChecked()
             user_param.proxy = self.edit_proxy.text()
@@ -129,6 +137,9 @@ class MyDialog(QDialog, Ui_Dialog):
             user_param.breeding = self.checkbox_breeding.isChecked()
 
         else:
+            self.comboBox_rpc_domain.setCurrentText(user_param.rpc_domain)
+            self.comboBox_assets_domain.setCurrentText(user_param.assets_domain)
+
             self.edit_account.setText(user_param.wax_account)
             self.checkbox_proxy.setChecked(user_param.use_proxy)
             self.edit_proxy.setText(user_param.proxy)
@@ -180,6 +191,9 @@ class MyDialog(QDialog, Ui_Dialog):
             self.checkbox_breeding.setChecked(user_param.breeding)
 
     def setEnabled(self, status: bool):
+        self.comboBox_rpc_domain.setEnabled(status)
+        self.comboBox_assets_domain.setEnabled(status)
+
         self.checkbox_cow.setEnabled(status)
         self.checkbox_build.setEnabled(status)
         self.checkbox_plant.setEnabled(status)
@@ -231,7 +245,7 @@ class MyDialog(QDialog, Ui_Dialog):
         self.buy_food_num.setEnabled(status)
         # 繁殖
         self.checkbox_breeding.setEnabled(status)
-        for i in range(1, 24):
+        for i in range(1, 27):
             exec('self.label_{}.setEnabled(status)'.format(i))
 
     def start(self):

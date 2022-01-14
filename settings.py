@@ -137,7 +137,7 @@ def load_user_param(user: dict):
     user_param.rpc_domain_list = user.get("rpc_domain_list", ['https://api.wax.alohaeos.com'])
     user_param.rpc_domain = user.get("rpc_domain", 'https://api.wax.alohaeos.com')
     user_param.assets_domain_list = user.get("assets_domain_list", ['https://wax.api.atomicassets.io'])
-    user_param.assets_domain = user.get("assets_domain", 'https://api.wax.alohaeos.com')
+    user_param.assets_domain = user.get("assets_domain", 'https://wax.api.atomicassets.io')
 
     user_param.wax_account = user["wax_account"]
     user_param.use_proxy = user.get("use_proxy", True)

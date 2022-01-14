@@ -161,8 +161,8 @@ class Farmer:
 
     def start(self):
         self.log.info("启动浏览器")
-        self.log.info("wax节点:{0}".format(user_param.rpc_domain))
-        self.log.info("原子市场节点:{0}".format(user_param.assets_domain))
+        self.log.info("wax节点: {0}".format(user_param.rpc_domain))
+        self.log.info("原子市场节点: {0}".format(user_param.assets_domain))
         if self.cookies:
             self.log.info("使用预设的cookie自动登录")
             cookies = self.cookies["cookies"]
