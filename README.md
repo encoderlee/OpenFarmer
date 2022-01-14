@@ -6,7 +6,7 @@
 
 可视化界面图例：
 
-![image](https://static.umaske.com/20211231114315.png)
+![image](https://static.umaske.com/121212_20220114141141.png)
 
 命令行界面图例：
 
@@ -71,11 +71,11 @@
 
 https://chromedriver.chromium.org/downloads
 
-    比如我的Chrome版本是 96.0.4664.45
+    比如我的Chrome版本是 97.0.4664.45
 
-    那么我就下载 ChromeDriver 96.0.4664.45
+    那么我就下载 ChromeDriver 97.0.4664.45
 
-    其实小版本不一致也没关系，大版本号96一致就行
+    其实小版本不一致也没关系，大版本号97一致就行
    
    windows系统的话下载【chromedriver_win32.zip】
 6. 将下载的 ChromeDriver 压缩包中的 chromedriver.exe 文件，解压到本项目的源码目录中（和 main.py 在一个目录中）
@@ -95,6 +95,9 @@ https://chromedriver.chromium.org/downloads
 11. 注意，一个账号第一次运行脚本，脚本第一次自动收割农作物的时候，Chrome浏览器中可能会弹出WAX钱包授权窗口，并停在那里不动了，这个时候需要勾选自动确认交易，并同意交易，这样脚本以后就能自动处理了，其实和人工操作是一样的，第一次收割的时候，也要点自动同意交易，否则每次都要弹出授权窗口来，脚本只负责收割农作物，不处理授权的事情，是否自动授权取决于用户账号设置
 12. 脚本多开，请把整个源码目录复制一份，在另一个目录中修改配置文件【user.yaml】为另一个账号，双击运行 【main.py】 启动第二个脚本，以此类推，多开互不干扰
 13. 正确关闭程序，请点击脚本控制台窗口右上角的X，稍等几秒钟便会关闭，或者点击脚本控制台窗口后，按Ctrl+C，尽量不要直接关闭脚本控制的Chrome窗口，否则webdriver容易产生一些僵尸进程
+
+
+> ！！！如果因为环境问题双击打不开python文件，可以使用命令行
 
 ### 命令行运行脚本
 
@@ -130,7 +133,7 @@ https://chromedriver.chromium.org/downloads
 
 TRC20地址: TXmvTZ3ndHpvJU7SYmuLdLBufWdxA34Qix
 
-WAX地址：4lrzu.wam（支持WAX、FWW、FWF、FWG）
+WAX地址：openfarmercn（这个账号和xxxx.wam一样，支持WAX、FWW、FWF、FWG）
 
 ### 感谢!
 
