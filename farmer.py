@@ -311,6 +311,8 @@ class Farmer:
         resp = self.http.post(self.url_table_row, json=post_data)
         self.log.debug("get_table_rows:{0}".format(resp.text))
         resp = resp.json()
+        if len(resp["rows"]) == 0:
+            self.log.info("获取不到账号数据，请检查账号名是否有误")
         resource = Resoure()
         resource.energy = Decimal(resp["rows"][0]["energy"])
         resource.max_energy = Decimal(resp["rows"][0]["max_energy"])
@@ -1258,12 +1260,12 @@ class Farmer:
     # 消耗能量 （操作前模拟计算）
     def consume_energy(self, real_consume: Decimal, fake_consume: Decimal = Decimal(0)):
         consume = real_consume + fake_consume
-        if self.resoure.energy - consume > user_param.min_energy:
+        if self.resoure.energy - consume >= 0:
             self.resoure.energy -= real_consume
             return True
         else:
             self.log.info("能量不足")
-            recover = min(user_param.recover_energy, self.resoure.max_energy - self.resoure.energy)
+            recover = min(user_param.recover_energy, self.resoure.max_energy) - self.resoure.energy
             recover = (recover // Decimal(5)) * Decimal(5)
             self.recover_energy(recover)
             self.resoure.energy += recover
@@ -1369,6 +1371,13 @@ class Farmer:
         r = self.get_resource()
         self.log.info(f"金币【{r.gold}】 木头【{r.wood}】 食物【{r.food}】 能量【{r.energy}/{r.max_energy}】")
         self.resoure = r
+        if self.resoure.energy <= user_param.min_energy:
+            self.log.info("能量小于配置的最小能量，开启能量补充{0}".format(self.resoure.max_energy))
+            recover = min(user_param.recover_energy, self.resoure.max_energy) - self.resoure.energy
+            recover = (recover // Decimal(5)) * Decimal(5)
+            self.recover_energy(recover)
+            self.resoure.energy += recover
+
         time.sleep(cfg.req_interval)
         self.token = self.get_fw_balance()
         self.log.info(f"FWG【{self.token.fwg}】 FWW【{self.token.fww}】 FWF【{self.token.fwf}】")
