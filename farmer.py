@@ -1238,8 +1238,12 @@ class Farmer:
         self.log.info("正在恢复能量: 【{0}】点 ".format(count))
         need_food = count // Decimal(5)
         if need_food > self.resoure.food:
-            self.log.error(f"食物不足，仅剩【{self.resoure.food}】，兑换能量【{count}】点需要【{need_food}】个食物，请手工处理")
-            raise FarmerException("没有足够的食物，请补充食物，稍后程序自动重试")
+            if self.resoure.food == 0:
+                self.log.error(f"食物不足，仅剩【{self.resoure.food}】，兑换能量【{count}】点需要【{need_food}】个食物，请手工处理")
+                raise FarmerException("没有足够的食物，请补充食物，稍后程序自动重试")
+            else:
+                count = self.resoure.food * Decimal(5)
+                self.log.error(f"食物不足，仅剩【{self.resoure.food}】，只能补充【{count}】点能量")
 
         transaction = {
             "actions": [{
