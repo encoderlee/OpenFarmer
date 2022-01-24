@@ -114,6 +114,8 @@ class Farmer:
         options.add_argument("--disable-extensions")
         options.add_argument("--log-level=3")
         options.add_argument("--disable-logging")
+        options.add_experimental_option('useAutomationExtension', False)
+        options.add_experimental_option('excludeSwitches', ['enable-automation'])
         data_dir = os.path.join(Farmer.chrome_data_dir, self.wax_account)
         options.add_argument("--user-data-dir={0}".format(data_dir))
         if self.proxy:
