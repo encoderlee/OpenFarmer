@@ -400,8 +400,8 @@ class Farmer:
         energy_consumed = crop.energy_consumed
         fake_consumed = Decimal(0)
         if crop.times_claimed == crop.required_claims - 1:
-            # 收获前的最后一次耕作，多需要200点能量，游戏合约BUG
-            fake_consumed = Decimal(200)
+            # 收获前的最后一次耕作，多需要200点能量，游戏合约BUG（玉米需要245）
+            fake_consumed = Decimal(250)
         self.consume_energy(Decimal(energy_consumed), fake_consumed)
         transaction = {
             "actions": [{
