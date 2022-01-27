@@ -1138,21 +1138,30 @@ class Farmer:
 
         if r.wood <= user_param.fww_min:
             deposit_wood = user_param.deposit_fww
-            if self.token.fww < deposit_wood:
-                self.log.info(f"fww不足，请先购买{deposit_wood}个fww代币")
+            if 0 < self.token.fww < deposit_wood:
+                deposit_wood = self.token.fww
+                self.log.info(f"fww不足，剩余{deposit_wood}个fww代币将全部充值")
+            else:
+                self.log.info(f"fww为0，请先购买{deposit_wood}个fww代币")
                 return False
         if r.gold <= user_param.fwg_min:
             deposit_gold = user_param.deposit_fwg
-            if self.token.fwg < deposit_gold:
-                self.log.info(f"fwg不足，请先购买{deposit_gold}个fwg代币")
+            if 0 < self.token.fwg < deposit_gold:
+                deposit_gold = self.token.fwg
+                self.log.info(f"fwg不足，剩余{deposit_gold}个fwg代币将全部充值")
+            else:
+                self.log.info(f"fwg为0，请先购买{deposit_gold}个fwg代币")
                 return False
         if r.food <= user_param.fwf_min:
             deposit_food = user_param.deposit_fwf
-            if self.token.fwf < deposit_food:
-                self.log.info(f"fwf不足，请先购买{deposit_food}个fwf代币")
+            if 0 < self.token.fwf < deposit_food:
+                deposit_food = self.token.fwf
+                self.log.info(f"fwf不足，剩余{deposit_food}个fwf代币将全部充值")
+            else:
+                self.log.info(f"fwf为0，请先购买{deposit_food}个fwf代币")
                 return False
         if deposit_wood + deposit_food + deposit_gold == 0:
-            self.log.info("无需充值")
+            self.log.info("充值数量为0，无需充值")
         else:
             self.do_deposit(deposit_food, deposit_gold, deposit_wood)
             self.log.info(f"充值：金币【{deposit_gold}】 木头【{deposit_wood}】 食物【{deposit_food}】 ")
