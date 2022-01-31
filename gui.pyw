@@ -12,7 +12,7 @@ import utils
 from settings import load_user_param, user_param
 import os
 
-version = "1.1"
+version = "1.2"
 
 
 def resource_path(relative_path):
