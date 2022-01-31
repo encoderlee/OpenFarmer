@@ -47,9 +47,9 @@
    <property name="geometry">
     <rect>
      <x>20</x>
-     <y>240</y>
+     <y>260</y>
      <width>741</width>
-     <height>241</height>
+     <height>221</height>
     </rect>
    </property>
    <property name="readOnly">
@@ -107,7 +107,7 @@
      <x>18</x>
      <y>110</y>
      <width>103</width>
-     <height>111</height>
+     <height>124</height>
     </rect>
    </property>
    <layout class="QVBoxLayout" name="verticalLayout">
@@ -541,7 +541,7 @@
      <x>538</x>
      <y>110</y>
      <width>111</width>
-     <height>111</height>
+     <height>116</height>
     </rect>
    </property>
    <layout class="QVBoxLayout" name="verticalLayout_4">
@@ -734,7 +734,7 @@
     <rect>
      <x>20</x>
      <y>73</y>
-     <width>381</width>
+     <width>461</width>
      <height>16</height>
     </rect>
    </property>
@@ -795,6 +795,14 @@
    <widget class="QCheckBox" name="checkbox_mbs">
     <property name="text">
      <string>会员</string>
+    </property>
+    <property name="checked">
+     <bool>false</bool>
+    </property>
+   </widget>
+   <widget class="QCheckBox" name="checkbox_mbs_mint">
+    <property name="text">
+     <string>会员存储</string>
     </property>
     <property name="checked">
      <bool>false</bool>

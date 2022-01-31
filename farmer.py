@@ -1463,11 +1463,11 @@ class Farmer:
             self.scan_resource()
             time.sleep(cfg.req_interval)
 
-            if user_param.mining:
-                self.scan_mining()
-                time.sleep(cfg.req_interval)
             if user_param.mbs:
                 self.scan_mbs()
+                time.sleep(cfg.req_interval)
+            if user_param.mining:
+                self.scan_mining()
                 time.sleep(cfg.req_interval)
             if user_param.plant:
                 self.scan_crops()
