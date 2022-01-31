@@ -38,6 +38,8 @@ plant: false
 mbs: false
 # 繁殖喂养
 breeding: false
+# 开启会员卡存储挖矿
+mbs_mint: true
 
 #自动卖资产对应游戏里的Exchange
 #自动卖玉米

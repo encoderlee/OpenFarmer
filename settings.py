@@ -34,6 +34,7 @@ class user_param:
     plant: bool = True
     cow: bool = True
     mbs: bool = True
+    mbs_mint: bool = False
     # 能量不够的时候，就去恢复那么多能量,但不超过最大能量
     recover_energy: int = 500
 
@@ -97,6 +98,7 @@ class user_param:
             "plant": user_param.plant,
             "cow": user_param.cow,
             "mbs": user_param.mbs,
+            "mbs_mint": user_param.mbs_mint,
             "recover_energy": user_param.recover_energy,
             "withdraw": user_param.withdraw,
             "auto_deposit": user_param.auto_deposit,
@@ -148,6 +150,7 @@ def load_user_param(user: dict):
     user_param.cow = user.get("cow", True)
     user_param.plant = user.get("plant", True)
     user_param.mbs = user.get("mbs", True)
+    user_param.mbs_mint = user.get("mbs_mint", False)
     user_param.sell_corn = user.get("sell_corn", False)
     user_param.sell_barley = user.get("sell_barley", False)
     user_param.sell_milk = user.get("sell_milk", False)

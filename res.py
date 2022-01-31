@@ -43,6 +43,13 @@ class Token:
     fwf: Decimal = None
 
 
+@dataclass(init=False)
+class MbsSavedClaims:
+    Wood: int = 0
+    Food: int = 0
+    Gold: int = 0
+
+
 # 可操作的作物
 @dataclass(init=False)
 class Farming:
@@ -84,6 +91,7 @@ class Barley(Farming):
 
 supported_foods = [Milk, Corn, Barley]
 farming_table.update({cls.template_id: cls for cls in supported_foods})
+
 
 # ==== Food =====
 
@@ -232,6 +240,7 @@ def create_animal(item: dict, breeding=False) -> Animal:
 
     return animal
 
+
 # 动物-从http返回的json数据构造对象
 def create_breeding(item: dict) -> Animal:
     animal_class = farming_table.get(item["template_id"], None)
@@ -246,6 +255,7 @@ def create_breeding(item: dict) -> Animal:
     animal.last_claimed = datetime.fromtimestamp(item["last_claimed"])
     animal.next_availability = datetime.fromtimestamp(item["next_availability"])
     return animal
+
 
 ####################################################### Animal #######################################################
 
@@ -277,6 +287,7 @@ class BarleySeed(Crop):
     name: str = "Barley Seed"
     template_id: int = 298595
     golds_cost: int = 50
+
 
 # 玉米种子
 @dataclass(init=False)
@@ -441,10 +452,11 @@ def create_tool(item: dict) -> Tool:
 class MBS(Farming):
     energy_consumed: int = 100
 
-    def __init__(self, template_id, name, type):
+    def __init__(self, template_id, name, type, saved_claims):
         self.name = name
         self.template_id = template_id
         self.type = type
+        self.saved_claims = saved_claims
 
     def show(self, more=True) -> str:
         if more:
@@ -458,7 +470,7 @@ mbs_table: Dict[int, MBS] = {}
 
 def init_mbs_config(rows: List[dict]):
     for item in rows:
-        mbs = MBS(item["template_id"], item["name"], item["type"])
+        mbs = MBS(item["template_id"], item["name"], item["type"], item["saved_claims"])
         mbs_table[item["template_id"]] = mbs
 
 
@@ -467,7 +479,7 @@ def create_mbs(item: dict) -> MBS:
     mbs_class = mbs_table.get(item["template_id"], None)
     if not mbs_class:
         return None
-    mbs = MBS(mbs_class.template_id, mbs_class.name, mbs_class.type)
+    mbs = MBS(mbs_class.template_id, mbs_class.name, mbs_class.type, mbs_class.saved_claims)
     mbs.asset_id = item["asset_id"]
     mbs.next_availability = datetime.fromtimestamp(item["next_availability"])
     return mbs
