@@ -1118,6 +1118,7 @@ class Farmer:
         self.log.info("采矿的工具:")
         if user_param.mbs and user_param.mbs_mint:
             self.log.info("已开启会员卡存储挖矿")
+            
         for item in tools:
             if user_param.mbs and user_param.mbs_mint:
                 if item.mining_type == 'Wood':
