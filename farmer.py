@@ -1120,14 +1120,15 @@ class Farmer:
             self.log.info("已开启会员卡存储挖矿")
         for item in tools:
             if user_param.mbs and user_param.mbs_mint:
-                next_op_time = item.next_availability
                 if item.mining_type == 'Wood':
-                    next_op_time = item.next_availability + item.charge_time * self.mbs_saved_claims.Wood
+                    item.next_availability = item.next_availability + item.charge_time * self.mbs_saved_claims.Wood
+                    item.energy_consumed = item.energy_consumed * (self.mbs_saved_claims.Wood+1)
                 if item.mining_type == 'Food':
-                    next_op_time = item.next_availability + item.charge_time * self.mbs_saved_claims.Food
+                    item.next_availability = item.next_availability + item.charge_time * self.mbs_saved_claims.Food
+                    item.energy_consumed = item.energy_consumed * (self.mbs_saved_claims.Food + 1)
                 if item.mining_type == 'Gold':
-                    next_op_time = item.next_availability + item.charge_time * self.mbs_saved_claims.Gold
-                item.next_availability = next_op_time
+                    item.next_availability = item.next_availability + item.charge_time * self.mbs_saved_claims.Gold
+                    item.energy_consumed = item.energy_consumed * (self.mbs_saved_claims.Gold + 1)
             self.log.info(item.show())
         tools = self.filter_operable(tools)
         if not tools:
