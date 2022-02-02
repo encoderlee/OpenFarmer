@@ -1124,12 +1124,15 @@ class Farmer:
                 if item.mining_type == 'Wood':
                     item.next_availability = item.next_availability + item.charge_time * self.mbs_saved_claims.Wood
                     item.energy_consumed = item.energy_consumed * (self.mbs_saved_claims.Wood+1)
+                    item.durability_consumed = item.durability_consumed * (self.mbs_saved_claims.Wood+1)
                 if item.mining_type == 'Food':
                     item.next_availability = item.next_availability + item.charge_time * self.mbs_saved_claims.Food
                     item.energy_consumed = item.energy_consumed * (self.mbs_saved_claims.Food + 1)
+                    item.durability_consumed = item.durability_consumed * (self.mbs_saved_claims.Food + 1)
                 if item.mining_type == 'Gold':
                     item.next_availability = item.next_availability + item.charge_time * self.mbs_saved_claims.Gold
                     item.energy_consumed = item.energy_consumed * (self.mbs_saved_claims.Gold + 1)
+                    item.durability_consumed = item.durability_consumed * (self.mbs_saved_claims.Gold + 1)
             self.log.info(item.show())
         tools = self.filter_operable(tools)
         if not tools:
