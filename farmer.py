@@ -228,8 +228,8 @@ class Farmer:
             self.log.info("正在重试: [{0}]".format(state.attempt_number))
 
     def http_post(self, post_data):
-        rpc_domain = random.choice(user_param.rpc_domain_list)
-        url_table_row = rpc_domain + '/v1/chain/get_table_rows'
+        # rpc_domain = random.choice(user_param.rpc_domain_list)
+        url_table_row = user_param.rpc_domain + '/v1/chain/get_table_rows'
         return self.http.post(url_table_row, json=post_data)
 
     def table_row_template(self) -> dict:
@@ -320,8 +320,10 @@ class Farmer:
         resp = self.http_post(post_data)
         self.log.debug("get_table_rows:{0}".format(resp.text))
         resp = resp.json()
-        if len(resp["rows"]) == 0:
+        if resp["code"] != 200 or len(resp["rows"]) == 0:
+            self.log.info("===============================")
             self.log.info("获取不到账号数据，请检查账号名是否有误")
+            self.log.info("===============================")
         resource = Resoure()
         resource.energy = Decimal(resp["rows"][0]["energy"])
         resource.max_energy = Decimal(resp["rows"][0]["max_energy"])
