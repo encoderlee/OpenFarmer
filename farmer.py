@@ -320,7 +320,7 @@ class Farmer:
         resp = self.http_post(post_data)
         self.log.debug("get_table_rows:{0}".format(resp.text))
         resp = resp.json()
-        if resp["code"] != 200 or len(resp["rows"]) == 0:
+        if len(resp["rows"]) == 0:
             self.log.info("===============================")
             self.log.info("获取不到账号数据，请检查账号名是否有误")
             self.log.info("===============================")
