@@ -24,6 +24,8 @@
 
 欢迎加入 Telegram 群组反馈问题：https://t.me/OpenFarmer
 
+欢迎加入微信群，加微信好友【lintan299】拉你进群
+
 ### 功能
 1. 支持一台电脑上多开
 2. 支持设置HTTP代理
